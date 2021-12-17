@@ -9,7 +9,7 @@ User-Centered Design and Evaluation 2021/2022
 - [Leonor Morgado](https://github.com/)
 - [Maria Ribeiro](https://github.com/amariaribeiro)
 - [Mariana Garcia](https://github.com/)
-- [Patrícia Vilao](https://github.com/)
+- [Patrícia Vilao](https://github.com/patriciavilaoist)
 
 ### Projects
 
