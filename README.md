@@ -6,7 +6,7 @@ User-Centered Design and Evaluation 2021/2022
 
 #### Group 05
 - [Catarina Sousa](https://github.com/catasofia)
-- [Leonor Morgado](https://github.com/)
+- [Leonor Morgado](https://github.com/LeonorMorgado00)
 - [Maria Ribeiro](https://github.com/amariaribeiro)
 - [Mariana Garcia](https://github.com/)
 - [Patrícia Vilao](https://github.com/patriciavilaoist)
