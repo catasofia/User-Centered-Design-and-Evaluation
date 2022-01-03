@@ -1,21 +1,16 @@
-<a href="http://fenix.tecnico.ulisboa.pt"><img align="right" src="https://fenix.tecnico.ulisboa.pt/api/bennu-portal/configuration/logo" alt="Fenix Tecnico"></a>
+# project_first_try
 
-# CCU_21-22
+A new Flutter project.
 
-User-Centered Design and Evaluation 2021/2022
+## Getting Started
 
-#### Group 05
-- [Catarina Sousa](https://github.com/catasofia)
-- [Leonor Morgado](https://github.com/LeonorMorgado00)
-- [Maria Ribeiro](https://github.com/amariaribeiro)
-- [Mariana Garcia](https://github.com/Marianacgarcia)
-- [Patrícia Vilao](https://github.com/patriciavilaoist)
+This project is a starting point for a Flutter application.
 
-### Projects
+A few resources to get you started if this is your first Flutter project:
 
-- [ ] [Project]()
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-### Grades
-| Solution          | Grade 			   	|
-| :-----------------| :-------------: |
-| [Project]()      	| *00.00* / 20.00   |
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
