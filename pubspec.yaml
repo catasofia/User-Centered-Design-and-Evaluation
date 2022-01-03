@@ -64,6 +64,11 @@ flutter:
   assets:
     - assets/carlos.jfif
     - assets/carolina.jpeg
+    - assets/afonso.jpg
+    - assets/francisca.jpg
+    - assets/beatriz.jpg
+    - assets/joao.jpg
+    - assets/marco.jpg
     - assets/map.jfif
 
   # An image asset can refer to one or more resolution-specific "variants", see
