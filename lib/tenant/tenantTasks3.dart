@@ -102,11 +102,19 @@ class _Task3State extends State<Task3> {
                     ],
                   ),
                 ),
-                SizedBox(width: 15.0),
-                Icon(
-                  Icons.notifications_active_outlined,
-                  color: Colors.black,
-                  size: 40.0,
+                SizedBox(width: 8.0),
+                IconButton(
+                  icon: const Icon(
+                    Icons.notifications_active_outlined,
+                    color: Colors.black,
+                    size: 38.0,
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => _buildPopupNotification(context),
+                    );
+                  },
                 ),
               ],
             ),
@@ -466,3 +474,75 @@ class _Task3State extends State<Task3> {
     );
   }
 }
+
+
+Widget _buildPopupNotification(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Notifications',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.white,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "- João completed a task, rate him now.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "- You have two days to complete your task.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "- Carlos added a new task.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Icon(
+              Icons.remove_circle_outline,
+              color: Colors.black,
+              size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
