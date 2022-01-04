@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
                  ),
                  SizedBox(width: 15.0),
                  Container(
-                   width: 240.0,
+                   width: 235.0,
                    height: 42.0,
                    decoration: BoxDecoration(
                      borderRadius: BorderRadius.circular(24.0),
@@ -103,11 +103,19 @@ class _HomeState extends State<Home> {
                     ],
                    ),
                  ),
-                 SizedBox(width: 15.0),
-                 Icon(
-                   Icons.notifications_active_outlined,
-                   color: Colors.black,
-                   size: 40.0,
+                 SizedBox(width: 8.0),
+                 IconButton(
+                   icon: const Icon(
+                     Icons.notifications_active_outlined,
+                     color: Colors.black,
+                     size: 38.0,
+                   ),
+                   onPressed: () {
+                     showDialog(
+                       context: context,
+                       builder: (BuildContext context) => _buildPopupNotification(context),
+                     );
+                   },
                  ),
                ],
              ),
@@ -261,88 +269,77 @@ class _HomeState extends State<Home> {
              )
            ],
          ),
-
        ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       /* body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 120.0, 0, 0),
-
-
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'HELLLOOOOOO',
-                          style: TextStyle(
-                            fontSize: 28.0,
-                            letterSpacing: 2.0,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20.0),
-                    Text(
-                      'Leonorrrrr',
-                      style: TextStyle(
-                        fontSize: 66.0,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ],
-                ),
-
-
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'HELLLOOOOOO',
-                          style: TextStyle(
-                            fontSize: 28.0,
-                            letterSpacing: 2.0,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20.0),
-                    Text(
-                      'Leonorrrrr',
-                      style: TextStyle(
-                        fontSize: 66.0,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-        )*/
     );
   }
+}
+
+Widget _buildPopupNotification(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Notifications',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.white,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "- João completed a task, rate him now.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "- You have two days to complete your task.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "- Carlos added a new task.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Icon(
+              Icons.remove_circle_outline,
+              color: Colors.black,
+              size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }
