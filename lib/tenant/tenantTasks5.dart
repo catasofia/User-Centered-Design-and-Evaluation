@@ -210,11 +210,10 @@ class _Task5State extends State<Task5> {
             ),
             SizedBox(height: 15.0),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
                   width: 150.0,
-                  height: 90.0,
+                  height: 95.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     boxShadow: [
@@ -234,34 +233,37 @@ class _Task5State extends State<Task5> {
                       Icon(
                         Icons.lightbulb,
                         color: Colors.white,
-                        size: 30.0,
+                        size: 35.0,
                       ),
-                      SizedBox(height: 10.0),
+                      SizedBox(height: 8.0),
                       Text(
                         'Exchange Lightbulb',
                         style: TextStyle(
                           fontFamily: 'Arial',
-                          fontSize: 16,
+                          fontSize: 15,
                           color: Colors.black,
                           height: 1,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 7.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            '+',
-                            style: TextStyle(
-                              fontFamily: 'Arial',
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF006D77),
-                              height: 1,
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.black,
+                              size: 12.0,
                             ),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => _buildPopupTaskExchangeLightbulb(context),
+                              );
+                            },
                           ),
-                          SizedBox(width: 3.0),
                         ],
                       ),
                     ],
@@ -270,7 +272,7 @@ class _Task5State extends State<Task5> {
                 SizedBox(width: 45.0),
                 Container(
                   width: 150.0,
-                  height: 90.0,
+                  height: 95.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     boxShadow: [
@@ -292,12 +294,12 @@ class _Task5State extends State<Task5> {
                         color: Colors.white,
                         size: 35.0,
                       ),
-                      SizedBox(height: 10.0),
+                      SizedBox(height: 8.0),
                       Text(
                         'ATA',
                         style: TextStyle(
                           fontFamily: 'Arial',
-                          fontSize: 18,
+                          fontSize: 15,
                           color: Colors.black,
                           height: 1,
                         ),
@@ -306,15 +308,20 @@ class _Task5State extends State<Task5> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            '+',
-                            style: TextStyle(
-                              fontFamily: 'Arial',
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF006D77),
-                              height: 1,
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.black,
+                              size: 12.0,
                             ),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => _buildPopupTaskAta(context),
+                              );
+                            },
                           ),
                           SizedBox(width: 3.0),
                         ],
@@ -324,7 +331,7 @@ class _Task5State extends State<Task5> {
                 ),
               ],
             ),
-            SizedBox(height: 25.0),
+            SizedBox(height: 22.0),
             Text(
               'Task History',
               style: TextStyle(
@@ -540,4 +547,278 @@ Widget _buildPopupNotification(BuildContext context) {
     ],
   );
 }
+
+
+Widget _buildPopupTaskExchangeLightbulb(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Exchange Lightbulb',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.black,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "By addind, you guarantee that you read the information of this task.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        Text(
+          "Press here to read",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            height: 1,
+          ),
+        ),
+        Text(
+          "Are you sure you want to add?",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 100.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.redAccent,
+            ),
+            padding: new EdgeInsets.only(top: 6.0),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 100.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.lightGreen,
+            ),
+            padding: new EdgeInsets.only(top: 6.0),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'Add',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+
+Widget _buildPopupTaskAta(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'ATA',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.black,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "By addind, you guarantee that you read the information of this task.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        Text(
+          "Press here to read",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            height: 1,
+          ),
+        ),
+        Text(
+          "Are you sure you want to add?",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 100.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.redAccent,
+            ),
+            padding: new EdgeInsets.only(top: 6.0),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 100.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.lightGreen,
+            ),
+            padding: new EdgeInsets.only(top: 6.0),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'Add',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+
+
+
 
