@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'signIn.dart';
+import 'signUp.dart';
 
 class Signs extends StatefulWidget {
   const Signs({Key? key}) : super(key: key);
@@ -60,7 +61,12 @@ class _SignsState extends State<Signs> {
                       borderRadius: BorderRadius.circular(14)
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUp()),
+                  );
+                },
                 child: Text('Sign Up',
                   style: TextStyle(
                       fontFamily: 'Arial',

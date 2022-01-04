@@ -4,6 +4,7 @@ import 'tenant/tenantContacts.dart';
 import 'tenant/tenantTasks.dart';
 import 'tenant/tenantContacts.dart';
 import 'homeScreen.dart';
+import 'signUp.dart';
 
 void main() => runApp(MaterialApp(
     initialRoute: '/',
