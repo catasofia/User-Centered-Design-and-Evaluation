@@ -142,23 +142,43 @@ class _TaskState extends State<Task> {
                     color: Color(0xFF48ACBE),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(3.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(width: 30.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.info_outline,
+                              color: Colors.yellow,
+                              size: 15.0,
+                            ),
+                          ],
+                        ),
                         Icon(
                           Icons.clean_hands_sharp,
                           color: Colors.white,
-                          size: 35.0,
+                          size: 32.0,
                         ),
-                        SizedBox(height: 15.0),
+                        SizedBox(height: 6.0),
                         Text(
                           'Clean Elevator',
                           style: TextStyle(
                             fontFamily: 'Arial',
-                            fontSize: 18,
-                            color: Colors.white,
+                            fontSize: 16,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 3.0),
+                        Text(
+                          '15 - 21 Dec',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 10,
+                            color: Colors.black,
                             height: 1,
                           ),
                           textAlign: TextAlign.center,
@@ -184,11 +204,20 @@ class _TaskState extends State<Task> {
                     color: Color(0xFF48ACBE),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(3.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(width: 15.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.info_outline,
+                              color: Colors.yellow,
+                              size: 15.0,
+                            ),
+                          ],
+                        ),
                         Icon(
                           Icons.lightbulb,
                           color: Colors.white,
@@ -200,7 +229,18 @@ class _TaskState extends State<Task> {
                           style: TextStyle(
                             fontFamily: 'Arial',
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 3.0),
+                        Text(
+                          '17 Dec',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 10,
+                            color: Colors.black,
                             height: 1,
                           ),
                           textAlign: TextAlign.center,
@@ -239,30 +279,43 @@ class _TaskState extends State<Task> {
                     ],
                     color: Color(0xFF48ACBE),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
+                  child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(width: 30.0),
+                        SizedBox(height: 10),
                         Icon(
                           Icons.stairs_outlined,
                           color: Colors.white,
                           size: 35.0,
                         ),
-                        SizedBox(height: 15.0),
+                        SizedBox(height: 10.0),
                         Text(
                           'Clean Stairs',
                           style: TextStyle(
                             fontFamily: 'Arial',
                             fontSize: 18,
-                            color: Colors.white,
+                            color: Colors.black,
                             height: 1,
                           ),
                           textAlign: TextAlign.center,
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              '+',
+                              style: TextStyle(
+                                fontFamily: 'Arial',
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF006D77),
+                                height: 1,
+                              ),
+                            ),
+                            SizedBox(width: 3.0),
+                          ],
+                        ),
                       ],
-                    ),
                   ),
                 ),
                 SizedBox(width: 45.0),
@@ -281,30 +334,43 @@ class _TaskState extends State<Task> {
                     ],
                     color: Color(0xFF48ACBE),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(height: 3.0),
-                        Icon(
-                          Icons.my_library_books_sharp,
-                          color: Colors.white,
-                          size: 30.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 10),
+                      Icon(
+                        Icons.my_library_books_sharp,
+                        color: Colors.white,
+                        size: 35.0,
+                      ),
+                      SizedBox(height: 10.0),
+                      Text(
+                        'ATA',
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          fontSize: 18,
+                          color: Colors.black,
+                          height: 1,
                         ),
-                        SizedBox(height: 18.0),
-                        Text(
-                          'ATA',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 16,
-                            color: Colors.white,
-                            height: 1,
+                        textAlign: TextAlign.center,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            '+',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF006D77),
+                              height: 1,
+                            ),
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
+                          SizedBox(width: 3.0),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
