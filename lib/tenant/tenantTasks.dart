@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
+import 'cleanStairs.dart';
 
 class Task extends StatefulWidget {
   const Task({Key? key}) : super(key: key);
@@ -245,10 +246,18 @@ class _TaskState extends State<Task> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(width: 30.0),
-                        Icon(
-                          Icons.stairs_outlined,
-                          color: Colors.white,
-                          size: 35.0,
+                        IconButton(
+                            icon: Icon(
+                              Icons.stairs_outlined,
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => CleanStairs()),
+                              );
+                            }
                         ),
                         SizedBox(height: 15.0),
                         Text(
