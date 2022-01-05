@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'neighborProfile.dart';
 
 class NeighborHome extends StatefulWidget {
   const NeighborHome({Key? key}) : super(key: key);
@@ -19,7 +20,12 @@ class _NeighborHomeState extends State<NeighborHome> {
             children: <Widget>[
               Row(
               children: <Widget>[
-                IconButton(onPressed: () {},
+                IconButton(onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NeighborProfile()),
+                  );
+                },
                     icon: Icon(Icons.person_outline,
                       color: Colors.black,
                       size: 38,)),
