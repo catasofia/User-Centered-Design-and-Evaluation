@@ -12,9 +12,19 @@ class Evaluate extends StatefulWidget {
 
 class _EvaluateState extends State<Evaluate> {
 
+  final _description = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _description.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
         color: Color(0xFF48ACBE),
@@ -184,7 +194,7 @@ class _EvaluateState extends State<Evaluate> {
             Center(
               child: Container(
                 width: 350.0,
-                height: 180.0,
+                height: 190.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
                   boxShadow: [
@@ -211,6 +221,13 @@ class _EvaluateState extends State<Evaluate> {
                         ),
                         textAlign: TextAlign.center,
                       ),
+                      TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Leave a comment:',
+                        ),
+                        controller: _description,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -224,7 +241,7 @@ class _EvaluateState extends State<Evaluate> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Evaluate1()),
+                                MaterialPageRoute(builder: (context) => Evaluate1(description: _description.text)),
                               );
                             },
                           ),
@@ -238,7 +255,7 @@ class _EvaluateState extends State<Evaluate> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Evaluate1()),
+                                MaterialPageRoute(builder: (context) => Evaluate1(description: _description.text)),
                               );
                             },
                           ),
@@ -252,7 +269,7 @@ class _EvaluateState extends State<Evaluate> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Evaluate1()),
+                                MaterialPageRoute(builder: (context) => Evaluate1(description: _description.text)),
                               );
                             },
                           ),
@@ -266,7 +283,7 @@ class _EvaluateState extends State<Evaluate> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Evaluate1()),
+                                MaterialPageRoute(builder: (context) => Evaluate1(description: _description.text)),
                               );
                             },
                           ),
@@ -280,37 +297,11 @@ class _EvaluateState extends State<Evaluate> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Evaluate1()),
+                                MaterialPageRoute(builder: (context) => Evaluate1(description: _description.text)),
                               );
                             },
                           ),
                         ],
-                      ),
-                      Center(
-                        child: Container(
-                          width: 300.0,
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: Colors.grey[400],
-                          ),
-                          padding: new EdgeInsets.all(6.0),
-                          child: new Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Leave a comment:',
-                                style: TextStyle(
-                                  fontFamily: 'Arial',
-                                  fontSize: 15,
-                                  color: Colors.grey[800],
-                                  height: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -367,7 +358,7 @@ class _EvaluateState extends State<Evaluate> {
                     Container(
                       child: CircleAvatar(
                         backgroundImage: AssetImage('assets/joao.jpg'),
-                        radius: 55.0,
+                        radius: 45.0,
                       ),
                     ),
                     SizedBox(height: 10.0),
@@ -387,7 +378,7 @@ class _EvaluateState extends State<Evaluate> {
                     Container(
                       child: CircleAvatar(
                         backgroundImage: AssetImage('assets/marco.jpg'),
-                        radius: 55.0,
+                        radius: 45.0,
                       ),
                     ),
                     SizedBox(height: 10.0),
