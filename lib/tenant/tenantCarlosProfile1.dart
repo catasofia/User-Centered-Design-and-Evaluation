@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 
-
-class Evaluate1 extends StatefulWidget {
+class CarlosProfile1 extends StatefulWidget {
   String description;
-  Evaluate1({Key? key, required this.description}) : super(key: key);
+  CarlosProfile1({Key? key, required this.description}) : super(key: key);
 
   @override
-  _Evaluate1State createState() => _Evaluate1State();
+  _CarlosProfile1State createState() => _CarlosProfile1State();
 }
 
-class _Evaluate1State extends State<Evaluate1> {
+class _CarlosProfile1State extends State<CarlosProfile1> {
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class _Evaluate1State extends State<Evaluate1> {
               ),
               IconButton(icon: Icon(
                 Icons.star_border,
-                color: Colors.white,
+                color: Colors.black,
                 size: 35.0,
               ), onPressed: () {}),
               IconButton(
@@ -149,12 +148,13 @@ class _Evaluate1State extends State<Evaluate1> {
                 ),
               ],
             ),
+            SizedBox(height: 12.0),
             Center(
               child: Container(
-                width: 100.0,
-                height: 30.0,
+                width: 350.0,
+                height: 140.0,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
+                  borderRadius: BorderRadius.circular(20.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
@@ -163,31 +163,99 @@ class _Evaluate1State extends State<Evaluate1> {
                       offset: Offset(0, 3), // changes position of shadow
                     ),
                   ],
-                  color: Color(0xFF48ACBE),
+                  color: Colors.white70,
                 ),
-                padding: new EdgeInsets.only(top: 6.0),
-                child: new Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'See profile',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(40, 10, 30, 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Text(
+                            'Info:',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 20,
+                              color: Color(0xFF48ACBE),
+                              height: 1,
+                            ),
+                          ),
+                          SizedBox(width: 50.0),
+                          Text(
+                            'Carlos Silva\nMale, 55',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 20,
+                              color: Color(0xFF48ACBE),
+                              height: 1,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      Row(
+                        children: [
+                          Text(
+                            'Role:',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 20,
+                              color: Color(0xFF48ACBE),
+                              height: 1,
+                            ),
+                          ),
+                          SizedBox(width: 45.0),
+                          Text(
+                            'Landlord',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 20,
+                              color: Color(0xFF48ACBE),
+                              height: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Rating:',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 20,
+                              color: Color(0xFF48ACBE),
+                              height: 1,
+                            ),
+                          ),
+                          SizedBox(width: 30.0),
+                          Text(
+                            '4.54',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 20,
+                              color: Color(0xFF48ACBE),
+                              height: 1,
+                            ),
+                          ),
+                          Icon(
+                            Icons.star_border,
+                            color: Color(0xFF48ACBE),
+                            size: 25.0,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+
                 ),
               ),
             ),
-            SizedBox(height: 12.0),
+            SizedBox(height: 15.0),
             Center(
               child: Container(
                 width: 350.0,
-                height: 180.0,
+                height: 190.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
                   boxShadow: [
@@ -293,7 +361,7 @@ class _Evaluate1State extends State<Evaluate1> {
                             onPressed: () {
                               showDialog(
                                 context: context,
-                                builder: (BuildContext context) => _buildPopupEvaluation(context),
+                                builder: (BuildContext context) => _buildPopupEvaluationCarlos(context),
                               );
                             },
                           ),
@@ -311,7 +379,7 @@ class _Evaluate1State extends State<Evaluate1> {
                             onPressed: () {
                               showDialog(
                                 context: context,
-                                builder: (BuildContext context) => _buildPopupEvaluation(context),
+                                builder: (BuildContext context) => _buildPopupEvaluationCarlos(context),
                               );
                             },
                           ),
@@ -321,52 +389,6 @@ class _Evaluate1State extends State<Evaluate1> {
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Column(
-                  children: [
-                    Container(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/joao.jpg'),
-                        radius: 55.0,
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      'Joao',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Container(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/marco.jpg'),
-                        radius: 55.0,
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      'Marco',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
             ),
           ],
         ),
@@ -447,7 +469,7 @@ Widget _buildPopupNotification(BuildContext context) {
 }
 
 
-Widget _buildPopupEvaluation(BuildContext context) {
+Widget _buildPopupEvaluationCarlos(BuildContext context) {
   return new AlertDialog(
     alignment: Alignment.center,
     backgroundColor: Color(0xFF48ACBE),
