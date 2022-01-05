@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'signInOrUp.dart';
 import 'tenant/tenantHomescreen.dart';
+import 'neighbor/neighborHomeScreen.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -242,6 +243,12 @@ class _SignUpState extends State<SignUp> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => Home()),
+                        );
+                      }
+                      if(_role == 'neighbor'){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NeighborHome()),
                         );
                       }
                     },
