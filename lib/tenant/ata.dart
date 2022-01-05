@@ -10,25 +10,25 @@ class Types{
   Types({required this.type, required this.task});
 }
 
-class CleanStairs extends StatefulWidget{
-  const CleanStairs({Key? key}) : super(key: key);
+class ATA extends StatefulWidget{
+  const ATA({Key? key}) : super(key: key);
 
   @override
-  _CleanState createState() => _CleanState();
+  _ATAState createState() => _ATAState();
 }
 
-class _CleanState extends State<CleanStairs>{
+class _ATAState extends State<ATA>{
 
   List<Types> tasks= [
-    Types(type: 'Description', task: 'You will have to clean all the stairs.\nAfter the stairs have been cleaned, you will have to wash the mop and the mop bucket, and put it back on the place where you have grabbed them.\nThis task has to be done twice per month.'),
-    Types(type: 'Products', task: '- Cif Lava-Tudo;\n- Sonasol;\n- Neo Blanc.\n\nNote: the mop and the mop bucket are on the layoff of the building.'),
-    Types(type: 'Price', task: 'This task has a discount on the rent of 30€.')
+    Types(type: 'Description', task: 'You will have to take notes about the neighbors that were at the meeting, the subjects discussed, what every person said, what was voted on, the time, and the place.'),
+    Types(type: 'Products', task: '- ATA;\n- Black pen.\n\nNote: the ATA is in the office room, inside the desk drawer. The pen is on yourself but is preferably a black one.'),
+    Types(type: 'Price', task: 'This task has a discount on the rent of 15€.')
   ];
 
   @override
   Widget template(tt) {
     return Card(
-      margin: EdgeInsets.fromLTRB(16.0, 18.0, 16.0, 0.0),
+      margin: EdgeInsets.fromLTRB(12.0, 18.0, 16.0, 8.0),
       color: Color(0xFF9ED3DD),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -104,10 +104,10 @@ class _CleanState extends State<CleanStairs>{
                     Icons.cleaning_services_rounded,
                     size: 30.0,
                   ), onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Task()),
-                      );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Task()),
+                );
               }),
               IconButton(
                   icon: Icon(
@@ -127,70 +127,70 @@ class _CleanState extends State<CleanStairs>{
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.person_outline,
-                    color: Colors.black,
-                    size: 40.0,
-                  ),
-                  SizedBox(width: 15.0),
-                  Container(
-                    width: 240.0,
-                    height: 42.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24.0),
-                      color: Colors.grey[200],
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.person_outline,
+                      color: Colors.black,
+                      size: 40.0,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(width: 15.0),
-                        Icon(
-                          Icons.search,
-                          color: Colors.black,
-                        ),
-                        SizedBox(width: 10.0),
-                        Text(
-                          'Search',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 20,
+                    SizedBox(width: 15.0),
+                    Container(
+                      width: 240.0,
+                      height: 42.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        color: Colors.grey[200],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(width: 15.0),
+                          Icon(
+                            Icons.search,
                             color: Colors.black,
-                            height: 1,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                          SizedBox(width: 10.0),
+                          Text(
+                            'Search',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 20,
+                              color: Colors.black,
+                              height: 1,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 15.0),
-                  Icon(
-                    Icons.notifications_active_outlined,
-                    color: Colors.black,
-                    size: 40.0,
-                  ),
-                ],
+                    SizedBox(width: 15.0),
+                    Icon(
+                      Icons.notifications_active_outlined,
+                      color: Colors.black,
+                      size: 40.0,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 4.0, 220.0, 0.0),
-              child: Text(
-                  'Clean Stairs',
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 4.0, 310.0, 0.0),
+                child: Text(
+                  'ATA',
                   style: TextStyle(
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
-            ),
-            for (var i in tasks) template(i),
-          ]
+              ),
+              for (var i in tasks) template(i),
+            ]
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -198,14 +198,14 @@ class _CleanState extends State<CleanStairs>{
           // Add your onPressed code here!
         },
         shape: BeveledRectangleBorder(
-            borderRadius: BorderRadius.circular(3.0),
-            side: BorderSide(color: Colors.black),
+          borderRadius: BorderRadius.circular(3.0),
+          side: BorderSide(color: Colors.black),
         ),
         label: const Text(
             '        Add        ',
-          style: TextStyle(
+            style: TextStyle(
               color: Colors.black,
-          )
+            )
         ),
         backgroundColor: Color(0xFF69BB67),
       ),

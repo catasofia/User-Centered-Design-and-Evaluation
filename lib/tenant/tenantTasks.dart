@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
+import 'cleanStairs.dart';
+import 'ata.dart';
 
 class Task extends StatefulWidget {
   const Task({Key? key}) : super(key: key);
@@ -272,40 +274,36 @@ class _TaskState extends State<Task> {
             SizedBox(height: 15.0),
             Row(
               children: <Widget>[
-                Container(
-                  width: 150.0,
-                  height: 95.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: Color(0xFF48ACBE),
-                  ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                  Stack(
+                      //mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(height: 10),
-                        Icon(
-                          Icons.stairs_outlined,
-                          color: Colors.white,
-                          size: 35.0,
+                        RaisedButton(
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => CleanStairs()),
+                              );
+                            },
+                            color: Color(0xFF48ACBE),
+                            child: Text('                                 \n\n\n\n\n'),
                         ),
-                        SizedBox(height: 8.0),
-                        Text(
-                          'Clean Stairs',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 15,
-                            color: Colors.black,
-                            height: 1,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
+                          child: Icon(
+                              Icons.stairs_outlined,
+                              color: Colors.white,
+                              size: 35.0,),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(32.0, 55.0, 0.0, 0.0),
+                          child: Text(
+                            'Clean Stairs',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 15,
+                              color: Colors.black,
+                              height: 1.0)
                           ),
-                          textAlign: TextAlign.center,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -329,42 +327,37 @@ class _TaskState extends State<Task> {
                         ),
                       ],
                   ),
-                ),
                 SizedBox(width: 45.0),
                 Container(
-                  width: 150.0,
-                  height: 95.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: Color(0xFF48ACBE),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  child:  Stack(
                     children: <Widget>[
-                      SizedBox(height: 10),
-                      Icon(
-                        Icons.my_library_books_sharp,
-                        color: Colors.white,
-                        size: 35.0,
+                      RaisedButton(
+                        onPressed: (){
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ATA()),
+                          );
+                        },
+                        color: Color(0xFF48ACBE),
+                        child: Text('                                 \n\n\n\n\n'),
                       ),
-                      SizedBox(height: 8.0),
-                      Text(
-                        'ATA',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 15,
-                          color: Colors.black,
-                          height: 1,
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
+                        child: Icon(
+                          Icons.my_library_books_sharp,
+                          color: Colors.white,
+                          size: 35.0,),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(60.0, 57.0, 0.0, 0.0),
+                        child: Text(
+                          'ATA',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 15,
+                            color: Colors.black,
+                            height: 1.0)
                         ),
-                        textAlign: TextAlign.center,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
