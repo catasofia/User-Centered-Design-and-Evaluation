@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'neighborProfile.dart';
+import 'suggestTasks.dart';
 
 class NeighborHome extends StatefulWidget {
   const NeighborHome({Key? key}) : super(key: key);
@@ -191,7 +192,12 @@ class _NeighborHomeState extends State<NeighborHome> {
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFF48ACBE)
                       ),
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SuggestTask()),
+                        );
+                      },
                       child: Text('Suggest new task',
                       style: TextStyle(color: Colors.black),)),
                 ),

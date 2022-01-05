@@ -160,9 +160,8 @@ class _NeighborProfileState extends State<NeighborProfile> {
                       child: IconButton(
                         icon: Icon(Icons.arrow_back_ios),
                         onPressed: (){
-                          Navigator.push(
+                          Navigator.pop(
                             context,
-                            MaterialPageRoute(builder: (context) => NeighborHome()),
                           );
                         },
                       )
