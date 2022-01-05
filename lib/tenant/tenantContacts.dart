@@ -160,7 +160,7 @@ class _ContactsState extends State<Contacts> {
                   children: [
                     Container(
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/map.jfif'),
+                        backgroundImage: AssetImage('assets/marco.jpg'),
                         radius: 65.0,
                       ),
                     ),
@@ -267,7 +267,7 @@ class _ContactsState extends State<Contacts> {
               children: [
                 Container(
                   child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/map.jfif'),
+                    backgroundImage: AssetImage('assets/marco.jpg'),
                     radius: 25.0,
                   ),
                 ),
@@ -335,7 +335,7 @@ class _ContactsState extends State<Contacts> {
               children: [
                 Container(
                   child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/map.jfif'),
+                    backgroundImage: AssetImage('assets/joao.jpg'),
                     radius: 25.0,
                   ),
                 ),
