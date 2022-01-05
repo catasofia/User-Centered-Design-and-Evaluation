@@ -4,6 +4,8 @@ import 'tenant/tenantContacts.dart';
 import 'tenant/tenantTasks.dart';
 import 'tenant/tenantContacts.dart';
 import 'homeScreen.dart';
+import 'landlord/landlordEvaluate.dart';
+import 'landlord/landlordHomeScreen.dart';
 
 void main() => runApp(MaterialApp(
     initialRoute: '/',
