@@ -83,30 +83,26 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.black,
-                    elevation: 3,
-                    padding: EdgeInsets.all(20),
-                    shape: CircleBorder(),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Signs()),
-                    );
-                  },
-                  child: Text('<',
-                      style: TextStyle(
-                          fontSize: 20
-                      )),
+            Row(
+              children: [
+                SizedBox(width: 20,),
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back_ios),
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Signs()),
+                        );
+                      },
+                    )
                 ),
-              )
-            ],
-          ),
+              ],
+            ),
+          ]
         ),
+      ),
     );
   }
 }
