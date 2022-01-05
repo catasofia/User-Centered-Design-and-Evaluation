@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'neighborProfile.dart';
+import 'neighborHomeScreen.dart';
 
 class SuggestTask extends StatefulWidget {
   const SuggestTask({Key? key}) : super(key: key);
@@ -8,7 +9,11 @@ class SuggestTask extends StatefulWidget {
   _SuggestTaskState createState() => _SuggestTaskState();
 }
 
+final textController_1 = TextEditingController();
+final textController_2 = TextEditingController();
+
 class _SuggestTaskState extends State<SuggestTask> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,6 +99,7 @@ class _SuggestTaskState extends State<SuggestTask> {
               child: new Column(
                 children: <Widget>[
                   new TextField(
+                    controller: textController_1,
                     decoration: InputDecoration(
                       hintText: "Insert name"
                     ),
@@ -108,6 +114,7 @@ class _SuggestTaskState extends State<SuggestTask> {
                     ],
                   ),
                   new TextField(
+                    controller: textController_2,
                     decoration: InputDecoration(
                       hintText: "Insert description"
                     ),
@@ -131,7 +138,19 @@ class _SuggestTaskState extends State<SuggestTask> {
                           borderRadius: BorderRadius.circular(14)
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      if(checkTextFieldEmptyOrNot()){
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _confirmationPopup(context),
+                        );
+                      } else{
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _errorPopup(context),
+                        );
+                      }
+                    },
                     child: Text('Submit',
                       style: TextStyle(
                         fontFamily: 'Arial',
@@ -144,10 +163,138 @@ class _SuggestTaskState extends State<SuggestTask> {
                 ),
               ],
             ),
+            SizedBox(height: 30,),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    elevation: 0,
+                  ),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NeighborHome()),
+                    );
+                    clearText();
+                  },
+                  child: Text('Cancel',
+                    style: TextStyle(color: Colors.grey[700]),)),
+            )
           ]
       ),
     );
   }
+}
+
+clearText(){
+  textController_1.clear();
+  textController_2.clear();
+}
+
+checkTextFieldEmptyOrNot(){
+  String text1,text2;
+
+  text1 = textController_1.text;
+  text2 = textController_2.text;
+
+  if(text1 == '' || text2 == '') {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Widget _confirmationPopup(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Center(child: Icon(Icons.error, color: Colors.red[700], size: 100,)),
+        SizedBox(height: 15,),
+        Text(
+          "You need to fill the information in order to submit.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Icon(
+              Icons.highlight_remove,
+              color: Colors.black,
+              size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+Widget _errorPopup(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Center(child: Icon(Icons.check, color: Colors.green[800], size: 100,)),
+        SizedBox(height: 15,),
+        Text(
+          "Task successfully added.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.grey[400]
+              ),
+              onPressed: (){
+                clearText();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NeighborHome()),
+                );
+              },
+              child: Text('Ok', style: TextStyle(color: Colors.black),),
+            )
+          ),
+        ],
+      ),
+    ],
+  );
 }
 
 Widget _buildPopupNotification(BuildContext context) {
