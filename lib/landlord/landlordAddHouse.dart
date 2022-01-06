@@ -15,11 +15,18 @@ class _AddHouseState extends State<AddHouse> {
   File? image;
   Future getImage() async{
     try{
-      print('ola');
       final image = await ImagePicker().getImage(source: ImageSource.gallery);
       if (image == null) return;
       final imageTemporary = File(image.path);
       setState(() => this.image = imageTemporary);
+    } on PlatformException catch (e){
+      print('Failed to load image: $e');
+    }
+  }
+
+  Future deleteImage() async{
+    try{
+      setState(() => this.image = null);
     } on PlatformException catch (e){
       print('Failed to load image: $e');
     }
@@ -144,7 +151,7 @@ class _AddHouseState extends State<AddHouse> {
                   SizedBox(height: 20,),
                   Row(
                     children: [
-                      Text('Images',
+                      Text('Image',
                         style: TextStyle(
                             fontSize: 20
                         ),),
@@ -153,51 +160,52 @@ class _AddHouseState extends State<AddHouse> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Container(
+                alignment: Alignment.topCenter,
+                child:
+                image != null? Image.file(image!, width: 100, height:100, fit: BoxFit.cover) : SizedBox(width: 100, height:100 ),
+              ),
+            ),
+            // onPressed: () => getImage(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
                   child: Container(
-                    width: 150,
-                    height: 40,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD6D6D6),
-                        elevation: 1,
-                        padding: EdgeInsets.all(10),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14)
-                        ),
-                      ),
+                    width: 170,
+                    height: 30,
+                    alignment: Alignment.center,
+                    child: ElevatedButton.icon(
+                      label: Text('Pick from gallery'),
+                      style: ElevatedButton.styleFrom(primary: Colors.grey[350], onPrimary: Colors.black),
+                      icon: Icon(Icons.image, size: 20),
                       onPressed: () => getImage(),
-                      child: Text('Pick from gallery',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 15,
-                          color: Colors.black, //font color
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    )
                   ),
                 ),
+
+                MaterialButton(
+                  onPressed: () => deleteImage(),
+                  color: Colors.grey[350],
+                  textColor: Colors.black,
+                  child: Icon(
+                    Icons.delete,
+                    size: 20,
+                  ),
+                  padding: EdgeInsets.all(5.0),
+                  shape: CircleBorder(),
+                )
               ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                alignment: Alignment.topCenter,
-                child:
-                image != null? Image.file(image!, width: 100, height:100, fit: BoxFit.cover) : SizedBox.shrink(),
-              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 120,
-                  height: 40,
+                  width: 150,
+                  height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xFF48ACBE),
