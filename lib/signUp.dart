@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'signInOrUp.dart';
 import 'tenant/tenantHomescreen.dart';
 import 'neighbor/neighborHomeScreen.dart';
+import 'landlord/landlordHomeScreen.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -19,14 +20,23 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
       body: Padding(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: Column(
           children:[
-            Image.asset('assets/buildingsSmaller.jpg', fit: BoxFit.fill,),
-            Image.asset('assets/logoS.jpg', height: 110,),
-            SizedBox(height: 5,),
+            Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Image.asset('assets/buildingsSmaller.jpg', fit: BoxFit.fill,),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0,213,0,0),
+                  child: Image.asset('assets/logoS.jpg', height: 110,),
+                ),
+              ],
+            ),
+            SizedBox(height: 8,),
             Text(
               'Sign up as',
               style: TextStyle(
@@ -35,17 +45,17 @@ class _SignUpState extends State<SignUp> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 7,),
+            SizedBox(height: 12,),
             Row(
                 //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(width: 130,),
+                  SizedBox(width: 145,),
                   Container(
                     width: 25,
                     height: 25,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: _landHasBeenPressed ? Color(0xFF48ACBE) : Colors.grey[500],
+                        primary: _landHasBeenPressed ? Color(0xFF48ACBE) : Colors.grey[400],
                         elevation: 3,
                         padding: EdgeInsets.all(20),
                         shape: CircleBorder(),
@@ -55,7 +65,7 @@ class _SignUpState extends State<SignUp> {
                           _landHasBeenPressed = !_landHasBeenPressed;
                           _neigHasBeenPressed = false;
                           _tenHasBeenPressed = false;
-                          if (_role != 'landlord'){
+                          if (_role == 'landlord'){
                             _role = '';
                           } else {
                             _role = 'landlord';
@@ -81,13 +91,13 @@ class _SignUpState extends State<SignUp> {
             SizedBox(height: 7,),
             Row(
               children: [
-                SizedBox(width: 130,),
+                SizedBox(width: 145,),
                 Container(
                   width: 25,
                   height: 25,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: _neigHasBeenPressed ? Color(0xFF48ACBE) : Colors.grey[500],
+                      primary: _neigHasBeenPressed ? Color(0xFF48ACBE) : Colors.grey[400],
                       elevation: 3,
                       padding: EdgeInsets.all(20),
                       shape: CircleBorder(),
@@ -122,13 +132,13 @@ class _SignUpState extends State<SignUp> {
             SizedBox(height: 7,),
             Row(
               children: [
-                SizedBox(width: 130,),
+                SizedBox(width: 145,),
                 Container(
                   width: 25,
                   height: 25,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: _tenHasBeenPressed ? Color(0xFF48ACBE) : Colors.grey[500],
+                      primary: _tenHasBeenPressed ? Color(0xFF48ACBE) : Colors.grey[400],
                       elevation: 3,
                       padding: EdgeInsets.all(20),
                       shape: CircleBorder(),
@@ -160,47 +170,39 @@ class _SignUpState extends State<SignUp> {
                   ),)
               ],
             ),
-            SizedBox(height: 7,),
+
+            SizedBox(height: 15,),
             Container(
               width: 240.0,
               height: 45.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14.0),
-                color: Colors.grey[400],
+                color: Colors.grey[300],
               ),
               child:
-              Text(
-                'Insert Email or Phone',
-                style: TextStyle(
-                  fontFamily: 'Arial',
-                  fontSize: 20,
-                  color: Colors.black,
-                  height: 1.7,
+              TextField(
+                decoration: InputDecoration(
+
+                    hintText: "Insert email or phone"
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(height: 7,),
+            SizedBox(height: 10,),
             Container(
               width: 240.0,
               height: 45.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14.0),
-                color: Colors.grey[400],
+                color: Colors.grey[300],
               ),
               child:
-              Text(
-                'Insert Password',
-                style: TextStyle(
-                  fontFamily: 'Arial',
-                  fontSize: 20,
-                  color: Colors.black,
-                  height: 1.7,
+              TextField(
+                decoration: InputDecoration(
+                    hintText: "Insert password"
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(height: 7,),
+            SizedBox(height: 15,),
             Row(
               children: [
                 Row(
@@ -242,6 +244,12 @@ class _SignUpState extends State<SignUp> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => NeighborHome()),
+                        );
+                      }
+                      if(_role == 'landlord'){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeLandlord()),
                         );
                       }
                     },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
 import 'tenantTasks.dart';
+import 'tenantTasks3.dart';
 
 class Types{
   String type;
@@ -195,7 +196,10 @@ class _CleanState extends State<CleanStairs>{
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // Add your onPressed code here!
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => _buildPopupConfirmation(context),
+          );
         },
         shape: BeveledRectangleBorder(
             borderRadius: BorderRadius.circular(3.0),
@@ -213,3 +217,124 @@ class _CleanState extends State<CleanStairs>{
     );
   }
 }
+
+
+
+Widget _buildPopupConfirmation(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Confirmation',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.black,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "Are you sure you want to add this task?",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 100.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.redAccent,
+            ),
+            padding: new EdgeInsets.only(top: 6.0),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 100.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.lightGreen,
+            ),
+            padding: new EdgeInsets.only(top: 6.0),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Task3()),
+                    );
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'Add',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
+import 'tenantEvaluatePage.dart';
 
 
 class Evaluate1 extends StatefulWidget {
@@ -291,9 +292,9 @@ class _Evaluate1State extends State<Evaluate1> {
                             ),
                             color: Colors.redAccent,
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => _buildPopupEvaluation(context),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Evaluate()),
                               );
                             },
                           ),

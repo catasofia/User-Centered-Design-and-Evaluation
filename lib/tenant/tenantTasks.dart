@@ -3,6 +3,9 @@ import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
 import 'cleanStairs.dart';
 import 'ata.dart';
+import 'tenantTasks3.dart';
+import 'tenantTasks4.dart';
+
 
 class Task extends StatefulWidget {
   const Task({Key? key}) : super(key: key);
@@ -714,7 +717,10 @@ Widget _buildPopupTaskCleanStairs(BuildContext context) {
               children: <Widget>[
                 new FlatButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Task3()),
+                    );
                   },
                   textColor: Theme.of(context).primaryColor,
                   child: const Text(
@@ -849,7 +855,10 @@ Widget _buildPopupTaskAta(BuildContext context) {
               children: <Widget>[
                 new FlatButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Task4()),
+                    );
                   },
                   textColor: Theme.of(context).primaryColor,
                   child: const Text(
