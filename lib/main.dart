@@ -5,9 +5,10 @@ import 'tenant/tenantContacts.dart';
 import 'tenant/tenantTasks.dart';
 import 'tenant/tenantContacts.dart';
 import 'homeScreen.dart';
-import 'landlord/landlordEvaluate.dart';
+import 'landlord/landlordEvaluatePage1.dart';
 import 'landlord/landlordHomeScreen.dart';
-import 'landlord/landlordAddHouse.dart';
+import 'landlord/landlordAddTask.dart';
+import 'landlord/landlordEditTask.dart';
 import 'neighbor/suggestTasks.dart';
 
 void main() => runApp(MaterialApp(

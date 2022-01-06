@@ -111,7 +111,6 @@ class _LandlordEvaluateState extends State<LandlordEvaluate1> {
                     size: 38.0,
                   ),
                   onPressed: () {
-
                   },
                 ),
               ],
@@ -288,10 +287,6 @@ class _LandlordEvaluateState extends State<LandlordEvaluate1> {
                             ),
                             color: Colors.redAccent,
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => _buildPopupEvaluation(context),
-                              );
                             },
                           ),
                           RaisedButton(
