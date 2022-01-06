@@ -3,6 +3,7 @@ import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
 import 'tenantTasks.dart';
 import 'tenantTasks4.dart';
+import 'profile.dart';
 
 class Types{
   String type;
@@ -29,7 +30,7 @@ class _ATAState extends State<ATA>{
   @override
   Widget template(tt) {
     return Card(
-      margin: EdgeInsets.fromLTRB(12.0, 18.0, 16.0, 8.0),
+      margin: EdgeInsets.fromLTRB(12.0, 13.0, 16.0, 8.0),
       color: Color(0xFF9ED3DD),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -132,13 +133,21 @@ class _ATAState extends State<ATA>{
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+                padding: EdgeInsets.fromLTRB(30.0, 12.0, 0.0, 0.0),
                 child: Row(
                   children: <Widget>[
-                    Icon(
-                      Icons.person_outline,
-                      color: Colors.black,
-                      size: 40.0,
+                    IconButton(
+                        onPressed:(){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Profile()),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.person_outline,
+                          color: Colors.black,
+                          size: 40.0,
+                        )
                     ),
                     SizedBox(width: 15.0),
                     Container(

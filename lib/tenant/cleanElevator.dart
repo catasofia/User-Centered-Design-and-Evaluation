@@ -3,6 +3,7 @@ import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
 import 'tenantTasks.dart';
 import 'tenantTasks4.dart';
+import 'profile.dart';
 
 class Types{
   String type;
@@ -78,52 +79,49 @@ class _CleanState extends State<CleanElevator>{
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
         color: Color(0xFF48ACBE),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: Icon(
+                Icons.house_outlined,
+                size: 35.0,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Home()),
+                );
+              },
+            ),
+            IconButton(icon: Icon(
+              Icons.star_border,
+              size: 35.0,
+            ), onPressed: () {}),
+            IconButton(
+                color: Colors.white,
                 icon: Icon(
-                  Icons.house_outlined,
-                  size: 35.0,
+                  Icons.cleaning_services_rounded,
+                  size: 30.0,
+                ), onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Task()),
+              );
+            }),
+            IconButton(
+                icon: Icon(
+                  Icons.chat_bubble_outline_rounded,
+                  size: 30.0,
                 ),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Home()),
+                    MaterialPageRoute(builder: (context) => Contacts()),
                   );
-                },
-              ),
-              IconButton(icon: Icon(
-                Icons.star_border,
-                size: 35.0,
-              ), onPressed: () {}),
-              IconButton(
-                  color: Colors.white,
-                  icon: Icon(
-                    Icons.cleaning_services_rounded,
-                    size: 30.0,
-                  ), onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Task()),
-                );
-              }),
-              IconButton(
-                  icon: Icon(
-                    Icons.chat_bubble_outline_rounded,
-                    size: 30.0,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Contacts()),
-                    );
-                  }
-              ),
-            ],
-          ),
+                }
+            ),
+          ],
         ),
       ),
       body: SafeArea(
@@ -132,13 +130,21 @@ class _CleanState extends State<CleanElevator>{
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+                padding: EdgeInsets.fromLTRB(30.0, 12.0, 0.0, 0.0),
                 child: Row(
                   children: <Widget>[
-                    Icon(
-                      Icons.person_outline,
-                      color: Colors.black,
-                      size: 40.0,
+                    IconButton(
+                        onPressed:(){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Profile()),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.person_outline,
+                          color: Colors.black,
+                          size: 40.0,
+                        )
                     ),
                     SizedBox(width: 15.0),
                     Container(

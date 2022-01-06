@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
+import 'profile.dart';
 
 class Contacts extends StatefulWidget {
   const Contacts({Key? key}) : super(key: key);
@@ -61,16 +62,24 @@ class _ContactsState extends State<Contacts> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+        padding: EdgeInsets.fromLTRB(30.0, 40.0, 20.0, 0.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
               children: <Widget>[
-                Icon(
-                  Icons.person_outline,
-                  color: Colors.black,
-                  size: 40.0,
+                IconButton(
+                    onPressed:(){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Profile()),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.person_outline,
+                      color: Colors.black,
+                      size: 40.0,
+                    )
                 ),
                 SizedBox(width: 15.0),
                 Container(

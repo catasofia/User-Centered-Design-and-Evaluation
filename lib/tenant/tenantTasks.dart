@@ -9,6 +9,7 @@ import 'cleanElevator.dart';
 import 'exchangeLightbulb.dart';
 import 'tenantTasks3.dart';
 import 'tenantTasks4.dart';
+import 'profile.dart';
 
 
 class Task extends StatefulWidget {
@@ -70,16 +71,24 @@ class _TaskState extends State<Task> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+        padding: EdgeInsets.fromLTRB(28.0, 40.0, 0.0, 0.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
               children: <Widget>[
-                Icon(
-                  Icons.person_outline,
-                  color: Colors.black,
-                  size: 40.0,
+                IconButton(
+                  onPressed:(){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Profile()),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.person_outline,
+                    color: Colors.black,
+                    size: 40.0,
+                  )
                 ),
                 SizedBox(width: 15.0),
                 Container(
@@ -175,9 +184,9 @@ class _TaskState extends State<Task> {
                           size: 32.0),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(32.0, 55.0, 0.0, 0.0),
+                        padding: EdgeInsets.fromLTRB(25.0, 55.0, 0.0, 0.0),
                         child: Text(
-                            'Clean Stairs',
+                            'Clean Elevator',
                             style: TextStyle(
                                 fontFamily: 'Arial',
                                 fontSize: 16,
@@ -186,7 +195,7 @@ class _TaskState extends State<Task> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(52.0, 75.0, 0.0, 0.0),
+                        padding: EdgeInsets.fromLTRB(50.0, 75.0, 0.0, 0.0),
                         child: Text(
                           '15 - 21 Dec',
                           style: TextStyle(

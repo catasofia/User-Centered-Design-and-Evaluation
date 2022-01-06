@@ -81,8 +81,12 @@ class _NeighborProfileState extends State<NeighborProfile> {
                     SizedBox(width: 135,),
                     Container(
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/francisca.jpg'),
-                        radius: 65.0,
+                        radius: 79.0,
+                        backgroundColor: Colors.black54,
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('assets/francisca.jpg'),
+                          radius: 75.0,
+                        ),
                       ),
                     ),
                   ],
@@ -129,7 +133,7 @@ class _NeighborProfileState extends State<NeighborProfile> {
                     ),
                   ),
                 ),
-                SizedBox(height: 90,),
+                SizedBox(height: 60,),
                 Container(
                   width: 175,
                   height: 50,
