@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
+import 'tenantCarlosProfile.dart';
 
 class CarlosProfile1 extends StatefulWidget {
   String description;
@@ -359,9 +360,9 @@ class _CarlosProfile1State extends State<CarlosProfile1> {
                             ),
                             color: Colors.redAccent,
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => _buildPopupEvaluationCarlos(context),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => CarlosProfile()),
                               );
                             },
                           ),
