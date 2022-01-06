@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:time_app/tenant/cleanElevator.dart';
+import 'package:time_app/tenant/exchangeLightbulb.dart';
 import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
 import 'cleanStairs.dart';
 import 'ata.dart';
 import 'cleanElevator.dart';
+import 'exchangeLightbulb.dart';
 import 'tenantTasks3.dart';
 import 'tenantTasks4.dart';
 
@@ -142,116 +144,51 @@ class _TaskState extends State<Task> {
             Row(
               children: <Widget>[
                 Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Stack(
-                      children: <Widget>[
-                        RaisedButton(
-                          onPressed: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => CleanElevator()),
-                            );
-                          },
-                          color: Color(0xFF48ACBE),
-                          child: Text('                                 \n\n\n\n\n'),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(100.0, 0.0, 0.0, 0.0),
-                          child: IconButton(
-                            onPressed: (){},
-                            icon: Icon(
-                              Icons.info_outline,
-                              color: Colors.yellow,
-                              size: 15.0,
-                            )
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
-                          child: Icon(
-                            Icons.clean_hands_sharp,
-                            color: Colors.white,
-                            size: 32.0),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(32.0, 55.0, 0.0, 0.0),
-                          child: Text(
-                              'Clean Stairs',
-                              style: TextStyle(
-                                  fontFamily: 'Arial',
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  height: 1.0)
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(52.0, 75.0, 0.0, 0.0),
-                          child: Text(
-                            '15 - 21 Dec',
-                            style: TextStyle(
-                              fontFamily: 'Arial',
-                              fontSize: 10,
-                              color: Colors.black,
-                              height: 1,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 45.0),
-                Container(
-                  width: 150.0,
-                  height: 90.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
+                  child: Stack(
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => CleanElevator()),
+                          );
+                        },
+                        color: Color(0xFF48ACBE),
+                        child: Text('                                 \n\n\n\n\n'),
                       ),
-                    ],
-                    color: Color(0xFF48ACBE),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Icon(
-                              Icons.info_outline,
-                              color: Colors.yellow,
-                              size: 15.0,
-                            ),
-                          ],
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(100.0, 0.0, 0.0, 0.0),
+                        child: IconButton(
+                          onPressed: (){},
+                          icon: Icon(
+                            Icons.info_outline,
+                            color: Colors.yellow,
+                            size: 15.0,
+                          )
                         ),
-                        Icon(
-                          Icons.lightbulb,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
+                        child: Icon(
+                          Icons.clean_hands_sharp,
                           color: Colors.white,
-                          size: 30.0,
+                          size: 32.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(32.0, 55.0, 0.0, 0.0),
+                        child: Text(
+                            'Clean Stairs',
+                            style: TextStyle(
+                                fontFamily: 'Arial',
+                                fontSize: 16,
+                                color: Colors.black,
+                                height: 1.0)
                         ),
-                        SizedBox(height: 8.0),
-                        Text(
-                          'Exchange Lightbulb',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 16,
-                            color: Colors.black,
-                            height: 1,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 3.0),
-                        Text(
-                          '17 Dec',
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(52.0, 75.0, 0.0, 0.0),
+                        child: Text(
+                          '15 - 21 Dec',
                           style: TextStyle(
                             fontFamily: 'Arial',
                             fontSize: 10,
@@ -260,9 +197,72 @@ class _TaskState extends State<Task> {
                           ),
                           textAlign: TextAlign.center,
                         ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 45.0),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Stack(
+                      children: <Widget>[
+                        RaisedButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ExchangeLightbulb()),
+                            );
+                          },
+                          color: Color(0xFF48ACBE),
+                          child: Text('                                 \n\n\n\n\n'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(100.0, 0.0, 0.0, 0.0),
+                          child: IconButton(
+                              onPressed: (){},
+                              icon: Icon(
+                                Icons.info_outline,
+                                color: Colors.yellow,
+                                size: 15.0,
+                              )
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(60.0, 13.0, 0.0, 0.0),
+                          child: Icon(
+                              Icons.lightbulb,
+                              color: Colors.white,
+                              size: 30.0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5.0, 55.0, 0.0, 0.0),
+                          child: Text(
+                            'Exchange Lightbulb',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 16,
+                              color: Colors.black,
+                              height: 1,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(60.0, 75.0, 0.0, 0.0),
+                          child: Text(
+                            '17 Dec',
+                          style: TextStyle(
+                          fontFamily: 'Arial',
+                            fontSize: 10,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ],
                     ),
-                  ),
+                ),
                 ),
               ],
             ),
