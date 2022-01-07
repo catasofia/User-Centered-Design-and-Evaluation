@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'tenantChat2.dart';
+import 'tenantEvaluateMain.dart';
 
 class Chat extends StatefulWidget {
   const Chat({Key? key}) : super(key: key);
@@ -48,9 +49,13 @@ class _ChatState extends State<Chat> {
               ),
               IconButton(icon: Icon(
                 Icons.star_border,
-                color: Colors.white,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EvaluateMain()),
+                );
+              }),
               IconButton(
                   icon: Icon(
                     Icons.cleaning_services_rounded,
@@ -64,7 +69,7 @@ class _ChatState extends State<Chat> {
                   }
               ),
               IconButton(
-                  color: Colors.black,
+                  color: Colors.white,
                   icon: Icon(
                     Icons.chat_bubble_outline_rounded,
                     size: 30.0,

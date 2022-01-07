@@ -4,6 +4,7 @@ import 'tenantContacts.dart';
 import 'tenantTasks.dart';
 import 'tenantTasks4.dart';
 import 'profile.dart';
+import 'tenantEvaluateMain.dart';
 
 class Types{
   String type;
@@ -97,7 +98,12 @@ class _CleanState extends State<CleanElevator>{
             IconButton(icon: Icon(
               Icons.star_border,
               size: 35.0,
-            ), onPressed: () {}),
+            ), onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EvaluateMain()),
+              );
+            }),
             IconButton(
                 color: Colors.white,
                 icon: Icon(

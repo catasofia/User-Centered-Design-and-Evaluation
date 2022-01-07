@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'tenantEvaluatePage1.dart';
+import 'tenantEvaluateMain.dart';
 
 class Evaluate extends StatefulWidget {
   const Evaluate({Key? key}) : super(key: key);
@@ -49,7 +50,12 @@ class _EvaluateState extends State<Evaluate> {
                 Icons.star_border,
                 color: Colors.white,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EvaluateMain()),
+                );
+              }),
               IconButton(
                   icon: Icon(
                     Icons.cleaning_services_rounded,

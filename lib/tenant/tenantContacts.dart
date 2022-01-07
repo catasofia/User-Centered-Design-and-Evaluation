@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'profile.dart';
+import 'tenantEvaluateMain.dart';
 
 class Contacts extends StatefulWidget {
   const Contacts({Key? key}) : super(key: key);
@@ -38,7 +39,12 @@ class _ContactsState extends State<Contacts> {
               IconButton(icon: Icon(
                 Icons.star_border,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EvaluateMain()),
+                );
+              }),
               IconButton(
                   icon: Icon(
                     Icons.cleaning_services_rounded,

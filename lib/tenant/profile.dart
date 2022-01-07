@@ -3,6 +3,7 @@ import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
 import 'tenantTasks.dart';
 import '../signInOrUp.dart';
+import 'tenantEvaluateMain.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -39,7 +40,12 @@ class _ProfileState extends State<Profile> {
               IconButton(icon: Icon(
                 Icons.star_border,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EvaluateMain()),
+                );
+              }),
               IconButton(
                   icon: Icon(
                     Icons.cleaning_services_rounded,

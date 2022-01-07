@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'tenantCarlosProfile1.dart';
+import 'tenantEvaluateMain.dart';
 
 class CarlosProfile extends StatefulWidget {
   const CarlosProfile({Key? key}) : super(key: key);
@@ -49,7 +50,12 @@ class _CarlosProfileState extends State<CarlosProfile> {
                 Icons.star_border,
                 color: Colors.black,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EvaluateMain()),
+                );
+              }),
               IconButton(
                   icon: Icon(
                     Icons.cleaning_services_rounded,

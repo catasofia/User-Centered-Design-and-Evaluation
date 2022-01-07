@@ -3,6 +3,7 @@ import 'package:time_app/tenant/cleanElevator.dart';
 import 'package:time_app/tenant/exchangeLightbulb.dart';
 import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
+import 'tenantEvaluateMain.dart';
 import 'cleanStairs.dart';
 import 'ata.dart';
 import 'cleanElevator.dart';
@@ -47,7 +48,12 @@ class _TaskState extends State<Task> {
               IconButton(icon: Icon(
                 Icons.star_border,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EvaluateMain()),
+                  );
+              }),
               IconButton(
                 color: Colors.white,
                 icon: Icon(

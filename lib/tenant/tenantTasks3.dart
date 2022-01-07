@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
+import 'tenantEvaluateMain.dart';
 
 class Task3 extends StatefulWidget {
   const Task3({Key? key}) : super(key: key);
@@ -37,7 +38,12 @@ class _Task3State extends State<Task3> {
               IconButton(icon: Icon(
                 Icons.star_border,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EvaluateMain()),
+                );
+              }),
               IconButton(
                   color: Colors.white,
                   icon: Icon(

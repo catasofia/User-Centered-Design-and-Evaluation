@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
+import 'tenantEvaluateMain.dart';
 
 class Chat2 extends StatefulWidget {
   String description;
@@ -49,9 +50,13 @@ class _Chat2State extends State<Chat2> {
               ),
               IconButton(icon: Icon(
                 Icons.star_border,
-                color: Colors.white,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EvaluateMain()),
+                );
+              }),
               IconButton(
                   icon: Icon(
                     Icons.cleaning_services_rounded,
@@ -65,7 +70,7 @@ class _Chat2State extends State<Chat2> {
                   }
               ),
               IconButton(
-                  color: Colors.black,
+                  color: Colors.white,
                   icon: Icon(
                     Icons.chat_bubble_outline_rounded,
                     size: 30.0,
