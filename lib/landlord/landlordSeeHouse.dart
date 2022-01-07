@@ -66,18 +66,34 @@ class _HomeState extends State<LandlordSeeHouse> {
         children: <Widget>[
           new Align(
             alignment: new Alignment(-1.1, 0.0),
-            child: Container(
-              width: 400.0,
-              height: 28.0,
-              child: Text(
-                tt.name,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.black,
-                  letterSpacing: 2.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    tt.name,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-            ),
+                RaisedButton(onPressed: (){},
+                    padding: EdgeInsets.only(top:14.0, bottom:14.0, left:10.0, right: 10.0),
+                    child: Text('Edit',
+                    style: TextStyle(
+                    fontFamily: 'Arial',
+                    fontSize: 18,
+                    color: Colors.black,
+                    height: 1,
+                  ),
+                ),
+            color: Color(0xFF48ACBE),),
+              ]
+            )
           ),
         ],
       ),
@@ -199,18 +215,28 @@ class _HomeState extends State<LandlordSeeHouse> {
               height: 25.0,
               color: Colors.white,
             ),
-            Text(
-              'Tenants',
-              style: TextStyle(
-                color: Colors.black,
-                letterSpacing: 2.0,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Divider(
-              height: 15.0,
-              color: Colors.white,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  'Tenants',
+                  style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+               ButtonTheme(
+                  height: 30,
+                  child: OutlineButton(onPressed: (){},
+                  shape: new CircleBorder(),
+                  borderSide: BorderSide(color: Color(0xFF48ACBE)),
+                  child:Icon(Icons.add,
+                  color: Color(0xFF48ACBE))
+                  ),
+                ),
+              ]
             ),
             Center(
               child: Column(
@@ -225,18 +251,28 @@ class _HomeState extends State<LandlordSeeHouse> {
               height: 50.0,
               color: Colors.white,
             ),
-            Text(
-              'Neighbors',
-              style: TextStyle(
-                color: Colors.black,
-                letterSpacing: 2.0,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Divider(
-              height: 15.0,
-              color: Colors.white,
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Neighbors',
+                    style: TextStyle(
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  ButtonTheme(
+                    height: 30,
+                    child: OutlineButton(onPressed: (){},
+                        shape: new CircleBorder(),
+                        borderSide: BorderSide(color: Color(0xFF48ACBE)),
+                        child:Icon(Icons.add,
+                            color: Color(0xFF48ACBE))
+                    ),
+                  ),
+                ]
             ),
             Center(
               child: Column(
@@ -251,18 +287,28 @@ class _HomeState extends State<LandlordSeeHouse> {
               height: 50.0,
               color: Colors.white,
             ),
-            Text(
-              'Tasks',
-              style: TextStyle(
-                color: Colors.black,
-                letterSpacing: 2.0,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Divider(
-              height: 15.0,
-              color: Colors.white,
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Tenants',
+                    style: TextStyle(
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  ButtonTheme(
+                    height: 30,
+                    child: OutlineButton(onPressed: (){},
+                        shape: new CircleBorder(),
+                        borderSide: BorderSide(color: Color(0xFF48ACBE)),
+                        child:Icon(Icons.add,
+                            color: Color(0xFF48ACBE))
+                    ),
+                  ),
+                ]
             ),
             Center(
               child: Column(
