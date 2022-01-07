@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'neighborProfile.dart';
 import 'suggestTasks.dart';
-import 'neighborEvaluation.dart';
+import 'neighborEvaluationCarlos.dart';
+import 'neighborEvaluationCarolina.dart';
+import 'neighborEvaluationJoao.dart';
+import 'neighborEvaluationMarco.dart';
 
 class NeighborHome extends StatefulWidget {
   const NeighborHome({Key? key}) : super(key: key);
@@ -11,8 +14,6 @@ class NeighborHome extends StatefulWidget {
 }
 
 class _NeighborHomeState extends State<NeighborHome> {
-  bool _showEval = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +91,7 @@ class _NeighborHomeState extends State<NeighborHome> {
                      onPressed: () {
                        Navigator.push(
                          context,
-                         MaterialPageRoute(builder: (context) => NeigEvaluation()),
+                         MaterialPageRoute(builder: (context) => NeigEvaluationCarlos()),
                        );
                      },
                      elevation: 0,
@@ -104,7 +105,12 @@ class _NeighborHomeState extends State<NeighborHome> {
                    height: 100,
                    child: FloatingActionButton(
                      heroTag: null,
-                     onPressed: () {},
+                     onPressed: () {
+                       Navigator.push(
+                         context,
+                         MaterialPageRoute(builder: (context) => NeigEvaluationCarolina()),
+                       );
+                     },
                      elevation: 0,
                      child: new ConstrainedBox(constraints: new BoxConstraints.expand(),
                        child: new CircleAvatar(backgroundImage: AssetImage('assets/carolina.jpeg'),
@@ -125,20 +131,27 @@ class _NeighborHomeState extends State<NeighborHome> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => NeigEvaluation()),
+                          MaterialPageRoute(builder: (context) => NeigEvaluationCarlos()),
                         );
                       },
-                      child: Text('Carlos', style: TextStyle(color: Colors.black),)
+                      child: Text('Carlos', style: TextStyle(color: Colors.black,
+                      fontSize: 16),)
                   ),
-                  SizedBox(width: 80,),
+                  SizedBox(width: 70,),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           primary: Colors.white,
                           onPrimary: Colors.white,
                           elevation: 0
                       ),
-                      onPressed: () {},
-                      child: Text('Carolina', style: TextStyle(color: Colors.black),)
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NeigEvaluationCarolina()),
+                        );
+                      },
+                      child: Text('Carolina', style: TextStyle(color: Colors.black,
+                      fontSize: 16),)
                   ),
                 ],
               ),
@@ -150,7 +163,12 @@ class _NeighborHomeState extends State<NeighborHome> {
                     height: 100,
                     child: FloatingActionButton(
                       heroTag: null,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NeigEvaluationJoao()),
+                        );
+                      },
                       elevation: 0,
                       child: new ConstrainedBox(constraints: new BoxConstraints.expand(),
                         child: new CircleAvatar(backgroundImage: AssetImage('assets/joao.jpg'),
@@ -162,7 +180,12 @@ class _NeighborHomeState extends State<NeighborHome> {
                     height: 100,
                     child: FloatingActionButton(
                       heroTag: null,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NeigEvaluationMarco()),
+                        );
+                      },
                       elevation: 0,
                       child: new ConstrainedBox(constraints: new BoxConstraints.expand(),
                         child: new CircleAvatar(backgroundImage: AssetImage('assets/marco.jpg'),
@@ -180,8 +203,14 @@ class _NeighborHomeState extends State<NeighborHome> {
                           onPrimary: Colors.white,
                           elevation: 0
                       ),
-                      onPressed: () {},
-                      child: Text('João', style: TextStyle(color: Colors.black),)
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NeigEvaluationJoao()),
+                        );
+                      },
+                      child: Text('João', style: TextStyle(color: Colors.black,
+                      fontSize: 16),)
                   ),
                   SizedBox(width: 80,),
                   ElevatedButton(
@@ -190,8 +219,14 @@ class _NeighborHomeState extends State<NeighborHome> {
                           onPrimary: Colors.white,
                           elevation: 0
                       ),
-                      onPressed: () {},
-                      child: Text('Marco', style: TextStyle(color: Colors.black),)
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NeigEvaluationMarco()),
+                        );
+                      },
+                      child: Text('Marco', style: TextStyle(color: Colors.black,
+                      fontSize: 16),)
                   ),
                 ],
               ),
