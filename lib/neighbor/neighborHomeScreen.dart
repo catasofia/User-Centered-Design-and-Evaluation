@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'neighborProfile.dart';
 import 'suggestTasks.dart';
+import 'neighborEvaluation.dart';
 
 class NeighborHome extends StatefulWidget {
   const NeighborHome({Key? key}) : super(key: key);
@@ -10,6 +11,8 @@ class NeighborHome extends StatefulWidget {
 }
 
 class _NeighborHomeState extends State<NeighborHome> {
+  bool _showEval = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +87,12 @@ class _NeighborHomeState extends State<NeighborHome> {
                    height: 100,
                    child: FloatingActionButton(
                      heroTag: null,
-                     onPressed: () {},
+                     onPressed: () {
+                       Navigator.push(
+                         context,
+                         MaterialPageRoute(builder: (context) => NeigEvaluation()),
+                       );
+                     },
                      elevation: 0,
                     child: new ConstrainedBox(constraints: new BoxConstraints.expand(),
                       child: new CircleAvatar(backgroundImage: AssetImage('assets/carlos.jfif'),
@@ -114,7 +122,12 @@ class _NeighborHomeState extends State<NeighborHome> {
                         onPrimary: Colors.white,
                         elevation: 0
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NeigEvaluation()),
+                        );
+                      },
                       child: Text('Carlos', style: TextStyle(color: Colors.black),)
                   ),
                   SizedBox(width: 80,),
@@ -201,7 +214,7 @@ class _NeighborHomeState extends State<NeighborHome> {
                       child: Text('Suggest new task',
                       style: TextStyle(color: Colors.black),)),
                 ),
-              )
+              ),
           ],
         ),
       ),
