@@ -142,12 +142,12 @@ class _SuggestTaskState extends State<SuggestTask> {
                       if(checkTextFieldEmptyOrNot()){
                         showDialog(
                           context: context,
-                          builder: (BuildContext context) => _confirmationPopup(context),
+                          builder: (BuildContext context) => _errorPopup(context),
                         );
                       } else{
                         showDialog(
                           context: context,
-                          builder: (BuildContext context) => _errorPopup(context),
+                          builder: (BuildContext context) => _confirmationPopup(context),
                         );
                       }
                     },
@@ -205,7 +205,7 @@ checkTextFieldEmptyOrNot(){
   }
 }
 
-Widget _confirmationPopup(BuildContext context) {
+Widget _errorPopup(BuildContext context) {
   return new AlertDialog(
     alignment: Alignment.center,
     backgroundColor: Color(0xFF48ACBE),
@@ -247,7 +247,7 @@ Widget _confirmationPopup(BuildContext context) {
   );
 }
 
-Widget _errorPopup(BuildContext context) {
+Widget _confirmationPopup(BuildContext context) {
   return new AlertDialog(
     alignment: Alignment.center,
     backgroundColor: Color(0xFF48ACBE),
