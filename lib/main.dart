@@ -22,6 +22,6 @@ void main() => runApp(MaterialApp(
       //'/': (context) => Contacts(),
       //'/home': (context) => Home(),
       //'/home': (context) => Task(),
-      '/': (context) => LandlordEvaluatePage3(),
+      '/': (context) => HomeScreen(),
     }
 ));
