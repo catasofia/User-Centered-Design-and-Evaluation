@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'landlordAlameda.dart';
+
 class EditTask extends StatefulWidget {
   const EditTask({Key? key}) : super(key: key);
 
@@ -194,6 +196,26 @@ class _EditTaskState extends State<EditTask> {
                 ),
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.only(top:10.0),
+              child: Row(
+                children: [
+                  SizedBox(width: 20,),
+                  Align(
+                      alignment: Alignment.bottomLeft,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LandlordAlameda()),
+                          );
+                        },
+                      )
+                  ),
+                ],
+              ),
+            )
           ]
       ),
     );

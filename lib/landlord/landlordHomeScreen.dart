@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'landlordAddHouse.dart';
+import 'landlordAlameda.dart';
 import 'landlordEvaluate.dart';
 
 class House{
@@ -26,129 +27,137 @@ class _HomeState extends State<HomeLandlord> {
   Widget template(tt) {
     return Card(
       margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
-      color: Color(0xFF9ED3DD),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: <Widget>[
-            new Align(
-              alignment: new Alignment(-1.1, 0.0),
-              child: Container(
-                width: 400.0,
-                height: 28.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Color(0xFF006D77),
-                    width: 2,
+      color: Color(0xFF48ACBE),
+      child: new InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LandlordAlameda()),
+        );
+      },
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: <Widget>[
+              new Align(
+                alignment: new Alignment(-1.1, 0.0),
+                child: Container(
+                  width: 400.0,
+                  height: 28.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Color(0xFF006D77),
+                      width: 2,
+                    ),
+                  ),
+                  child: Text(
+                    tt.name,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  tt.name,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.black,
-                    letterSpacing: 2.0,
-                  ),
-                  textAlign: TextAlign.center,
+                    tt.description,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black,
+                    )
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  tt.description,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.black,
-                  )
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(width: 50.0),
+                    Column(
+                      children: [
+                        Container(
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage('assets/carolina.jpeg'),
+                            radius: 20.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        Text(
+                          'Carolina',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 14,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 50.0),
+                    Column(
+                      children: [
+                        Container(
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage('assets/joao.jpg'),
+                            radius: 20.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        Text(
+                          'João',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 14,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 50.0),
+                    Column(
+                      children: [
+                        Container(
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage('assets/marco.jpg'),
+                            radius: 20.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        Text(
+                          'Marco',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 14,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: <Widget>[
-                  SizedBox(width: 50.0),
-                  Column(
-                    children: [
-                      Container(
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/carolina.jpeg'),
-                          radius: 20.0,
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      Text(
-                        'Carolina',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 14,
-                          color: Colors.black,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 50.0),
-                  Column(
-                    children: [
-                      Container(
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/joao.jpg'),
-                          radius: 20.0,
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      Text(
-                        'João',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 14,
-                          color: Colors.black,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 50.0),
-                  Column(
-                    children: [
-                      Container(
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/marco.jpg'),
-                          radius: 20.0,
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      Text(
-                        'Marco',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 14,
-                          color: Colors.black,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "4.7 ",
-                    style: TextStyle(fontSize: 14, color: Colors.black),
-                  ),
-                  WidgetSpan(
-                    child: Icon(Icons.star_border, size: 16),
-                  ),
-                ],
-              ),
-            )
-          ],
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "4.7 ",
+                      style: TextStyle(fontSize: 14, color: Colors.black),
+                    ),
+                    WidgetSpan(
+                      child: Icon(Icons.star_border, size: 16),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -158,7 +167,7 @@ class _HomeState extends State<HomeLandlord> {
   Widget saldanha(tt) {
     return Card(
       margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
-      color: Color(0xFF9ED3DD),
+      color: Color(0xFF48ACBE),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -203,7 +212,7 @@ class _HomeState extends State<HomeLandlord> {
                   'No tenants yet.',
                   style: TextStyle(
                     fontSize: 14.0,
-                    color: Colors.grey[600],
+                    color: Colors.grey[300],
                   )
               ),
             ),
@@ -456,7 +465,6 @@ Widget _buildPopupNotification(BuildContext context) {
   );
 }
 
-//REVER CORES PARA FICAR IGUAL AO HOME SCREEN
 Widget _buildPopupAdd(BuildContext context) {
   return new AlertDialog(
     alignment: Alignment.center,
@@ -476,15 +484,15 @@ Widget _buildPopupAdd(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(4.0),
           child: SizedBox(
-            height: 50,
+            height: 40,
             width: 150,
             child: TextButton(
               child: Text('House'),
               style: TextButton.styleFrom(
                 primary: Colors.black,
-                backgroundColor: Colors.cyan[200],
+                backgroundColor: Colors.cyan[100],
               ),
               onPressed: () {
                 Navigator.push(
@@ -496,15 +504,15 @@ Widget _buildPopupAdd(BuildContext context) {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(4.0),
           child: SizedBox(
-            height: 50,
+            height: 40,
             width: 150,
             child: TextButton(
               child: Text('Tenant'),
               style: TextButton.styleFrom(
                 primary: Colors.black,
-                backgroundColor: Colors.cyan[200],
+                backgroundColor: Colors.cyan[100],
               ),
               onPressed: () {
               },
@@ -512,40 +520,38 @@ Widget _buildPopupAdd(BuildContext context) {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(4.0),
           child: SizedBox(
-            height: 50,
+            height: 40,
             width: 150,
             child: TextButton(
               child: Text('Neighbor'),
               style: TextButton.styleFrom(
                 primary: Colors.black,
-                backgroundColor: Colors.cyan[200],
+                backgroundColor: Colors.cyan[100],
               ),
               onPressed: () {
               },
             ),
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            new FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              textColor: Theme.of(context).primaryColor,
+              child: const Icon(
+                Icons.remove_circle_outline,
+                color: Colors.black,
+                size: 25.0,
+              ),
+            ),
+          ],
+        ),
       ],
     ),
-    actions: <Widget>[
-      Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          new FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            textColor: Theme.of(context).primaryColor,
-            child: const Icon(
-              Icons.remove_circle_outline,
-              color: Colors.black,
-              size: 25.0,
-            ),
-          ),
-        ],
-      ),
-    ],
   );
 }

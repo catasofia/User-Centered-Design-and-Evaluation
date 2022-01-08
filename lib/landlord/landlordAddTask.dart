@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:time_app/landlord/landlordAlameda.dart';
 
 
 class AddTask extends StatefulWidget {
@@ -137,7 +138,7 @@ class _AddTaskState extends State<AddTask> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 90.0, 0.0, 0.0),
                   child: Container(
                     width: 150,
                     height: 50,
@@ -168,6 +169,23 @@ class _AddTaskState extends State<AddTask> {
                 ),
               ],
             ),
+            Row(
+              children: [
+                SizedBox(width: 20,),
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back_ios),
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LandlordAlameda()),
+                        );
+                      },
+                    )
+                ),
+              ],
+            )
           ]
       ),
     );

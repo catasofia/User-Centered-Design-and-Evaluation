@@ -12,6 +12,7 @@ class AddHouse extends StatefulWidget {
   @override
   _AddHouseState createState() => _AddHouseState();
 }
+final textController_1 = TextEditingController();
 
 class _AddHouseState extends State<AddHouse> {
   File? image;
@@ -109,8 +110,9 @@ class _AddHouseState extends State<AddHouse> {
                         ],
                       ),
                       new TextField(
+                        controller: textController_1,
                         decoration: InputDecoration(
-                            hintText: "Insert name"
+                            hintText: "Insert name *"
                         ),
                       ),
                       SizedBox(height: 20,),
@@ -222,7 +224,20 @@ class _AddHouseState extends State<AddHouse> {
                               borderRadius: BorderRadius.circular(14)
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if(checkTextFieldEmptyOrNot()){
+                            clearText();
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => _buildPopupAddHouse(context),
+                            );
+                          } else{
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => _errorPopup(context),
+                            );
+                          }
+                        },
                         child: Text('Confirm',
                           style: TextStyle(
                             fontFamily: 'Arial',
@@ -327,4 +342,143 @@ Widget _buildPopupNotification(BuildContext context) {
       ),
     ],
   );
+}
+
+Widget _buildPopupAddHouse(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check,
+              size: 20.0,
+              color: Colors.lightGreen,
+            ),
+            SizedBox(width: 3.0),
+          ],
+        ),
+        SizedBox(height: 12.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "House added!",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 90.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.grey[300],
+            ),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      //MUDAR P PAGINA HOME MAS C A CASA NOVA
+                      MaterialPageRoute(builder: (context) => HomeLandlord()),
+                    );
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 15,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+//VER O Q E PRECISO PREENCHER PARA ADD UMA CASA
+Widget _errorPopup(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Center(child: Icon(Icons.error, color: Colors.red[700], size: 100,)),
+        SizedBox(height: 15,),
+        Text(
+          "You need to fill the house name in order to confirm.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Icon(
+              Icons.highlight_remove,
+              color: Colors.black,
+              size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+clearText(){
+  textController_1.clear();
+}
+
+checkTextFieldEmptyOrNot(){
+  String text1;
+  text1 = textController_1.text;
+  return text1 != '' ;
 }
