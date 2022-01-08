@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_app/neighbor/joaoProfile.dart';
 import 'neighborProfile.dart';
 import 'neighborHomeScreen.dart';
 import 'neighborEvaluationCarlos.dart';
@@ -118,38 +119,31 @@ class _NeigEvaluationJoaoState extends State<NeigEvaluationJoao> {
                 ],
               ),
               Center(
-                child: Container(
-                  width: 100.0,
-                  height: 30.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: Color(0xFF48ACBE),
-                  ),
-                  padding: new EdgeInsets.only(top: 6.0),
                   child: new Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'See profile',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 18,
-                          color: Colors.black,
-                          height: 1,
+                      RaisedButton(
+                        child: Text(
+                          'See profile:',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 18,
+                            color: Colors.black,
+                            height: 1,
+                          ),
                         ),
+                        color: Color(0xFF48ACBE),
+                        onPressed: () {
+                          clearText();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => JoaoProfile()),
+                          );
+                        },
                       ),
                     ],
                   ),
-                ),
               ),
               SizedBox(height: 8.0),
               Center(
@@ -469,7 +463,7 @@ class _NeigEvaluationJoaoState extends State<NeigEvaluationJoao> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => NeigEvaluationCarolina()),
+                              MaterialPageRoute(builder: (context) => NeigEvaluationMarco()),
                             );
                           },
                           elevation: 0,
@@ -488,7 +482,7 @@ class _NeigEvaluationJoaoState extends State<NeigEvaluationJoao> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => NeigEvaluationCarolina()),
+                          MaterialPageRoute(builder: (context) => NeigEvaluationMarco()),
                         );
                       },
                       child: Text('Marco',
@@ -687,7 +681,7 @@ Widget _buildPopupNotification(BuildContext context) {
         ),
         SizedBox(height: 20.0),
         Text(
-          "- Maria completed a task, rate him now.",
+          "- Carolina completed a task, rate her now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,

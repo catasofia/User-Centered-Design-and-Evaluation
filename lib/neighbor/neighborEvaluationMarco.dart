@@ -4,6 +4,7 @@ import 'neighborHomeScreen.dart';
 import 'neighborEvaluationCarlos.dart';
 import 'neighborEvaluationCarolina.dart';
 import 'neighborEvaluationJoao.dart';
+import 'marcoProfile.dart';
 
 class NeigEvaluationMarco extends StatefulWidget {
   NeigEvaluationMarco({Key? key}) : super(key: key);
@@ -118,28 +119,13 @@ class _NeigEvaluationMarcoState extends State<NeigEvaluationMarco> {
                 ],
               ),
               Center(
-                child: Container(
-                  width: 100.0,
-                  height: 30.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: Color(0xFF48ACBE),
-                  ),
-                  padding: new EdgeInsets.only(top: 6.0),
-                  child: new Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'See profile',
+                child: new Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    RaisedButton(
+                      child: Text(
+                        'See profile:',
                         style: TextStyle(
                           fontFamily: 'Arial',
                           fontSize: 18,
@@ -147,8 +133,16 @@ class _NeigEvaluationMarcoState extends State<NeigEvaluationMarco> {
                           height: 1,
                         ),
                       ),
-                    ],
-                  ),
+                      color: Color(0xFF48ACBE),
+                      onPressed: () {
+                        clearText();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MarcoProfile()),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 8.0),
@@ -687,7 +681,7 @@ Widget _buildPopupNotification(BuildContext context) {
         ),
         SizedBox(height: 20.0),
         Text(
-          "- Maria completed a task, rate him now.",
+          "- Carolina completed a task, rate her now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,

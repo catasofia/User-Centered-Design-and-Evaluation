@@ -81,52 +81,80 @@ class _NeighborProfileState extends State<NeighborProfile> {
                     SizedBox(width: 135,),
                     Container(
                       child: CircleAvatar(
-                        radius: 79.0,
-                        backgroundColor: Colors.black54,
-                        child: CircleAvatar(
                           backgroundImage: AssetImage('assets/francisca.jpg'),
-                          radius: 75.0,
-                        ),
+                          radius: 70.0,
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: 30.0),
-                Container(
-                  width: 270,
-                  height: 140,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14)
+                SizedBox(height: 30.0),
+                Center(
+                  child: Container(
+                    width: 350.0,
+                    height: 140.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1.5,
+                          blurRadius: 1.5,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                      color: Colors.white70,
                     ),
-                    color: Colors.grey[100],
-                    elevation: 5,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(height: 25,),
                         Row(
                           children: [
                             SizedBox(width: 20,),
-                            Text('Info:',
-                              style: TextStyle(color: Color(0xFF48ACBE),
-                              fontSize: 20),),
-                            SizedBox(width: 60,),
-                            Text('Francisca Mota\nFemale, 27',
-                              style: TextStyle(color: Color(0xFF7AC8D7),
-                              fontSize: 18),),
+                            Text(
+                              'Info:',
+                              style: TextStyle(
+                                fontFamily: 'Arial',
+                                fontSize: 20,
+                                color: Color(0xFF48ACBE),
+                                height: 1,
+                              ),
+                            ),
+                            SizedBox(width: 50.0),
+                            Text(
+                              'Francisca Mota\nFemale, 27',
+                              style: TextStyle(
+                                fontFamily: 'Arial',
+                                fontSize: 20,
+                                color: Color(0xFF48ACBE),
+                                height: 1,
+                              ),
+                            ),
                           ],
                         ),
-                        SizedBox(height: 20,),
                         Row(
                           children: [
                             SizedBox(width: 20,),
-                            Text('Role:',
-                              style: TextStyle(color: Color(0xFF48ACBE),
-                              fontSize: 20),),
-                            SizedBox(width: 56,),
-                            Text('Neighbor',
-                              style: TextStyle(color: Color(0xFF7AC8D7),
-                              fontSize: 18),),
+                            Text(
+                              'Role:',
+                              style: TextStyle(
+                                fontFamily: 'Arial',
+                                fontSize: 20,
+                                color: Color(0xFF48ACBE),
+                                height: 1,
+                              ),
+                            ),
+                            SizedBox(width: 45.0),
+                            Text(
+                              'Neighbor',
+                              style: TextStyle(
+                                fontFamily: 'Arial',
+                                fontSize: 20,
+                                color: Color(0xFF48ACBE),
+                                height: 1,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -209,7 +237,7 @@ Widget _buildPopupNotification(BuildContext context) {
         ),
         SizedBox(height: 20.0),
         Text(
-          "- Maria completed a task, rate him now.",
+          "- Carolina completed a task, rate her now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,

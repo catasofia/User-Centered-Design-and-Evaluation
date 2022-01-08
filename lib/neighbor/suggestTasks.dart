@@ -326,7 +326,7 @@ Widget _buildPopupNotification(BuildContext context) {
         ),
         SizedBox(height: 20.0),
         Text(
-          "- Maria completed a task, rate him now.",
+          "- Carolina completed a task, rate her now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
