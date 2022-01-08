@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'landlordEvaluate.dart';
 import 'landlordHomeScreen.dart';
 
-//Carolina
-class LandlordEvaluatePage1 extends StatefulWidget {
-  LandlordEvaluatePage1({Key? key}) : super(key: key);
+//Joao
+class LandlordEvaluatePage2 extends StatefulWidget {
+  LandlordEvaluatePage2({Key? key}) : super(key: key);
 
   @override
-  _LandlordEvaluatePage1State createState() => _LandlordEvaluatePage1State();
+  _LandlordEvaluatePage2State createState() => _LandlordEvaluatePage2State();
 }
 
 final textController_1 = TextEditingController();
 
-class _LandlordEvaluatePage1State extends State<LandlordEvaluatePage1> {
+class _LandlordEvaluatePage2State extends State<LandlordEvaluatePage2> {
   bool _star1 = false;
   bool _star2 = false;
   bool _star3 = false;
@@ -139,13 +139,13 @@ class _LandlordEvaluatePage1State extends State<LandlordEvaluatePage1> {
                   children: [
                     Container(
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/carolina.jpeg'),
+                        backgroundImage: AssetImage('assets/joao.jpg'),
                         radius: 55.0,
                       ),
                     ),
                     SizedBox(height: 8.0),
                     Text(
-                      'Carolina',
+                      'João',
                       style: TextStyle(
                         fontFamily: 'Arial',
                         fontSize: 18,
@@ -431,7 +431,7 @@ class _LandlordEvaluatePage1State extends State<LandlordEvaluatePage1> {
                         },
                         elevation: 0,
                         child: new ConstrainedBox(constraints: new BoxConstraints.expand(),
-                          child: new CircleAvatar(backgroundImage: AssetImage('assets/joao.jpg'),
+                          child: new CircleAvatar(backgroundImage: AssetImage('assets/carolina.jpeg'),
                           ),),),
                     ),
                     ElevatedButton(
@@ -443,7 +443,7 @@ class _LandlordEvaluatePage1State extends State<LandlordEvaluatePage1> {
                         onPressed: () {
 
                         },
-                        child: Text('João',
+                        child: Text('Carolina',
                           style: TextStyle(color: Colors.black,
                               fontSize: 18,
                               fontFamily: 'Arial',

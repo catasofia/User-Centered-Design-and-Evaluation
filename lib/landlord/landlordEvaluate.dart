@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:time_app/landlord/landlordEvaluatePage1.dart';
+import 'package:time_app/landlord/landlordEvaluatePage2.dart';
+import 'package:time_app/landlord/landlordEvaluatePage3.dart';
+import 'landlordHomeScreen.dart';
 
 class LandlordEvaluate extends StatefulWidget {
   const LandlordEvaluate({Key? key}) : super(key: key);
@@ -26,6 +30,10 @@ class _EvaluateState extends State<LandlordEvaluate> {
                   size: 35.0,
                 ),
                 onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeLandlord()),
+                  );
                 },
               ),
               IconButton(
@@ -101,6 +109,10 @@ class _EvaluateState extends State<LandlordEvaluate> {
                     size: 38.0,
                   ),
                   onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => _buildPopupNotification(context),
+                    );
                   },
                 ),
               ],
@@ -123,7 +135,11 @@ class _EvaluateState extends State<LandlordEvaluate> {
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             child: InkWell(
                                 splashColor: Colors.white70,
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => LandlordEvaluatePage1()),
+                                );},
                                 child: Ink.image(
                                     image: AssetImage('assets/carolina.jpeg'), height: 130.0, width: 130.0, fit: BoxFit.cover)
                             )
@@ -152,7 +168,12 @@ class _EvaluateState extends State<LandlordEvaluate> {
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             child: InkWell(
                                 splashColor: Colors.white70,
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => LandlordEvaluatePage2()),
+                                  );
+                                },
                                 child: Ink.image(
                                     image: AssetImage('assets/joao.jpg'), height: 130.0, width: 130.0, fit: BoxFit.cover)
                             )
@@ -188,7 +209,12 @@ class _EvaluateState extends State<LandlordEvaluate> {
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: InkWell(
                           splashColor: Colors.white70,
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => LandlordEvaluatePage3()),
+                            );
+                          },
                           child: Ink.image(
                             image: AssetImage('assets/marco.jpg'), height: 130.0, width: 130.0, fit: BoxFit.cover)
                         )
@@ -213,4 +239,74 @@ class _EvaluateState extends State<LandlordEvaluate> {
       ),
     );
   }
+}
+
+Widget _buildPopupNotification(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Notifications',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.white,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "- João completed a task, rate him now.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "- Vasco is interested in your apartment in Chiado.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "- Carolina has sent you a message.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Icon(
+              Icons.remove_circle_outline,
+              color: Colors.black,
+              size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'landlordEvaluate.dart';
 
 class House{
   String name;
@@ -88,7 +89,12 @@ class _HomeState extends State<HomeLandlord> {
               IconButton(icon: Icon(
                 Icons.star_border,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LandlordEvaluate()),
+                );
+              }),
               IconButton(
                   icon: Icon(
                     Icons.cleaning_services_rounded,
@@ -161,6 +167,10 @@ class _HomeState extends State<HomeLandlord> {
                     size: 38.0,
                   ),
                   onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => _buildPopupNotification(context),
+                    );
                   },
                 ),
               ],
@@ -215,4 +225,75 @@ class _HomeState extends State<HomeLandlord> {
       ),
     );
   }
+}
+
+
+Widget _buildPopupNotification(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Notifications',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.white,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "- João completed a task, rate him now.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "- Vasco is interested in your apartment in Chiado.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "- Carolina has sent you a message.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Icon(
+              Icons.remove_circle_outline,
+              color: Colors.black,
+              size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }

@@ -5,9 +5,11 @@ import 'package:time_app/tenant/tenantEvaluatePage.dart';
 import 'loading.dart';
 import 'tenant/tenantContacts.dart';
 import 'tenant/tenantTasks.dart';
+import 'neighbor/neighborEvaluationCarolina.dart';
 import 'tenant/tenantContacts.dart';
 import 'homeScreen.dart';
 import 'landlord/landlordEvaluatePage1.dart';
+import 'landlord/landlordEvaluatePage3.dart';
 import 'landlord/landlordHomeScreen.dart';
 import 'landlord/landlordAddTask.dart';
 import 'landlord/landlordEditTask.dart';
@@ -20,6 +22,6 @@ void main() => runApp(MaterialApp(
       //'/': (context) => Contacts(),
       //'/home': (context) => Home(),
       //'/home': (context) => Task(),
-      '/': (context) => HomeScreen(),
+      '/': (context) => LandlordEvaluatePage3(),
     }
 ));
