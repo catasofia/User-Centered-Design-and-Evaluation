@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'landlordAddHouse.dart';
 import 'landlordEvaluate.dart';
 
 class House{
   String name;
   String description;
-
   House({required this.name, required this.description});
 }
 
@@ -55,13 +55,171 @@ class _HomeState extends State<HomeLandlord> {
                 ),
               ),
             ),
-            Text(
-                tt.description,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.black,
-                )
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                  tt.description,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  )
+              ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  SizedBox(width: 50.0),
+                  Column(
+                    children: [
+                      Container(
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('assets/carolina.jpeg'),
+                          radius: 20.0,
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Text(
+                        'Carolina',
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          fontSize: 14,
+                          color: Colors.black,
+                          height: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 50.0),
+                  Column(
+                    children: [
+                      Container(
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('assets/joao.jpg'),
+                          radius: 20.0,
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Text(
+                        'João',
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          fontSize: 14,
+                          color: Colors.black,
+                          height: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 50.0),
+                  Column(
+                    children: [
+                      Container(
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('assets/marco.jpg'),
+                          radius: 20.0,
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Text(
+                        'Marco',
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          fontSize: 14,
+                          color: Colors.black,
+                          height: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "4.7 ",
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                  WidgetSpan(
+                    child: Icon(Icons.star_border, size: 16),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget saldanha(tt) {
+    return Card(
+      margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
+      color: Color(0xFF9ED3DD),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: <Widget>[
+            new Align(
+              alignment: new Alignment(-1.1, 0.0),
+              child: Container(
+                width: 400.0,
+                height: 28.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Color(0xFF006D77),
+                    width: 2,
+                  ),
+                ),
+                child: Text(
+                  tt.name,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                  tt.description,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  )
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                  'No tenants yet.',
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.grey[600],
+                  )
+              ),
+            ),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "- ",
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                  WidgetSpan(
+                    child: Icon(Icons.star_border, size: 16),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
@@ -175,42 +333,38 @@ class _HomeState extends State<HomeLandlord> {
                 ),
               ],
             ),
-            Divider(
-              height: 40.0,
-              color: Colors.white,
-            ),
-            Text(
-              'Welcome Home, Carlos!',
-              style: TextStyle(
-                color: Color(0xFF48ACBE),
-                letterSpacing: 2.0,
-                fontSize: 25.0,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+              child: Text(
+                'Welcome Home, Carlos!',
+                style: TextStyle(
+                  color: Color(0xFF48ACBE),
+                  letterSpacing: 2.0,
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            Divider(
-              height: 25.0,
-              color: Colors.white,
-            ),
-            Text(
-              'Your Houses',
-              style: TextStyle(
-                color: Colors.black,
-                letterSpacing: 2.0,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+              child: Text(
+                'Your Houses',
+                style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2.0,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            Divider(
-              height: 15.0,
-              color: Colors.white,
-            ),
+
             Center(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                for (var i in houses) template(i),
+                template(houses[0]),
+                saldanha(houses[1]),
                 ],
               ),
             ),
@@ -219,6 +373,10 @@ class _HomeState extends State<HomeLandlord> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => _buildPopupAdd(context),
+          );
         },
         child: Icon(Icons.add, color: Colors.black),
         backgroundColor: Color(0xFF48ACBE),
@@ -273,6 +431,100 @@ Widget _buildPopupNotification(BuildContext context) {
             fontSize: 20,
             color: Colors.black,
             height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Icon(
+              Icons.remove_circle_outline,
+              color: Colors.black,
+              size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+//REVER CORES PARA FICAR IGUAL AO HOME SCREEN
+Widget _buildPopupAdd(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Add',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.white,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 50,
+            width: 150,
+            child: TextButton(
+              child: Text('House'),
+              style: TextButton.styleFrom(
+                primary: Colors.black,
+                backgroundColor: Colors.cyan[200],
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddHouse()),
+                );
+              },
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 50,
+            width: 150,
+            child: TextButton(
+              child: Text('Tenant'),
+              style: TextButton.styleFrom(
+                primary: Colors.black,
+                backgroundColor: Colors.cyan[200],
+              ),
+              onPressed: () {
+              },
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 50,
+            width: 150,
+            child: TextButton(
+              child: Text('Neighbor'),
+              style: TextButton.styleFrom(
+                primary: Colors.black,
+                backgroundColor: Colors.cyan[200],
+              ),
+              onPressed: () {
+              },
+            ),
           ),
         ),
       ],
