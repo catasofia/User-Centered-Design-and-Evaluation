@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
-import 'tenantEvaluatePage1.dart';
 import 'tenantEvaluateMain.dart';
 
 class Evaluate extends StatefulWidget {
@@ -14,6 +13,12 @@ class Evaluate extends StatefulWidget {
 class _EvaluateState extends State<Evaluate> {
 
   final _description = TextEditingController();
+
+  bool _star1 = false;
+  bool _star2 = false;
+  bool _star3 = false;
+  bool _star4 = false;
+  bool _star5 = false;
 
   @override
   void dispose() {
@@ -237,76 +242,114 @@ class _EvaluateState extends State<Evaluate> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          IconButton(
-                            padding: const EdgeInsets.all(0.0),
-                            icon: Icon(
-                              Icons.star_border,
-                              color: Colors.black,
-                              size: 32.0,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Evaluate1(description: _description.text)),
-                              );
-                            },
-                          ),
-                          IconButton(
-                            padding: const EdgeInsets.all(0.0),
-                            icon: Icon(
-                              Icons.star_border,
-                              color: Colors.black,
-                              size: 32.0,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Evaluate1(description: _description.text)),
-                              );
-                            },
-                          ),
-                          IconButton(
-                            padding: const EdgeInsets.all(0.0),
-                            icon: Icon(
-                              Icons.star_border,
-                              color: Colors.black,
-                              size: 32.0,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Evaluate1(description: _description.text)),
-                              );
-                            },
-                          ),
-                          IconButton(
-                            padding: const EdgeInsets.all(0.0),
-                            icon: Icon(
-                              Icons.star_border,
-                              color: Colors.black,
-                              size: 32.0,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Evaluate1(description: _description.text)),
-                              );
-                            },
-                          ),
-                          IconButton(
-                            padding: const EdgeInsets.all(0.0),
-                            icon: Icon(
-                              Icons.star_border,
-                              color: Colors.black,
-                              size: 32.0,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Evaluate1(description: _description.text)),
-                              );
-                            },
-                          ),
+                          IconButton(onPressed: (){
+                            setState(() {
+                              if(_star2 == true){
+                                _star1 = true;
+                              } else if(_star2 == false && _star1 == true){
+                                _star1 = false;
+                              } else if(_star2 == false && _star1 == false){
+                                _star1 = true;
+                              }
+                              _star2 = false;
+                              _star3 = false;
+                              _star4 = false;
+                              _star5 = false;
+                            });
+                          },
+                              icon: Icon(Icons.star,
+                                color: _star1 ? Colors.yellow : Colors.white,
+                                size: 32,)),
+                          SizedBox(width: 10.0),
+                          IconButton(onPressed: (){
+                            setState(() {
+                              if(_star3 == true){
+                                _star1 = true;
+                                _star2 = true;
+                              } else if(_star3 == false && _star2 == true){
+                                _star1 = false;
+                                _star2 = false;
+                              } else if(_star3 == false && _star2 == false){
+                                _star1 = true;
+                                _star2 = true;
+                              }
+                              _star3 = false;
+                              _star4 = false;
+                              _star5 = false;
+                            });
+                          },
+                              icon: Icon(Icons.star,
+                                color: _star2 ? Colors.yellow: Colors.white,
+                                size: 32,)),
+                          SizedBox(width: 10.0),
+                          IconButton(onPressed: (){
+                            setState(() {
+                              if(_star4 == true){
+                                _star1 = true;
+                                _star2 = true;
+                                _star3 = true;
+                              } else if(_star4 == false && _star3 == true){
+                                _star1 = false;
+                                _star2 = false;
+                                _star3 = false;
+                              } else if(_star4 == false && _star3 == false){
+                                _star1 = true;
+                                _star2 = true;
+                                _star3 = true;
+                              }
+                              _star4 = false;
+                              _star5 = false;
+                            });
+                          },
+                              icon: Icon(Icons.star,
+                                color: _star3 ? Colors.yellow: Colors.white,
+                                size: 32,)),
+                          SizedBox(width: 10.0),
+                          IconButton(onPressed: (){
+                            setState(() {
+                              if(_star5 == true){
+                                _star1 = true;
+                                _star2 = true;
+                                _star3 = true;
+                                _star4 = true;
+                              } else if(_star5 == false && _star4 == true){
+                                _star1 = false;
+                                _star2 = false;
+                                _star3 = false;
+                                _star4 = false;
+                              } else if(_star5 == false && _star4 == false){
+                                _star1 = true;
+                                _star2 = true;
+                                _star3 = true;
+                                _star4 = true;
+                              }
+                              _star5 = false;
+                            });
+                          },
+                              icon: Icon(Icons.star,
+                                color: _star4 ? Colors.yellow: Colors.white,
+                                size: 32,)),
+                          SizedBox(width: 10.0),
+                          IconButton(onPressed: (){
+                            setState(() {
+                              if(_star5 == false){
+                                _star1 = true;
+                                _star2 = true;
+                                _star3 = true;
+                                _star4 = true;
+                                _star5 = true;
+                              } else{
+                                _star1 = false;
+                                _star2 = false;
+                                _star3 = false;
+                                _star4 = false;
+                                _star5 = false;
+                              }
+                            });
+                          },
+                              icon: Icon(Icons.star,
+                                color: _star5 ? Colors.yellow: Colors.white,
+                                size: 32,)),
                         ],
                       ),
                       Row(
@@ -344,7 +387,7 @@ class _EvaluateState extends State<Evaluate> {
                             onPressed: () {
                               showDialog(
                                 context: context,
-                                builder: (BuildContext context) => _buildPopupEvaluation(context),
+                                builder: (BuildContext context) => _buildPopupEvaluation2(context),
                               );
                             },
                           ),
@@ -561,3 +604,102 @@ Widget _buildPopupEvaluation(BuildContext context) {
     ],
   );
 }
+
+
+Widget _buildPopupEvaluation2(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.star,
+              size: 20.0,
+              color: Colors.yellow,
+            ),
+            SizedBox(width: 3.0),
+            Icon(
+              Icons.star,
+              size: 30.0,
+              color: Colors.yellow,
+            ),
+            SizedBox(width: 3.0),
+            Icon(
+              Icons.star,
+              size: 20.0,
+              color: Colors.yellow,
+            ),
+          ],
+        ),
+        SizedBox(height: 12.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Evaluation submited!",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 90.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.grey[300],
+            ),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EvaluateMain()),
+                    );
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 15,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
