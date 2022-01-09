@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
 import 'tenantEvaluateMain.dart';
+import 'tenantTasks.dart';
+import 'profile.dart';
+import 'cleanStairs.dart';
+import 'ata.dart';
+import 'cleanElevator.dart';
+import 'exchangeLightbulb.dart';
+
 
 class Task4 extends StatefulWidget {
   const Task4({Key? key}) : super(key: key);
@@ -49,7 +56,14 @@ class _Task4State extends State<Task4> {
                   icon: Icon(
                     Icons.cleaning_services_rounded,
                     size: 30.0,
-                  ), onPressed: () {}),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Task()),
+                    );
+                  }
+              ),
               IconButton(
                   icon: Icon(
                     Icons.chat_bubble_outline_rounded,
@@ -73,14 +87,22 @@ class _Task4State extends State<Task4> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Icon(
-                  Icons.person_outline,
-                  color: Colors.black,
-                  size: 40.0,
+                IconButton(
+                    onPressed:(){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Profile()),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.person_outline,
+                      color: Colors.black,
+                      size: 40.0,
+                    )
                 ),
                 SizedBox(width: 15.0),
                 Container(
-                  width: 240.0,
+                  width: 232.0,
                   height: 42.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24.0),
@@ -141,123 +163,125 @@ class _Task4State extends State<Task4> {
             Row(
               children: <Widget>[
                 Container(
-                  width: 150.0,
-                  height: 90.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: Color(0xFF48ACBE),
-                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(3.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    child: Stack(
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Icon(
-                              Icons.info_outline,
-                              color: Colors.yellow,
-                              size: 15.0,
+                        RaisedButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ExchangeLightbulb()),
+                            );
+                          },
+                          color: Color(0xFF48ACBE),
+                          child: Text('                                 \n\n\n\n\n'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(100.0, 0.0, 0.0, 0.0),
+                          child: IconButton(
+                              onPressed: (){},
+                              icon: Icon(
+                                Icons.info_outline,
+                                color: Colors.yellow,
+                                size: 15.0,
+                              )
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(60.0, 13.0, 0.0, 0.0),
+                          child: Icon(
+                              Icons.lightbulb,
+                              color: Colors.white,
+                              size: 30.0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5.0, 55.0, 0.0, 0.0),
+                          child: Text(
+                            'Exchange Lightbulb',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 16,
+                              color: Colors.black,
+                              height: 1,
                             ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.lightbulb,
-                          color: Colors.white,
-                          size: 30.0,
-                        ),
-                        SizedBox(height: 8.0),
-                        Text(
-                          'Exchange Lightbulb',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 16,
-                            color: Colors.black,
-                            height: 1,
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 3.0),
-                        Text(
-                          '17 Dec',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 10,
-                            color: Colors.black,
-                            height: 1,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(60.0, 75.0, 0.0, 0.0),
+                          child: Text(
+                            '17 Dec',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 10,
+                              color: Colors.black,
+                              height: 1,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(width: 45.0),
+                SizedBox(width: 40.0),
                 Container(
-                  width: 150.0,
-                  height: 90.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: Color(0xFF48ACBE),
-                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(3.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    child: Stack(
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Icon(
-                              Icons.info_outline,
-                              color: Colors.yellow,
-                              size: 15.0,
+                        RaisedButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => CleanStairs()),
+                            );
+                          },
+                          color: Color(0xFF48ACBE),
+                          child: Text('                                 \n\n\n\n\n'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(100.0, 0.0, 0.0, 0.0),
+                          child: IconButton(
+                              onPressed: (){},
+                              icon: Icon(
+                                Icons.info_outline,
+                                color: Colors.yellow,
+                                size: 15.0,
+                              )
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(60.0, 13.0, 0.0, 0.0),
+                          child: Icon(
+                              Icons.stairs_outlined,
+                              color: Colors.white,
+                              size: 30.0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(30.0, 55.0, 0.0, 0.0),
+                          child: Text(
+                            'Clean Stairs',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 16,
+                              color: Colors.black,
+                              height: 1,
                             ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.stairs_outlined,
-                          color: Colors.white,
-                          size: 32.0,
-                        ),
-                        SizedBox(height: 6.0),
-                        Text(
-                          'Clean Stairs',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 16,
-                            color: Colors.black,
-                            height: 1,
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 3.0),
-                        Text(
-                          '17 - 19 Dec',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 10,
-                            color: Colors.black,
-                            height: 1,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(55.0, 75.0, 0.0, 0.0),
+                          child: Text(
+                            '17 - 19 Dec',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 10,
+                              color: Colors.black,
+                              height: 1,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
@@ -275,7 +299,7 @@ class _Task4State extends State<Task4> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 55.0),
+            SizedBox(height: 48.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -289,7 +313,7 @@ class _Task4State extends State<Task4> {
                 ),
               ],
             ),
-            SizedBox(height: 60.0),
+            SizedBox(height: 50.0),
             Text(
               'Task History',
               style: TextStyle(

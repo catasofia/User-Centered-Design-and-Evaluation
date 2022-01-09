@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_app/tenant/tenantEvaluatePage.dart';
 import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
 import 'tenantTasks.dart';
@@ -156,8 +157,27 @@ class _EvaluateMainState extends State<EvaluateMain> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildCircleAvatar('assets/carlos.jfif'),
-                buildCircleAvatar('assets/carolina.jpeg'),
+                FlatButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Evaluate()),
+                      );
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/carlos.jfif'),
+                      radius: 65,
+                    )
+                ),
+                FlatButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/carolina.jpeg'),
+                      radius: 65,
+                    )
+                ),
               ],
             ),
             Row(
@@ -171,8 +191,22 @@ class _EvaluateMainState extends State<EvaluateMain> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildCircleAvatar('assets/joao.jpg'),
-                buildCircleAvatar('assets/marco.jpg'),
+                FlatButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/joao.jpg'),
+                      radius: 65,
+                    )
+                ),
+                FlatButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/marco.jpg'),
+                      radius: 65,
+                    )
+                ),
               ],
             ),
             Row(

@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
 import 'tenantEvaluateMain.dart';
+import 'tenantTasks.dart';
+import 'profile.dart';
+import 'cleanStairs.dart';
+import 'ata.dart';
+import 'cleanElevator.dart';
+import 'exchangeLightbulb.dart';
 
 class Task2 extends StatefulWidget {
   const Task2({Key? key}) : super(key: key);
@@ -48,7 +54,14 @@ class _Task2State extends State<Task2> {
                   icon: Icon(
                     Icons.cleaning_services_rounded,
                     size: 30.0,
-                  ), onPressed: () {}),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Task()),
+                    );
+                  }
+              ),
               IconButton(
                   icon: Icon(
                     Icons.chat_bubble_outline_rounded,
@@ -72,14 +85,22 @@ class _Task2State extends State<Task2> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Icon(
-                  Icons.person_outline,
-                  color: Colors.black,
-                  size: 40.0,
+                IconButton(
+                    onPressed:(){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Profile()),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.person_outline,
+                      color: Colors.black,
+                      size: 40.0,
+                    )
                 ),
                 SizedBox(width: 15.0),
                 Container(
-                  width: 240.0,
+                  width: 232.0,
                   height: 42.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24.0),
@@ -137,46 +158,43 @@ class _Task2State extends State<Task2> {
               ),
             ),
             SizedBox(height: 15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: 150.0,
-                  height: 90.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
+            Center(
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Stack(
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ExchangeLightbulb()),
+                          );
+                        },
+                        color: Color(0xFF48ACBE),
+                        child: Text('                                 \n\n\n\n\n'),
                       ),
-                    ],
-                    color: Color(0xFF48ACBE),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Icon(
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(100.0, 0.0, 0.0, 0.0),
+                        child: IconButton(
+                            onPressed: (){},
+                            icon: Icon(
                               Icons.info_outline,
                               color: Colors.yellow,
                               size: 15.0,
-                            ),
-                          ],
+                            )
                         ),
-                        Icon(
-                          Icons.lightbulb,
-                          color: Colors.white,
-                          size: 30.0,
-                        ),
-                        SizedBox(height: 8.0),
-                        Text(
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(60.0, 13.0, 0.0, 0.0),
+                        child: Icon(
+                            Icons.lightbulb,
+                            color: Colors.white,
+                            size: 30.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(5.0, 55.0, 0.0, 0.0),
+                        child: Text(
                           'Exchange Lightbulb',
                           style: TextStyle(
                             fontFamily: 'Arial',
@@ -184,10 +202,11 @@ class _Task2State extends State<Task2> {
                             color: Colors.black,
                             height: 1,
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 3.0),
-                        Text(
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(60.0, 75.0, 0.0, 0.0),
+                        child: Text(
                           '17 Dec',
                           style: TextStyle(
                             fontFamily: 'Arial',
@@ -197,13 +216,13 @@ class _Task2State extends State<Task2> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
-            SizedBox(height: 25.0),
+            SizedBox(height: 18.0),
             Text(
               'Tasks Available',
               style: TextStyle(
@@ -216,99 +235,89 @@ class _Task2State extends State<Task2> {
             SizedBox(height: 15.0),
             Row(
               children: <Widget>[
-                Container(
-                  width: 150.0,
-                  height: 95.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: Color(0xFF48ACBE),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: 10),
-                      Icon(
+                Stack(
+                  children: <Widget>[
+                    RaisedButton(
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CleanStairs()),
+                        );
+                      },
+                      color: Color(0xFF48ACBE),
+                      child: Text('                                 \n\n\n\n\n'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
+                      child: Icon(
                         Icons.stairs_outlined,
                         color: Colors.white,
-                        size: 35.0,
-                      ),
-                      SizedBox(height: 8.0),
-                      Text(
-                        'Clean Stairs',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 15,
-                          color: Colors.black,
-                          height: 1,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                            icon: const Icon(
-                              Icons.add,
+                        size: 35.0,),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(32.0, 55.0, 0.0, 0.0),
+                      child: Text(
+                          'Clean Stairs',
+                          style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 15,
                               color: Colors.black,
-                              size: 12.0,
-                            ),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => _buildPopupTaskCleanStairs(context),
-                              );
-                            },
-                          ),
-                        ],
+                              height: 1.0)
                       ),
-                    ],
-                  ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          constraints: BoxConstraints(),
+                          icon: const Icon(
+                            Icons.add,
+                            color: Colors.black,
+                            size: 12.0,
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => _buildPopupTaskCleanStairs(context),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 SizedBox(width: 45.0),
                 Container(
-                  width: 150.0,
-                  height: 95.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: Color(0xFF48ACBE),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  child:  Stack(
                     children: <Widget>[
-                      SizedBox(height: 10),
-                      Icon(
-                        Icons.my_library_books_sharp,
-                        color: Colors.white,
-                        size: 35.0,
+                      RaisedButton(
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ATA()),
+                          );
+                        },
+                        color: Color(0xFF48ACBE),
+                        child: Text('                                 \n\n\n\n\n'),
                       ),
-                      SizedBox(height: 8.0),
-                      Text(
-                        'ATA',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 15,
-                          color: Colors.black,
-                          height: 1,
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
+                        child: Icon(
+                          Icons.my_library_books_sharp,
+                          color: Colors.white,
+                          size: 35.0,),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(60.0, 57.0, 0.0, 0.0),
+                        child: Text(
+                            'ATA',
+                            style: TextStyle(
+                                fontFamily: 'Arial',
+                                fontSize: 15,
+                                color: Colors.black,
+                                height: 1.0)
                         ),
-                        textAlign: TextAlign.center,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -336,7 +345,7 @@ class _Task2State extends State<Task2> {
                 ),
               ],
             ),
-            SizedBox(height: 22.0),
+            SizedBox(height: 17.0),
             Text(
               'Task History',
               style: TextStyle(
@@ -346,7 +355,7 @@ class _Task2State extends State<Task2> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 15.0),
+            SizedBox(height: 14.0),
             Container(
               width: 350.0,
               height: 40.0,
@@ -666,7 +675,10 @@ Widget _buildPopupTaskCleanStairs(BuildContext context) {
               children: <Widget>[
                 new FlatButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Task()),
+                    );
                   },
                   textColor: Theme.of(context).primaryColor,
                   child: const Text(
@@ -687,7 +699,6 @@ Widget _buildPopupTaskCleanStairs(BuildContext context) {
     ],
   );
 }
-
 
 Widget _buildPopupTaskAta(BuildContext context) {
   return new AlertDialog(
@@ -801,7 +812,10 @@ Widget _buildPopupTaskAta(BuildContext context) {
               children: <Widget>[
                 new FlatButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Task()),
+                    );
                   },
                   textColor: Theme.of(context).primaryColor,
                   child: const Text(
@@ -822,7 +836,5 @@ Widget _buildPopupTaskAta(BuildContext context) {
     ],
   );
 }
-
-
 
 

@@ -4,6 +4,8 @@ import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'tenantChat2.dart';
 import 'tenantEvaluateMain.dart';
+import 'tenantContacts.dart';
+
 
 class Chat extends StatefulWidget {
   const Chat({Key? key}) : super(key: key);
@@ -69,11 +71,18 @@ class _ChatState extends State<Chat> {
                   }
               ),
               IconButton(
-                  color: Colors.white,
                   icon: Icon(
                     Icons.chat_bubble_outline_rounded,
                     size: 30.0,
-                  ), onPressed: () {}),
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Contacts()),
+                    );
+                  }
+              ),
             ],
           ),
         ),

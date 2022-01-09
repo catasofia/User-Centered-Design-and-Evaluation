@@ -3,6 +3,7 @@ import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'profile.dart';
 import 'tenantEvaluateMain.dart';
+import 'tenantChat.dart';
 
 class Contacts extends StatefulWidget {
   const Contacts({Key? key}) : super(key: key);
@@ -152,11 +153,17 @@ class _ContactsState extends State<Contacts> {
                 SizedBox(width: 20.0),
                 Column(
                   children: [
-                    Container(
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Chat()),
+                        );
+                      },
                       child: CircleAvatar(
                         backgroundImage: AssetImage('assets/carlos.jfif'),
-                        radius: 65.0,
-                      ),
+                        radius: 60,
+                      )
                     ),
                     SizedBox(height: 10.0),
                     Text(
@@ -170,7 +177,7 @@ class _ContactsState extends State<Contacts> {
                     ),
                   ],
                 ),
-                SizedBox(width: 50.0),
+                SizedBox(width: 10.0),
                 Column(
                   children: [
                     Container(
@@ -206,15 +213,21 @@ class _ContactsState extends State<Contacts> {
             SizedBox(height: 15.0),
             Row(
               children: [
-                Container(
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/carlos.jfif'),
-                    radius: 25.0,
-                  ),
+                FlatButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Chat()),
+                      );
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/carlos.jfif'),
+                      radius: 25,
+                    )
                 ),
-                SizedBox(width: 10.0),
                 Container(
-                  width: 290.0,
+                  width: 250.0,
                   height: 50.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
@@ -228,51 +241,65 @@ class _ContactsState extends State<Contacts> {
                     ],
                     color: Colors.grey[100],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(width: 10.0),
-                        Row(
-                          children: [
+                  child: Stack(
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Chat()),
+                          );
+                        },
+                        color: Colors.grey[100],
+                        child: Text('                                 \n\n\n\n\n'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(width: 10.0),
+                            Row(
+                              children: [
+                                Text(
+                                  'Carlos',
+                                  style: TextStyle(
+                                    fontFamily: 'Arial',
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    height: 1,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                                SizedBox(width: 150.0),
+                                Icon(
+                                  Icons.plus_one_outlined,
+                                  color: Color(0xFF48ACBE),
+                                  size: 20,
+                                ),
+                                SizedBox(width: 5.0),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: Colors.black,
+                                  size: 12,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 5.0),
                             Text(
-                              'Carlos',
+                              'Good morning, have you switched...',
                               style: TextStyle(
                                 fontFamily: 'Arial',
-                                fontSize: 18,
+                                fontSize: 14,
                                 color: Colors.black,
                                 height: 1,
                               ),
                               textAlign: TextAlign.left,
                             ),
-                            SizedBox(width: 190.0),
-                            Icon(
-                              Icons.plus_one_outlined,
-                              color: Color(0xFF48ACBE),
-                              size: 20,
-                            ),
-                            SizedBox(width: 5.0),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.black,
-                              size: 12,
-                            ),
                           ],
                         ),
-                        SizedBox(height: 5.0),
-                        Text(
-                          'Good morning, have you switched the...',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 14,
-                            color: Colors.black,
-                            height: 1,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -280,15 +307,21 @@ class _ContactsState extends State<Contacts> {
             SizedBox(height: 15.0),
             Row(
               children: [
-                Container(
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/marco.jpg'),
-                    radius: 25.0,
-                  ),
+                FlatButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Chat()),
+                      );
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/marco.jpg'),
+                      radius: 25,
+                    )
                 ),
-                SizedBox(width: 10.0),
                 Container(
-                  width: 290.0,
+                  width: 250.0,
                   height: 50.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
@@ -320,7 +353,7 @@ class _ContactsState extends State<Contacts> {
                               ),
                               textAlign: TextAlign.left,
                             ),
-                            SizedBox(width: 215.0),
+                            SizedBox(width: 175.0),
                             Icon(
                               Icons.arrow_forward_ios_rounded,
                               color: Colors.black,
@@ -348,15 +381,21 @@ class _ContactsState extends State<Contacts> {
             SizedBox(height: 15.0),
             Row(
               children: [
-                Container(
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/joao.jpg'),
-                    radius: 25.0,
-                  ),
+                FlatButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Chat()),
+                      );
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/joao.jpg'),
+                      radius: 25,
+                    )
                 ),
-                SizedBox(width: 10.0),
                 Container(
-                  width: 290.0,
+                  width: 250.0,
                   height: 50.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
@@ -388,7 +427,7 @@ class _ContactsState extends State<Contacts> {
                               ),
                               textAlign: TextAlign.left,
                             ),
-                            SizedBox(width: 225.0),
+                            SizedBox(width: 185.0),
                             Icon(
                               Icons.arrow_forward_ios_rounded,
                               color: Colors.black,

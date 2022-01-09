@@ -4,6 +4,7 @@ import 'tenantContacts.dart';
 import 'tenantTasks.dart';
 import '../signInOrUp.dart';
 import 'tenantEvaluateMain.dart';
+import 'tenantCarlosProfile.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -89,7 +90,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     SizedBox(width: 15.0),
                     Container(
-                      width: 240.0,
+                      width: 232.0,
                       height: 42.0,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.0),
@@ -118,10 +119,18 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     SizedBox(width: 15.0),
-                    Icon(
-                      Icons.notifications_active_outlined,
-                      color: Colors.black,
-                      size: 40.0,
+                    IconButton(
+                      icon: const Icon(
+                        Icons.notifications_active_outlined,
+                        color: Colors.black,
+                        size: 38.0,
+                      ),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupNotification(context),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -194,7 +203,12 @@ class _ProfileState extends State<Profile> {
               ),
               SizedBox(height: 10),
               RaisedButton(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CarlosProfile()),
+                  );
+                },
                 color: Color(0xFF48ACBE),
                 shape: BeveledRectangleBorder(
                   borderRadius: BorderRadius.circular(3.0),
@@ -245,4 +259,75 @@ class _ProfileState extends State<Profile> {
       )
     );
   }
+}
+
+
+Widget _buildPopupNotification(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Notifications',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.white,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "- João completed a task, rate him now.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "- You have two days to complete your task.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "- Carlos added a new task.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Icon(
+              Icons.remove_circle_outline,
+              color: Colors.black,
+              size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }

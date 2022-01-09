@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'tenantEvaluateMain.dart';
+import 'tenantContacts.dart';
+
 
 class Chat2 extends StatefulWidget {
   String description;
@@ -70,11 +72,18 @@ class _Chat2State extends State<Chat2> {
                   }
               ),
               IconButton(
-                  color: Colors.white,
                   icon: Icon(
                     Icons.chat_bubble_outline_rounded,
                     size: 30.0,
-                  ), onPressed: () {}),
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Contacts()),
+                    );
+                  }
+              ),
             ],
           ),
         ),

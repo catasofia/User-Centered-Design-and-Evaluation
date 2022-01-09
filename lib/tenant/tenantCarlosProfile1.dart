@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'tenantCarlosProfile.dart';
-import 'tenantEvaluateMain.dart';
+import 'tenantEvaluateMain.dart';import 'tenantContacts.dart';
+
 
 class CarlosProfile1 extends StatefulWidget {
   String description;
@@ -62,11 +63,17 @@ class _CarlosProfile1State extends State<CarlosProfile1> {
                   }
               ),
               IconButton(
-                  color: Colors.black,
                   icon: Icon(
                     Icons.chat_bubble_outline_rounded,
                     size: 30.0,
-                  ), onPressed: () {}),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Contacts()),
+                    );
+                  }
+              ),
             ],
           ),
         ),

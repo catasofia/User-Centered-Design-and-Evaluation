@@ -3,6 +3,7 @@ import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'tenantCarlosProfile1.dart';
 import 'tenantEvaluateMain.dart';
+import 'tenantContacts.dart';
 
 class CarlosProfile extends StatefulWidget {
   const CarlosProfile({Key? key}) : super(key: key);
@@ -69,11 +70,17 @@ class _CarlosProfileState extends State<CarlosProfile> {
                   }
               ),
               IconButton(
-                  color: Colors.black,
                   icon: Icon(
                     Icons.chat_bubble_outline_rounded,
                     size: 30.0,
-                  ), onPressed: () {}),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Contacts()),
+                    );
+                  }
+              ),
             ],
           ),
         ),

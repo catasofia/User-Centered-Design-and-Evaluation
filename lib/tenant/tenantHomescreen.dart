@@ -3,6 +3,8 @@ import 'tenantTasks.dart';
 import 'tenantContacts.dart';
 import 'profile.dart';
 import 'tenantEvaluateMain.dart';
+import 'cleanElevator.dart';
+import 'exchangeLightbulb.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -198,86 +200,72 @@ class _HomeState extends State<Home> {
              Row(
                children: <Widget>[
                  Container(
-                   width: 150.0,
-                   height: 90.0,
-                   decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(5.0),
-                     boxShadow: [
-                       BoxShadow(
-                         color: Colors.grey.withOpacity(0.5),
-                         spreadRadius: 1.5,
-                         blurRadius: 1.5,
-                         offset: Offset(0, 3), // changes position of shadow
+                   child: Stack(
+                     children: <Widget>[
+                       RaisedButton(
+                         onPressed: (){
+                           Navigator.push(
+                             context,
+                             MaterialPageRoute(builder: (context) => CleanElevator()),
+                           );
+                         },
+                         color: Color(0xFF48ACBE),
+                         child: Text('                                 \n\n\n\n\n'),
+                       ),
+                       Padding(
+                         padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
+                         child: Icon(
+                             Icons.clean_hands_sharp,
+                             color: Colors.white,
+                             size: 35.0),
+                       ),
+                       Padding(
+                         padding: EdgeInsets.fromLTRB(25.0, 65.0, 0.0, 0.0),
+                         child: Text(
+                             'Clean Elevator',
+                             style: TextStyle(
+                                 fontFamily: 'Arial',
+                                 fontSize: 16,
+                                 color: Colors.white,
+                                 height: 1.0)
+                         ),
                        ),
                      ],
-                     color: Color(0xFF48ACBE),
-                   ),
-                   child: Padding(
-                     padding: const EdgeInsets.all(10.0),
-                     child: Column(
-                       mainAxisAlignment: MainAxisAlignment.start,
-                       children: <Widget>[
-                         SizedBox(width: 30.0),
-                         Icon(
-                           Icons.clean_hands_sharp,
-                           color: Colors.white,
-                           size: 35.0,
-                         ),
-                         SizedBox(height: 15.0),
-                         Text(
-                           'Clean Elevator',
-                           style: TextStyle(
-                             fontFamily: 'Arial',
-                             fontSize: 18,
-                             color: Colors.white,
-                             height: 1,
-                           ),
-                           textAlign: TextAlign.center,
-                         ),
-                       ],
-                     ),
                    ),
                  ),
                  SizedBox(width: 45.0),
                  Container(
-                   width: 150.0,
-                   height: 90.0,
-                   decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(5.0),
-                     boxShadow: [
-                       BoxShadow(
-                         color: Colors.grey.withOpacity(0.5),
-                         spreadRadius: 1.5,
-                         blurRadius: 1.5,
-                         offset: Offset(0, 3), // changes position of shadow
+                   child: Stack(
+                     children: <Widget>[
+                       RaisedButton(
+                         onPressed: (){
+                           Navigator.push(
+                             context,
+                             MaterialPageRoute(builder: (context) => ExchangeLightbulb()),
+                           );
+                         },
+                         color: Color(0xFF48ACBE),
+                         child: Text('                                 \n\n\n\n\n'),
+                       ),
+                       Padding(
+                         padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
+                         child: Icon(
+                             Icons.lightbulb,
+                             color: Colors.white,
+                             size: 35.0),
+                       ),
+                       Padding(
+                         padding: EdgeInsets.fromLTRB(5.0, 65.0, 0.0, 0.0),
+                         child: Text(
+                             'Exchange Lightbulb',
+                             style: TextStyle(
+                                 fontFamily: 'Arial',
+                                 fontSize: 16,
+                                 color: Colors.white,
+                                 height: 1.0)
+                         ),
                        ),
                      ],
-                     color: Color(0xFF48ACBE),
-                   ),
-                   child: Padding(
-                     padding: const EdgeInsets.all(10.0),
-                     child: Column(
-                       mainAxisAlignment: MainAxisAlignment.start,
-                       children: <Widget>[
-                         SizedBox(width: 15.0),
-                         Icon(
-                           Icons.lightbulb,
-                           color: Colors.white,
-                           size: 30.0,
-                         ),
-                         SizedBox(height: 8.0),
-                         Text(
-                           'Exchange Lightbulb',
-                           style: TextStyle(
-                             fontFamily: 'Arial',
-                             fontSize: 16,
-                             color: Colors.white,
-                             height: 1,
-                           ),
-                           textAlign: TextAlign.center,
-                         ),
-                       ],
-                     ),
                    ),
                  ),
                ],
