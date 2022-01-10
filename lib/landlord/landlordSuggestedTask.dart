@@ -2,20 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:time_app/landlord/landlordAlameda.dart';
 
 import 'carlosProfileLandlord.dart';
-import 'landlordSuggestedTask.dart';
+import 'landlordAlameda.dart';
+import 'landlordHomeScreen.dart';
 
-
-class AddTask extends StatefulWidget {
-  const AddTask({Key? key}) : super(key: key);
+class SuggestedTask extends StatefulWidget {
+  const SuggestedTask({Key? key}) : super(key: key);
 
   @override
-  _AddTaskState createState() => _AddTaskState();
+  _SuggestedTaskState createState() => _SuggestedTaskState();
 }
 
-class _AddTaskState extends State<AddTask> {
+class _SuggestedTaskState extends State<SuggestedTask> {
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +96,7 @@ class _AddTaskState extends State<AddTask> {
                   ),
                   new TextField(
                     decoration: InputDecoration(
-                        hintText: "Insert name"
+                        hintText: "Disinfect the elevator"
                     ),
                   ),
                   SizedBox(height: 20,),
@@ -111,7 +110,7 @@ class _AddTaskState extends State<AddTask> {
                   ),
                   new TextField(
                     decoration: InputDecoration(
-                        hintText: "Insert value"
+                        hintText: "-"
                     ),
                   ),
                   SizedBox(height: 20,),
@@ -125,7 +124,7 @@ class _AddTaskState extends State<AddTask> {
                   ),
                   new TextField(
                     decoration: InputDecoration(
-                        hintText: "Insert description"
+                        hintText: "Disinfect the elevator once a day"
                     ),
                   ),
                   SizedBox(height: 20,),
@@ -139,7 +138,21 @@ class _AddTaskState extends State<AddTask> {
                   ),
                   new TextField(
                     decoration: InputDecoration(
-                        hintText: "Insert products"
+                        hintText: "-"
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  Row(
+                    children: [
+                      Text('Date',
+                        style: TextStyle(
+                            fontSize: 20
+                        ),),
+                    ],
+                  ),
+                  new TextField(
+                    decoration: InputDecoration(
+                        hintText: "-"
                     ),
                   ),
                 ],
@@ -149,7 +162,7 @@ class _AddTaskState extends State<AddTask> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 90.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                   child: Container(
                     width: 150,
                     height: 50,
@@ -162,11 +175,7 @@ class _AddTaskState extends State<AddTask> {
                             borderRadius: BorderRadius.circular(14)
                         ),
                       ),
-                      onPressed: () { showDialog(
-                        context: context,
-                        //FAZER FUNCAO P SO MOSTRAR POP UP QD N ESTIVER TUDO PREENCHIDO
-                        builder: (BuildContext context) => _buildPopupEvaluation(context),
-                      );},
+                      onPressed: () { },
                       child: Text('Add',
                         style: TextStyle(
                           fontFamily: 'Arial',
@@ -180,111 +189,30 @@ class _AddTaskState extends State<AddTask> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                SizedBox(width: 20,),
-                Align(
-                    alignment: Alignment.bottomLeft,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
-                      onPressed: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LandlordAlameda()),
-                        );
-                      },
-                    )
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top:10.0),
+              child: Row(
+                children: [
+                  SizedBox(width: 20,),
+                  Align(
+                      alignment: Alignment.bottomLeft,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        onPressed: (){
+                          Navigator.pop(
+                            context,
+                          );
+                        },
+                      )
+                  ),
+                ],
+              ),
             )
           ]
       ),
     );
   }
 }
-
-Widget _buildPopupEvaluation(BuildContext context) {
-  return new AlertDialog(
-    alignment: Alignment.center,
-    backgroundColor: Color(0xFF48ACBE),
-    content: new Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.warning_amber_outlined,
-              size: 35.0,
-              color: Colors.redAccent,
-            ),
-          ],
-        ),
-        SizedBox(height: 12.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "You must fill in all the\n fields to add the task.",
-              style: TextStyle(
-                fontFamily: 'Arial',
-                fontSize: 20,
-                color: Colors.black,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-    actions: <Widget>[
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            width: 90.0,
-            height: 30.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1.5,
-                  blurRadius: 1.5,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-              color: Colors.grey[300],
-            ),
-            child: new Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  textColor: Theme.of(context).primaryColor,
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(
-                      fontFamily: 'Arial',
-                      fontSize: 15,
-                      color: Colors.black,
-                      height: 1,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ],
-  );
-}
-
 Widget _buildPopupNotification(BuildContext context) {
   return new AlertDialog(
     alignment: Alignment.center,
@@ -332,7 +260,6 @@ Widget _buildPopupNotification(BuildContext context) {
               context,
               MaterialPageRoute(builder: (context) => SuggestedTask()),
             );
-
           },
           child: const Text('- Francisca suggested a task for Alameda T2.',
               style: TextStyle(fontFamily: 'Arial',

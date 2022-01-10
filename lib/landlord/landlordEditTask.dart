@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'carlosProfileLandlord.dart';
 import 'landlordAlameda.dart';
+import 'landlordSuggestedTask.dart';
 
 class EditTask extends StatefulWidget {
   const EditTask({Key? key}) : super(key: key);
@@ -28,6 +30,10 @@ class _EditTaskState extends State<EditTask> {
               child: Row(
                 children: <Widget>[
                   IconButton(onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CarlosProfileLandlord()),
+                    );
                   },
                       icon: Icon(Icons.person_outline,
                         color: Colors.black,
@@ -64,6 +70,10 @@ class _EditTaskState extends State<EditTask> {
                   ),
                   SizedBox(width: 7.0),
                   IconButton(onPressed: (){
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => _buildPopupNotification(context),
+                    );
                   },
                       icon: Icon(Icons.notifications_active_outlined,
                         color: Colors.black,
@@ -114,7 +124,7 @@ class _EditTaskState extends State<EditTask> {
                   ),
                   new TextField(
                     decoration: InputDecoration(
-                        hintText: "Clean the halls everyday for a month"
+                        hintText: "Clean the halls twice a week"
                     ),
                   ),
                   SizedBox(height: 20,),
@@ -138,7 +148,7 @@ class _EditTaskState extends State<EditTask> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 85.0, 0.0, 0.0),
                   child: Container(
                     width: 150,
                     height: 50,
@@ -163,13 +173,8 @@ class _EditTaskState extends State<EditTask> {
                     ),
                   ),
                 ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(30.0, 85.0, 0.0, 0.0),
                   child: Container(
                     width: 150,
                     height: 50,
@@ -220,4 +225,80 @@ class _EditTaskState extends State<EditTask> {
       ),
     );
   }
+}
+Widget _buildPopupNotification(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Notifications',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.white,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "  - João completed a task, rate him now.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Text(
+          "  - Carolina has sent you a message.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        TextButton(
+          style: TextButton.styleFrom(
+            textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SuggestedTask()),
+            );
+          },
+          child: const Text('- Francisca suggested a task for Alameda T2.',
+              style: TextStyle(fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,)),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Icon(
+              Icons.remove_circle_outline,
+              color: Colors.black,
+              size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }

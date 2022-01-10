@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'carlosProfileLandlord.dart';
 import 'landlordAddTask.dart';
+import 'landlordEditTask.dart';
 import 'landlordEvaluate.dart';
 import 'landlordHomeScreen.dart';
+import 'landlordSuggestedTask.dart';
 
 class Tenant{
   String name;
@@ -98,7 +101,13 @@ class _HomeState extends State<LandlordAlameda> {
                       ),
 
                     ),
-                    RaisedButton(onPressed: (){ },
+                    RaisedButton(onPressed: (){
+                      Navigator.push(
+                        context,
+                        //TIRAR DE TODOS OS BOTOES/POR CORRESPONDENCIAS CORRETAS
+                        MaterialPageRoute(builder: (context) => EditTask()),
+                      );
+                    },
                       padding: EdgeInsets.only(top:14.0, bottom:14.0, left:10.0, right: 10.0),
                       child: Text('Edit',
                         style: TextStyle(
@@ -181,12 +190,16 @@ class _HomeState extends State<LandlordAlameda> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Icon(
-                    Icons.person_outline,
-                    color: Colors.black,
-                    size: 40.0,
-                  ),
-                  SizedBox(width: 15.0),
+                  IconButton(onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CarlosProfileLandlord()),
+                    );
+                  },
+                      icon: Icon(Icons.person_outline,
+                        color: Colors.black,
+                        size: 38,)),
+                  SizedBox(width: 8.0),
                   Container(
                     width: 235.0,
                     height: 42.0,
@@ -399,7 +412,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "- João completed a task, rate him now.",
+          "  - João completed a task, rate him now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -409,7 +422,7 @@ Widget _buildPopupNotification(BuildContext context) {
         ),
         SizedBox(height: 20.0),
         Text(
-          "- Vasco is interested in your apartment in Chiado.",
+          "  - Carolina has sent you a message.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -418,14 +431,22 @@ Widget _buildPopupNotification(BuildContext context) {
           ),
         ),
         SizedBox(height: 20.0),
-        Text(
-          "- Carolina has sent you a message.",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
+        TextButton(
+          style: TextButton.styleFrom(
+            textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
           ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SuggestedTask()),
+            );
+
+          },
+          child: const Text('- Francisca suggested a task for Alameda T2.',
+              style: TextStyle(fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,)),
         ),
       ],
     ),

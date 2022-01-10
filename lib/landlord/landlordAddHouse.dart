@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'carlosProfileLandlord.dart';
 import 'landlordHomeScreen.dart';
+import 'landlordSuggestedTask.dart';
 
 class AddHouse extends StatefulWidget {
   const AddHouse({Key? key}) : super(key: key);
@@ -49,6 +51,10 @@ class _AddHouseState extends State<AddHouse> {
                   child: Row(
                     children: <Widget>[
                       IconButton(onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CarlosProfileLandlord()),
+                        );
                       },
                           icon: Icon(Icons.person_outline,
                             color: Colors.black,
@@ -217,7 +223,7 @@ class _AddHouseState extends State<AddHouse> {
                       height: 40,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF48ACBE),
+                          primary: Color(0xFF81C784),
                           elevation: 3,
                           padding: EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(
@@ -293,7 +299,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "- João completed a task, rate him now.",
+          "  - João completed a task, rate him now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -303,7 +309,7 @@ Widget _buildPopupNotification(BuildContext context) {
         ),
         SizedBox(height: 20.0),
         Text(
-          "- Vasco is interested in your apartment in Chiado.",
+          "  - Carolina has sent you a message.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -312,14 +318,22 @@ Widget _buildPopupNotification(BuildContext context) {
           ),
         ),
         SizedBox(height: 20.0),
-        Text(
-          "- Carolina has sent you a message.",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
+        TextButton(
+          style: TextButton.styleFrom(
+            textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
           ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SuggestedTask()),
+            );
+
+          },
+          child: const Text('- Francisca suggested a task for Alameda T2.',
+              style: TextStyle(fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,)),
         ),
       ],
     ),
