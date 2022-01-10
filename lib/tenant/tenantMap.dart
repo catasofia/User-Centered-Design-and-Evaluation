@@ -178,16 +178,80 @@ class _MapState extends State<Map> {
                           ]
                         ),
                       ),
-                      buildPaddingRentValue(50.0, 50.0, 0.0, 0.0, '390€'),
-                      buildPadding(40.0, 60.0, 0.0, 0.0, 1),
-                      buildPaddingRentValue(100.0, 150.0, 0.0, 0.0, '500€'),
-                      buildPadding(90.0, 160.0, 0.0, 0.0, 2),
-                      buildPaddingRentValue(150.0, 160.0, 0.0, 0.0, '440€'),
-                      buildPadding(140.0, 170.0, 0.0, 15.0, 3),
-                      buildPaddingRentValue(299.0, 160.0, 0.0, 0.0, '510€'),
-                      buildPadding(289.0, 170.0, 0.0, 0.0, 4),
-                      buildPaddingRentValue(190.0, 281.0, 0.0, 0.0, '345€'),
-                      buildPadding(180.0, 291.0, 0.0, 0.0, 5),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(315.0, 20.0, 0.0, 0.0),
+                        child: SizedBox(
+                          height:30,
+                          width:30,
+                          child:FloatingActionButton(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Color(0xFF006D77),
+                            onPressed: () {},
+                            shape: BeveledRectangleBorder(
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: Icon(Icons.search),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(315.0, 55.0, 0.0, 0.0),
+                        child: SizedBox(
+                          height:30,
+                          width:30,
+                          child:FloatingActionButton(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.grey,
+                            onPressed: () {},
+                            shape: BeveledRectangleBorder(
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: Icon(Icons.add),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(315.0, 86.0, 0.0, 0.0),
+                        child: SizedBox(
+                          height:30,
+                          width:30,
+                          child:FloatingActionButton(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.grey,
+                            onPressed: () {},
+                            shape: BeveledRectangleBorder(
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: Icon(Icons.remove),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(315.0, 120.0, 0.0, 0.0),
+                        child: SizedBox(
+                          height:30,
+                          width:30,
+                          child:FloatingActionButton(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.red,
+                            onPressed: () {},
+                            shape: BeveledRectangleBorder(
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: Icon(Icons.filter_alt),
+                          ),
+                        ),
+                      ),
+                      buildPaddingRentValue(50.0, 50.0, 0.0, 0.0, '390€', 1),
+                      buildPadding(40.0, 60.0, 0.0, 0.0, '390€.\nRating: 4.12☆', 1, 'T2 near Alvalade'),
+                      buildPaddingRentValue(100.0, 150.0, 0.0, 0.0, '500€', 2),
+                      buildPadding(90.0, 160.0, 0.0, 0.0, '500€.\nRating: 4.77☆', 2, 'T3 in Av. Estados Unidos da América'),
+                      buildPaddingRentValue(150.0, 160.0, 0.0, 0.0, '440€', 3),
+                      buildPadding(140.0, 170.0, 0.0, 15.0, '440€.\nRating: 4.81☆', 3, 'T5 near Av. Estados Unidos da América'),
+                      buildPaddingRentValue(299.0, 160.0, 0.0, 0.0, '510€', 4),
+                      buildPadding(289.0, 170.0, 0.0, 0.0, '510€.\nRating: 4.33☆', 4,  'T3 in Av. de Roma'),
+                      buildPaddingRentValue(190.0, 281.0, 0.0, 0.0, '345€', 5),
+                      buildPadding(180.0, 291.0, 0.0, 0.0, '345€.\nRating: 4.20☆', 5,  'T4 near Entre Campos'),
 
                     ]
                   ),
@@ -197,7 +261,7 @@ class _MapState extends State<Map> {
     );
   }
 
-  Padding buildPaddingRentValue(double val1, double val2, double val3, double val4, String price) {
+  Padding buildPaddingRentValue(double val1, double val2, double val3, double val4, String price, int numberButton) {
     return Padding(
       padding: EdgeInsets.fromLTRB(val1, val2, val3, val4),
       child: Container(
@@ -205,7 +269,7 @@ class _MapState extends State<Map> {
         height: 15.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
-          color: Color(0xFF9ED3DD),
+          color: (butNumber == numberButton) ? Color(0xFF48ACBE) : Color(0xFF9ED3DD),
         ),
         child: Center(
           child: Text(
@@ -222,7 +286,7 @@ class _MapState extends State<Map> {
     );
   }
 
-  Padding buildPadding(double val1, double val2, double val3, double val4, int numberButton) {
+  Padding buildPadding(double val1, double val2, double val3, double val4, String price, int numberButton, String location) {
     return Padding(
       padding: EdgeInsets.fromLTRB(val1, val2, val3, val4),
       child: IconButton(
@@ -230,17 +294,41 @@ class _MapState extends State<Map> {
             setState(() {
               butNumber = numberButton;
             });
+            showDialog(
+              context: context,
+              builder: (BuildContext context) =>
+                  MyAlertDialog(price: price, apartName: location),
+            );
           },
           icon: Icon(
             Icons.location_on,
-            color: (butNumber == numberButton) ? Color(0xFF48ACBE) :  Color(0xFF9ED3DD),
-            size: 40.0,
+            color: (butNumber == numberButton) ? Color(0xFF48ACBE) : Color(0xFF9ED3DD),
+            size: (butNumber == numberButton) ? 43.0 : 40.0,
           )
       ),
     );
   }
 }
 
+class MyAlertDialog extends StatelessWidget {
+  String price;
+  String apartName;
+
+  MyAlertDialog({
+    required this.price,
+    required this.apartName
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Color(0xFF48ACBE),
+      title: Text(
+          this.apartName + ' for ' + this.price
+      ),
+    );
+  }
+}
 
 
 Widget _buildPopupNotification(BuildContext context) {
