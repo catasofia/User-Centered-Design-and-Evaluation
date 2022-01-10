@@ -166,18 +166,15 @@ class _EvaluateMainState extends State<EvaluateMain> {
                       );
                     },
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/carlos.jfif'),
-                      radius: 65,
+                      radius: 69.0,
+                      backgroundColor: Colors.black54,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('assets/carlos.jfif'),
+                        radius: 65.0,
+                      ),
                     )
                 ),
-                FlatButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/carolina.jpeg'),
-                      radius: 65,
-                    )
-                ),
+                buildFlatButton('assets/carolina.jpeg'),
               ],
             ),
             Row(
@@ -191,22 +188,8 @@ class _EvaluateMainState extends State<EvaluateMain> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FlatButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/joao.jpg'),
-                      radius: 65,
-                    )
-                ),
-                FlatButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/marco.jpg'),
-                      radius: 65,
-                    )
-                ),
+                buildFlatButton('assets/joao.jpg'),
+                buildFlatButton('assets/marco.jpg'),
               ],
             ),
             Row(
@@ -222,14 +205,18 @@ class _EvaluateMainState extends State<EvaluateMain> {
     );
   }
 
-  CircleAvatar buildCircleAvatar(String image) {
-    return CircleAvatar(
-      radius: 69.0,
-      backgroundColor: Colors.black54,
-      child: CircleAvatar(
-        backgroundImage: AssetImage(image),
-        radius: 65.0,
-      ),
+  FlatButton buildFlatButton(String image) {
+    return FlatButton(
+        padding: EdgeInsets.zero,
+        onPressed: () {},
+        child: CircleAvatar(
+          radius: 69.0,
+          backgroundColor: Colors.black54,
+          child: CircleAvatar(
+            backgroundImage: AssetImage(image),
+            radius: 65.0,
+          ),
+        )
     );
   }
 

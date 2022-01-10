@@ -5,6 +5,7 @@ import 'profile.dart';
 import 'tenantEvaluateMain.dart';
 import 'cleanElevator.dart';
 import 'exchangeLightbulb.dart';
+import 'tenantMap.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -167,22 +168,20 @@ class _HomeState extends State<Home> {
                color: Colors.white,
              ),
              Center(
-                child: Container(
-                    child: Image.asset('assets/map.jfif'),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1.5,
-                          blurRadius: 1.5,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      color: Color(0xFF48ACBE),
-                    ),
-                ),
-             ),
+               child: FlatButton(
+                   //padding: EdgeInsets.zero,
+                   onPressed: () {
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (context) => Map()),
+                     );
+                   },
+                   child: ClipRRect(
+                     borderRadius: BorderRadius.circular(7.0),
+                     child: Image.asset('assets/map.png', width: 280, ),
+                     ),
+                   )
+               ),
              Divider(
                height: 30.0,
                color: Colors.white,
