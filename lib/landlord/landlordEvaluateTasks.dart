@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_app/landlord/landlordHomeScreen.dart';
 import 'carlosProfileLandlord.dart';
 import 'landlordAddHouse.dart';
 import 'landlordAlameda.dart';
@@ -95,20 +96,23 @@ class _HomeState extends State<EvaluateTasks> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                  color: Colors.white,
+                  color: Colors.black,
                   icon: Icon(
                     Icons.house_outlined,
                     size: 35.0,
-                  ), onPressed: () {}
-              ),
-              IconButton(icon: Icon(
-                Icons.star_border,
-                size: 35.0,
-              ), onPressed: () {
+                  ), onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LandlordEvaluate()),
+                  MaterialPageRoute(builder: (context) => HomeLandlord()),
                 );
+              }
+              ),
+              IconButton(
+                  color: Colors.white,
+                  icon: Icon(
+                  Icons.star_border,
+                  size: 35.0,
+              ), onPressed: () {
               }),
               IconButton(
                   icon: Icon(
@@ -244,16 +248,6 @@ class _HomeState extends State<EvaluateTasks> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => _buildPopupAdd(context),
-          );
-        },
-        child: Icon(Icons.add, color: Colors.black),
-        backgroundColor: Color(0xFF48ACBE),
       ),
     );
   }

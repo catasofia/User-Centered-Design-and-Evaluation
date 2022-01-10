@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_app/landlord/landlordEvaluateTasks.dart';
 import 'carlosProfileLandlord.dart';
 import 'landlordAddHouse.dart';
 import 'landlordAlameda.dart';
@@ -261,7 +262,7 @@ class _HomeState extends State<HomeLandlord> {
               ), onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LandlordEvaluate()),
+                  MaterialPageRoute(builder: (context) => EvaluateTasks()),
                 );
               }),
               IconButton(
