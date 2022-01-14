@@ -25,13 +25,14 @@ class _CleanState extends State<CleanStairs>{
   List<Types> tasks= [
     Types(type: 'Description', task: 'You will have to clean all the stairs.\nAfter the stairs have been cleaned, you will have to wash the mop and the mop bucket, and put it back on the place where you have grabbed them.\nThis task has to be done twice per month.'),
     Types(type: 'Products', task: '- Cif Lava-Tudo;\n- Sonasol;\n- Neo Blanc.\n\nNote: the mop and the mop bucket are on the layoff of the building.'),
-    Types(type: 'Price', task: 'This task has a discount on the rent of 30€.')
+    Types(type: 'Price', task: 'This task has a discount on the rent of 30€.'),
+    Types(type: 'Date', task: 'This task has to be done on February 5th and February 12th.')
   ];
 
   @override
   Widget template(tt) {
     return Card(
-      margin: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 0.0),
+      margin: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 10.0),
       color: Color(0xFF9ED3DD),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -74,6 +75,7 @@ class _CleanState extends State<CleanStairs>{
     );
   }
 
+  final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,7 +207,24 @@ class _CleanState extends State<CleanStairs>{
                   ),
                 ),
             ),
-            for (var i in tasks) template(i),
+            Container(
+              height: 420,
+              child: Scrollbar(
+                isAlwaysShown: true,
+                controller: _scrollController,
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  child: SizedBox(
+                    width: 400,
+                    child:Column(
+                      children: [
+                        for(var i in tasks) template(i),
+                      ],
+                    ),
+                  ),
+                ),
+              ) ,
+            ),
           ]
         ),
       ),

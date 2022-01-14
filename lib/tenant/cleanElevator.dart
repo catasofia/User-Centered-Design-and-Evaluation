@@ -25,13 +25,14 @@ class _CleanState extends State<CleanElevator>{
   List<Types> tasks= [
     Types(type: 'Description', task: 'You will have to clean and desinfect the elevator.\nAfter that, you will have to wash all the instruments used and put it back on the place where you have grabbed them.\nThis task has to be done once per week.'),
     Types(type: 'Products', task: '- Cif Lava-Tudo;\n- Sonasol;\n- Ajax.\n\nNote: the fabrics, the mop and the mop bucket are on the layoff of the building.'),
-    Types(type: 'Price', task: 'This task has a discount on the rent of 20€.')
+    Types(type: 'Price', task: 'This task has a discount on the rent of 20€.'),
+    Types(type: 'Date', task: 'This task has to be done on February 1st and February 11th.')
   ];
 
   @override
   Widget template(tt) {
     return Card(
-      margin: EdgeInsets.fromLTRB(12.0, 16.0, 16.0, 8.0),
+      margin: EdgeInsets.fromLTRB(12.0, 18.0, 16.0, 10.0),
       color: Color(0xFF9ED3DD),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -74,6 +75,7 @@ class _CleanState extends State<CleanElevator>{
     );
   }
 
+  final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -202,7 +204,25 @@ class _CleanState extends State<CleanElevator>{
                   ),
                 ),
               ),
-              for (var i in tasks) template(i),
+              Container(
+                height: 440,
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  controller: _scrollController,
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: SizedBox(
+                      width: 400,
+                      child:Column(
+                        children: [
+                          for(var i in tasks) template(i),
+                        ],
+                      ),
+                    ),
+                  ),
+                ) ,
+              ),
+              SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[

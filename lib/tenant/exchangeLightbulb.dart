@@ -25,7 +25,8 @@ class _LightbulbState extends State<ExchangeLightbulb>{
   List<Types> tasks= [
     Types(type: 'Description', task: 'You will have to change the lightbulb in the hall of the building.\nAfter this task is performed, make sure to write the lightbulb used on the notepad so we can replace it in time for next time.'),
     Types(type: 'Products', task: '- Lightbulb: LED E27 A60 12W.\n\nNote: the ladder and the lightbulb are on the layoff of the building.'),
-    Types(type: 'Price', task: 'This task has a discount on the rent of 5€.')
+    Types(type: 'Price', task: 'This task has a discount on the rent of 5€.'),
+    Types(type: 'Date', task: 'This task has to be done on February 2nd.')
   ];
 
   @override
@@ -74,6 +75,7 @@ class _LightbulbState extends State<ExchangeLightbulb>{
     );
   }
 
+  final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,118 +136,137 @@ class _LightbulbState extends State<ExchangeLightbulb>{
         ),
       ),
       body: SafeArea(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(30.0, 12.0, 0.0, 0.0),
-                child: Row(
-                  children: <Widget>[
-                    IconButton(
-                        onPressed:(){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Profile()),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.person_outline,
-                          color: Colors.black,
-                          size: 40.0,
-                        )
-                    ),
-                    SizedBox(width: 15.0),
-                    Container(
-                      width: 240.0,
-                      height: 42.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.0),
-                        color: Colors.grey[200],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(width: 15.0),
-                          Icon(
-                            Icons.search,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.fromLTRB(30.0, 12.0, 0.0, 0.0),
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                          onPressed:(){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Profile()),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.person_outline,
                             color: Colors.black,
-                          ),
-                          SizedBox(width: 10.0),
-                          Text(
-                            'Search',
-                            style: TextStyle(
-                              fontFamily: 'Arial',
-                              fontSize: 20,
-                              color: Colors.black,
-                              height: 1,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                            size: 40.0,
+                          )
                       ),
-                    ),
-                    SizedBox(width: 15.0),
-                    Icon(
-                      Icons.notifications_active_outlined,
-                      color: Colors.black,
-                      size: 40.0,
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 4.0, 130.0, 0.0),
-                child: Text(
-                  'Exchange Lightbulb',
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                      SizedBox(width: 15.0),
+                      Container(
+                        width: 240.0,
+                        height: 42.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24.0),
+                          color: Colors.grey[200],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(width: 15.0),
+                            Icon(
+                              Icons.search,
+                              color: Colors.black,
+                            ),
+                            SizedBox(width: 10.0),
+                            Text(
+                              'Search',
+                              style: TextStyle(
+                                fontFamily: 'Arial',
+                                fontSize: 20,
+                                color: Colors.black,
+                                height: 1,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 15.0),
+                      Icon(
+                        Icons.notifications_active_outlined,
+                        color: Colors.black,
+                        size: 40.0,
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              for (var i in tasks) template(i),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    RaisedButton(
-                      onPressed: () {
 
-                      },
-                      color: Color(0xFFF86E6E),
-                      shape: BeveledRectangleBorder(
-                        borderRadius: BorderRadius.circular(3.0),
-                        side: BorderSide(color: Colors.black),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 4.0, 132.0, 0.0),
                       child: Text(
-                          '      Remove      ',
-                          style: TextStyle(
-                            color: Colors.black,
-                          )
+                        'Exchange Lightbulb',
+                        style: TextStyle(
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                    RaisedButton(
-                      onPressed: () {
-
-                      },
-                      color: Color(0xFF69BB67),
-                      shape: BeveledRectangleBorder(
-                        borderRadius: BorderRadius.circular(3.0),
-                        side: BorderSide(color: Colors.black),
-                      ),
-                      child: Text(
-                          '  Mark as Done  ',
-                          style: TextStyle(
-                            color: Colors.black,
-                          )
+                Container(
+                  height: 420,
+                  child: Scrollbar(
+                    isAlwaysShown: true,
+                    controller: _scrollController,
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      child: SizedBox(
+                          width: 400,
+                          child:Column(
+                            children: [
+                              for(var i in tasks) template(i),
+                            ],
+                          ),
                       ),
                     ),
-                  ]
-              )
-            ]
+                  ) ,
+                ),
+                SizedBox(height: 10,),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () {
+
+                        },
+                        color: Color(0xFFF86E6E),
+                        shape: BeveledRectangleBorder(
+                          borderRadius: BorderRadius.circular(3.0),
+                          side: BorderSide(color: Colors.black),
+                        ),
+                        child: Text(
+                            '      Remove      ',
+                            style: TextStyle(
+                              color: Colors.black,
+                            )
+                        ),
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+
+                        },
+                        color: Color(0xFF69BB67),
+                        shape: BeveledRectangleBorder(
+                          borderRadius: BorderRadius.circular(3.0),
+                          side: BorderSide(color: Colors.black),
+                        ),
+                        child: Text(
+                            '  Mark as Done  ',
+                            style: TextStyle(
+                              color: Colors.black,
+                            )
+                        ),
+                      ),
+                    ]
+                ),
+              ]
+          ),
         ),
-      ),
     );
   }
 }

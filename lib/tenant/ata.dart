@@ -25,7 +25,8 @@ class _ATAState extends State<ATA>{
   List<Types> tasks= [
     Types(type: 'Description', task: 'You will have to take notes about the neighbors that were at the meeting, the subjects discussed, what every person said, what was voted on, the time, and the place.'),
     Types(type: 'Products', task: '- ATA;\n- Black pen.\n\nNote: the ATA is in the office room, inside the desk drawer. The pen is on yourself but is preferably a black one.'),
-    Types(type: 'Price', task: 'This task has a discount on the rent of 15€.')
+    Types(type: 'Price', task: 'This task has a discount on the rent of 15€.'),
+    Types(type: 'Date', task: 'The meeting will take place on February 23rd.')
   ];
 
   @override
@@ -74,6 +75,7 @@ class _ATAState extends State<ATA>{
     );
   }
 
+  final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,7 +207,24 @@ class _ATAState extends State<ATA>{
                   ),
                 ),
               ),
-              for (var i in tasks) template(i),
+              Container(
+                height: 420,
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  controller: _scrollController,
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: SizedBox(
+                      width: 400,
+                      child:Column(
+                        children: [
+                          for(var i in tasks) template(i),
+                        ],
+                      ),
+                    ),
+                  ),
+                ) ,
+              ),
             ]
         ),
       ),

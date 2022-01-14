@@ -203,7 +203,7 @@ class _TaskState extends State<Task> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(50.0, 75.0, 0.0, 0.0),
                         child: Text(
-                          '15 - 21 Dec',
+                          '1 - 11 Feb',
                           style: TextStyle(
                             fontFamily: 'Arial',
                             fontSize: 10,
@@ -265,7 +265,7 @@ class _TaskState extends State<Task> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(60.0, 75.0, 0.0, 0.0),
                           child: Text(
-                            '17 Dec',
+                            '2 Feb',
                           style: TextStyle(
                           fontFamily: 'Arial',
                             fontSize: 10,
