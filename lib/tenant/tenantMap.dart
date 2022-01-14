@@ -5,6 +5,18 @@ import 'tenantTasks.dart';
 import 'tenantEvaluateMain.dart';
 import 'tenantCarlosProfile.dart';
 
+bool _T1 = false;
+bool _T2 = false;
+bool _T3 = false;
+bool _T4 = false;
+bool _T0 = false;
+int flag = 0;
+int flag1 = 0;
+int flag2 = 0;
+int flag3 = 0;
+int flag4 = 0;
+RangeValues _currentRangeValues = const RangeValues(300, 500);
+
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
@@ -234,7 +246,12 @@ class _MapState extends State<Map> {
                           child:FloatingActionButton(
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.red,
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => _buildPopupFilters(context),
+                              );
+                            },
                             shape: BeveledRectangleBorder(
                                 borderRadius: BorderRadius.circular(2.0)
                             ),
@@ -400,3 +417,259 @@ Widget _buildPopupNotification(BuildContext context) {
     ],
   );
 }
+
+Widget _buildPopupFilters(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Filters',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.white,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: Color(0xFF48ACBE),
+    content: StatefulBuilder(
+      builder: (BuildContext context, StateSetter setState) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Price range",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 24,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+            RangeSlider(
+              activeColor: Colors.black,
+              inactiveColor: Colors.grey,
+              values: _currentRangeValues,
+              max: 750,
+              min: 200,
+              divisions: 10,
+              labels: RangeLabels(
+                _currentRangeValues.start.round().toString(),
+                _currentRangeValues.end.round().toString(),
+              ),
+              onChanged: (RangeValues values) {
+                setState(() {
+                  _currentRangeValues = values;
+                });
+              },
+            ),
+            Text(
+              "Number of rooms",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 24,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    IconButton(onPressed: (){
+                      setState(() {
+                        if(flag == 0){
+                          _T0 = true;
+                          flag = 1;
+                        }
+                        else if(flag == 1){
+                          _T0 = false;
+                          flag = 0;
+                        }
+                      });
+                    },
+                        icon: Icon(Icons.crop_square,
+                          color: _T0 ? Colors.white : Colors.black,
+                          size: 32,)),
+                    Text(
+                      "T0",
+                      style: TextStyle(
+                        fontFamily: 'Arial',
+                        fontSize: 14,
+                        color: Colors.black,
+                        height: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 10.0),
+                Column(
+                  children: [
+                    IconButton(onPressed: (){
+                      setState(() {
+                        if(flag1 == 0){
+                          _T1 = true;
+                          flag1 = 1;
+                        }
+                        else if(flag1 == 1){
+                          _T1 = false;
+                          flag1 = 0;
+                        }
+                      });
+                    },
+                        icon: Icon(Icons.crop_square,
+                          color: _T1 ? Colors.white: Colors.black,
+                          size: 32,)),
+                    Text(
+                      "T1",
+                      style: TextStyle(
+                        fontFamily: 'Arial',
+                        fontSize: 14,
+                        color: Colors.black,
+                        height: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 10.0),
+                Column(
+                  children: [
+                    IconButton(onPressed: (){
+                      setState(() {
+                        if(flag2 == 0){
+                          _T2 = true;
+                          flag2 = 1;
+                        }
+                        else if(flag2 == 1){
+                          _T2 = false;
+                          flag2 = 0;
+                        }
+                      });
+                    },
+                        icon: Icon(Icons.crop_square,
+                          color: _T2 ? Colors.white: Colors.black,
+                          size: 32,)),
+                    Text(
+                      "T2",
+                      style: TextStyle(
+                        fontFamily: 'Arial',
+                        fontSize: 14,
+                        color: Colors.black,
+                        height: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 10.0),
+                Column(
+                  children: [
+                    IconButton(onPressed: (){
+                      setState(() {
+                        if(flag3 == 0){
+                          _T3 = true;
+                          flag3 = 1;
+                        }
+                        else if(flag3 == 1){
+                          _T3 = false;
+                          flag3 = 0;
+                        }
+                      });
+                    },
+                        icon: Icon(Icons.crop_square,
+                          color: _T3 ? Colors.white: Colors.black,
+                          size: 32,)),
+                    Text(
+                      "T3",
+                      style: TextStyle(
+                        fontFamily: 'Arial',
+                        fontSize: 14,
+                        color: Colors.black,
+                        height: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 10.0),
+                Column(
+                  children: [
+                    IconButton(onPressed: (){
+                      setState(() {
+                        if(flag4 == 0){
+                          _T4 = true;
+                          flag4 = 1;
+                        }
+                        else if(flag4 == 1){
+                          _T4 = false;
+                          flag4 = 0;
+                        }
+                      });
+                    },
+                        icon: Icon(Icons.crop_square,
+                          color: _T4 ? Colors.white: Colors.black,
+                          size: 32,)),
+                    Text(
+                      "T4",
+                      style: TextStyle(
+                        fontFamily: 'Arial',
+                        fontSize: 14,
+                        color: Colors.black,
+                        height: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 88.0,
+                  height: 25.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 1.5,
+                        blurRadius: 1.5,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                    color: Color(0xFF006D77),
+                  ),
+                  child: new Row(
+                    children: <Widget>[
+                      new FlatButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Map()),
+                          );
+                        },
+                        textColor: Theme.of(context).primaryColor,
+                        child: const Text(
+                          'close',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 18,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      }
+    ),
+  );
+}
+
