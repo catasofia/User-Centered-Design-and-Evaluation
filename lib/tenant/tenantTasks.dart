@@ -174,7 +174,13 @@ class _TaskState extends State<Task> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(100.0, 0.0, 0.0, 0.0),
                         child: IconButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  MyAlertDialog(description: 'price', products: 'location', date: 'aaa'),
+                            );
+                          },
                           icon: Icon(
                             Icons.info_outline,
                             color: Colors.yellow,
@@ -235,7 +241,13 @@ class _TaskState extends State<Task> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(100.0, 0.0, 0.0, 0.0),
                           child: IconButton(
-                              onPressed: (){},
+                              onPressed: (){
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      MyAlertDialog(description: 'price', products: 'location', date: 'aaa'),
+                                );
+                              },
                               icon: Icon(
                                 Icons.info_outline,
                                 color: Colors.yellow,
@@ -894,6 +906,29 @@ Widget _buildPopupTaskAta(BuildContext context) {
       ),
     ],
   );
+}
+
+
+class MyAlertDialog extends StatelessWidget {
+  String description;
+  String products;
+  String date;
+
+  MyAlertDialog({
+    required this.description,
+    required this.products,
+    required this.date
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Color(0xFF48ACBE),
+      title: Text(
+          'Description: ' + this.description + '\nProducts: ' + this.products + '\nDate: ' + this.date
+      ),
+    );
+  }
 }
 
 
