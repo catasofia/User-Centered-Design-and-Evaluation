@@ -21,24 +21,72 @@ import 'landlord/landlordAddTask.dart';
 import 'landlord/landlordEditTask.dart';
 import 'neighbor/suggestTasks.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() async{
+void main() => runApp(MaterialApp(
+    initialRoute: '/',
+    routes: {
+      // '/': (context) => Loading(),
+      //'/': (context) => Contacts(),
+      //'/home': (context) => Home(),
+      //'/home': (context) => Task(),
+      '/': (context) => HomeScreen(),
+    }
+));
+
+
+
+/*Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(Testing());
 }
-class MyApp extends StatelessWidget {
+class Testing extends StatefulWidget {
+  const Testing({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context){
+  _TestingState createState() => _TestingState();
+}
+
+class _TestingState extends State<Testing> {
+  final textController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference teste = FirebaseFirestore.instance.collection('teste');
+
     return MaterialApp(
-        initialRoute: '/',
-        routes: {
-          // '/': (context) => Loading(),
-          //'/': (context) => Contacts(),
-          //'/home': (context) => Home(),
-          //'/home': (context) => Task(),
-          '/': (context) => HomeScreen(),
-        }
+      home:Scaffold(
+        appBar: AppBar(
+          title: TextField(
+            controller: textController,
+          ),
+        ),
+        body: Center(
+          child: StreamBuilder(
+            stream: teste.snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
+              return ListView(
+                children: snapshot.data!.docs.map((teste){
+                  return Center(
+                    child: ListTile(
+                      title: Text(teste['name'])
+                    )
+                  );
+                }).toList(),
+              );
+            }
+          )
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.save),
+          onPressed: () {
+            teste.add({
+              'name': textController.text,
+            });
+          },
+        ),
+      )
     );
   }
-}
+}*/
