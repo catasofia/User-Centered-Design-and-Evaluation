@@ -8,13 +8,20 @@ import 'carlosProfileLandlord.dart';
 import 'landlordHomeScreen.dart';
 import 'landlordSuggestedTask.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class AddHouse extends StatefulWidget {
   const AddHouse({Key? key}) : super(key: key);
 
   @override
   _AddHouseState createState() => _AddHouseState();
 }
-final textController_1 = TextEditingController();
+
+final house_name = TextEditingController();
+final price = TextEditingController();
+final description = TextEditingController();
+final location = TextEditingController();
 
 class _AddHouseState extends State<AddHouse> {
   File? image;
@@ -38,6 +45,8 @@ class _AddHouseState extends State<AddHouse> {
   }
   @override
   Widget build(BuildContext context) {
+    CollectionReference house = FirebaseFirestore.instance.collection('house');
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -116,9 +125,9 @@ class _AddHouseState extends State<AddHouse> {
                         ],
                       ),
                       new TextField(
-                        controller: textController_1,
+                        controller: house_name,
                         decoration: InputDecoration(
-                            hintText: "Insert name *"
+                            hintText: "Insert name"
                         ),
                       ),
                       SizedBox(height: 20,),
@@ -131,6 +140,7 @@ class _AddHouseState extends State<AddHouse> {
                         ],
                       ),
                       new TextField(
+                        controller: price,
                         decoration: InputDecoration(
                             hintText: "Insert price"
                         ),
@@ -145,6 +155,7 @@ class _AddHouseState extends State<AddHouse> {
                         ],
                       ),
                       new TextField(
+                        controller: description,
                         decoration: InputDecoration(
                             hintText: "Insert description"
                         ),
@@ -159,6 +170,7 @@ class _AddHouseState extends State<AddHouse> {
                         ],
                       ),
                       new TextField(
+                        controller: location,
                         decoration: InputDecoration(
                             hintText: "Insert location"
                         ),
@@ -232,6 +244,12 @@ class _AddHouseState extends State<AddHouse> {
                         ),
                         onPressed: () {
                           if(checkTextFieldEmptyOrNot()){
+                            house.add({
+                              'name': house_name.text,
+                              'price': price.text,
+                              'location': location.text,
+                              'description': description.text,
+                            });
                             clearText();
                             showDialog(
                               context: context,
@@ -456,7 +474,7 @@ Widget _errorPopup(BuildContext context) {
         Center(child: Icon(Icons.error, color: Colors.red[700], size: 100,)),
         SizedBox(height: 15,),
         Text(
-          "You need to fill the house name in order to confirm.",
+          "You need to fill the details in order to confirm.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -488,11 +506,20 @@ Widget _errorPopup(BuildContext context) {
 }
 
 clearText(){
-  textController_1.clear();
+  house_name.clear();
+  description.clear();
+  price.clear();
+  location.clear();
 }
 
 checkTextFieldEmptyOrNot(){
-  String text1;
-  text1 = textController_1.text;
-  return text1 != '' ;
+  String name;
+  String loc;
+  String desc;
+  String pri;
+  name = house_name.text;
+  loc = location.text;
+  desc = description.text;
+  pri = price.text;
+  return name != '' && loc !='' && desc !='' && pri !='';
 }
