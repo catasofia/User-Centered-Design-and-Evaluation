@@ -20,14 +20,25 @@ import 'landlord/landlordHomeScreen.dart';
 import 'landlord/landlordAddTask.dart';
 import 'landlord/landlordEditTask.dart';
 import 'neighbor/suggestTasks.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(MaterialApp(
-    initialRoute: '/',
-    routes: {
-     // '/': (context) => Loading(),
-      //'/': (context) => Contacts(),
-      //'/home': (context) => Home(),
-      //'/home': (context) => Task(),
-      '/': (context) => HomeScreen(),
-    }
-));
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context){
+    return MaterialApp(
+        initialRoute: '/',
+        routes: {
+          // '/': (context) => Loading(),
+          //'/': (context) => Contacts(),
+          //'/home': (context) => Home(),
+          //'/home': (context) => Task(),
+          '/': (context) => HomeScreen(),
+        }
+    );
+  }
+}

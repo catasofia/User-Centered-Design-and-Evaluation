@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "825230007156",
+    "project_id": "sturent-5b5ed",
+    "storage_bucket": "sturent-5b5ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825230007156:android:a05ffd8d308130cdda6a21",
+        "android_client_info": {
+          "package_name": "com.example.project_first_try"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825230007156-vk93m9iccia99vjrvdrq5fhfskkj8dmf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBg9rk1bc8Zauc44XeCnjSmG2OVASROhEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825230007156-vk93m9iccia99vjrvdrq5fhfskkj8dmf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
