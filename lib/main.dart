@@ -4,6 +4,8 @@ import 'package:time_app/landlord/landlordEvaluateTasks.dart';
 import 'package:time_app/landlord/landlordSeeHouse.dart';
 import 'package:time_app/landlord/landlordSuggestedTask.dart';
 import 'package:time_app/neighbor/suggestTasks.dart';
+import 'package:time_app/signIn.dart';
+import 'package:time_app/signUp.dart';
 import 'package:time_app/tenant/tenantEvaluatePage.dart';
 import 'package:time_app/tenant/tenantHomescreen.dart';
 import 'landlord/landlordAddHouse.dart';
@@ -23,7 +25,7 @@ import 'neighbor/suggestTasks.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() => runApp(MaterialApp(
+/*void main() => runApp(MaterialApp(
     initialRoute: '/',
     routes: {
       // '/': (context) => Loading(),
@@ -34,12 +36,12 @@ void main() => runApp(MaterialApp(
     }
 ));
 
-
-
-/*Future<void> main() async{
+*/
+/*
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(Testing());
+  runApp(SignUp());
 }
 class Testing extends StatefulWidget {
   const Testing({Key? key}) : super(key: key);
@@ -89,4 +91,21 @@ class _TestingState extends State<Testing> {
       )
     );
   }
-}*/
+}
+*/
+
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MaterialApp(
+      initialRoute: '/',
+      routes: {
+        // '/': (context) => Loading(),
+        //'/': (context) => Contacts(),
+        //'/home': (context) => Home(),
+        //'/home': (context) => Task(),
+        '/': (context) => HomeScreen(),
+      }
+  ));
+}
+
