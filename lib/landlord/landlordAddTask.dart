@@ -5,8 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:time_app/landlord/landlordAlameda.dart';
 
 import 'carlosProfileLandlord.dart';
+import 'landlordHomeScreen.dart';
 import 'landlordSuggestedTask.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({Key? key}) : super(key: key);
@@ -15,10 +18,18 @@ class AddTask extends StatefulWidget {
   _AddTaskState createState() => _AddTaskState();
 }
 
+//FALTA ADD CAMPO PARA DATA !!!
+final task_name = TextEditingController();
+final discount = TextEditingController();
+final description = TextEditingController();
+final products = TextEditingController();
+
 class _AddTaskState extends State<AddTask> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference task = FirebaseFirestore.instance.collection('task');
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -96,6 +107,7 @@ class _AddTaskState extends State<AddTask> {
                     ],
                   ),
                   new TextField(
+                    controller: task_name,
                     decoration: InputDecoration(
                         hintText: "Insert name"
                     ),
@@ -110,6 +122,7 @@ class _AddTaskState extends State<AddTask> {
                     ],
                   ),
                   new TextField(
+                    controller: discount,
                     decoration: InputDecoration(
                         hintText: "Insert value"
                     ),
@@ -124,6 +137,7 @@ class _AddTaskState extends State<AddTask> {
                     ],
                   ),
                   new TextField(
+                    controller: description,
                     decoration: InputDecoration(
                         hintText: "Insert description"
                     ),
@@ -138,6 +152,7 @@ class _AddTaskState extends State<AddTask> {
                     ],
                   ),
                   new TextField(
+                    controller: products,
                     decoration: InputDecoration(
                         hintText: "Insert products"
                     ),
@@ -162,11 +177,27 @@ class _AddTaskState extends State<AddTask> {
                             borderRadius: BorderRadius.circular(14)
                         ),
                       ),
-                      onPressed: () { showDialog(
-                        context: context,
-                        //FAZER FUNCAO P SO MOSTRAR POP UP QD N ESTIVER TUDO PREENCHIDO
-                        builder: (BuildContext context) => _buildPopupEvaluation(context),
-                      );},
+                      onPressed: () {
+                        if(checkTextFieldEmptyOrNot()){
+                          task.add({
+                            'name': task_name.text,
+                            'discount': discount.text,
+                            'products': products.text,
+                            'description': description.text,
+                          });
+                          clearText();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => _buildPopupAddTask(context),
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            //FAZER FUNCAO P SO MOSTRAR POP UP QD N ESTIVER TUDO PREENCHIDO
+                            builder: (BuildContext context) => _buildPopupEvaluation(context),
+                          );
+                        }
+                        },
                       child: Text('Add',
                         style: TextStyle(
                           fontFamily: 'Arial',
@@ -355,6 +386,112 @@ Widget _buildPopupNotification(BuildContext context) {
               Icons.remove_circle_outline,
               color: Colors.black,
               size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+clearText(){
+  task_name.clear();
+  description.clear();
+  products.clear();
+  discount.clear();
+}
+
+checkTextFieldEmptyOrNot(){
+  String name;
+  String dis;
+  String prod;
+  String desc;
+  name = task_name.text;
+  dis = discount.text;
+  prod = products.text;
+  desc = description.text;
+  return name != '' && dis !='' && prod !='' && desc !='';
+}
+
+Widget _buildPopupAddTask(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check,
+              size: 20.0,
+              color: Colors.lightGreen,
+            ),
+            SizedBox(width: 3.0),
+          ],
+        ),
+        SizedBox(height: 12.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Task added!",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 90.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.grey[300],
+            ),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      //MUDAR !!
+                      MaterialPageRoute(builder: (context) => HomeLandlord()),
+                    );
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 15,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

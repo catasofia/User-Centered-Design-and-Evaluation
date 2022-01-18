@@ -462,7 +462,7 @@ Widget _buildPopupAddHouse(BuildContext context) {
     ],
   );
 }
-//VER O Q E PRECISO PREENCHER PARA ADD UMA CASA
+
 Widget _errorPopup(BuildContext context) {
   return new AlertDialog(
     alignment: Alignment.center,
