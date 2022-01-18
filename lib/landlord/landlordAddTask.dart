@@ -18,11 +18,11 @@ class AddTask extends StatefulWidget {
   _AddTaskState createState() => _AddTaskState();
 }
 
-//FALTA ADD CAMPO PARA DATA !!!
 final task_name = TextEditingController();
 final discount = TextEditingController();
 final description = TextEditingController();
 final products = TextEditingController();
+final date = TextEditingController();
 
 class _AddTaskState extends State<AddTask> {
 
@@ -157,6 +157,21 @@ class _AddTaskState extends State<AddTask> {
                         hintText: "Insert products"
                     ),
                   ),
+                  SizedBox(height: 20,),
+                  Row(
+                    children: [
+                      Text('Date',
+                        style: TextStyle(
+                            fontSize: 20
+                        ),),
+                    ],
+                  ),
+                  new TextField(
+                    controller: date,
+                    decoration: InputDecoration(
+                        hintText: "Insert date"
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -164,7 +179,7 @@ class _AddTaskState extends State<AddTask> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 90.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                   child: Container(
                     width: 150,
                     height: 50,
@@ -184,6 +199,7 @@ class _AddTaskState extends State<AddTask> {
                             'discount': discount.text,
                             'products': products.text,
                             'description': description.text,
+                            'date': description.text,
                           });
                           clearText();
                           showDialog(
@@ -399,6 +415,7 @@ clearText(){
   description.clear();
   products.clear();
   discount.clear();
+  date.clear();
 }
 
 checkTextFieldEmptyOrNot(){
@@ -406,11 +423,13 @@ checkTextFieldEmptyOrNot(){
   String dis;
   String prod;
   String desc;
+  String da;
   name = task_name.text;
   dis = discount.text;
   prod = products.text;
   desc = description.text;
-  return name != '' && dis !='' && prod !='' && desc !='';
+  da = date.text;
+  return name != '' && dis !='' && prod !='' && desc !='' && da !='';
 }
 
 Widget _buildPopupAddTask(BuildContext context) {

@@ -41,7 +41,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(SignUp());
+  runApp(Testing());
 }
 class Testing extends StatefulWidget {
   const Testing({Key? key}) : super(key: key);
@@ -55,7 +55,7 @@ class _TestingState extends State<Testing> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference teste = FirebaseFirestore.instance.collection('teste');
+    CollectionReference teste = FirebaseFirestore.instance.collection('teste2');
 
     return MaterialApp(
       home:Scaffold(
@@ -66,13 +66,16 @@ class _TestingState extends State<Testing> {
         ),
         body: Center(
           child: StreamBuilder(
-            stream: teste.snapshots(),
+            stream: teste.orderBy('name').snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
               return ListView(
-                children: snapshot.data!.docs.map((teste){
+                children: snapshot.data!.docs.map((teste2){
                   return Center(
                     child: ListTile(
-                      title: Text(teste['name'])
+                      title: Text(teste2['name']),
+                      onLongPress: (){
+                        teste2.reference.delete();
+                      },
                     )
                   );
                 }).toList(),
@@ -92,8 +95,8 @@ class _TestingState extends State<Testing> {
     );
   }
 }
-*/
 
+*/
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -108,4 +111,3 @@ Future<void> main() async{
       }
   ));
 }
-
