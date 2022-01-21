@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:time_app/landlord/landlordEvaluateTasks.dart';
 import 'carlosProfileLandlord.dart';
-import 'landlordAddHouse.dart';
-import 'landlordAlameda.dart';
-import 'landlordEvaluate.dart';
 import 'landlordSuggestedTask.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+//FALTA DAR GUARDAR NA BD
 
 class House{
   String name;
@@ -16,6 +16,7 @@ class House{
 class Tenant{
   String name;
   String imagePath;
+  bool? value = false;
 
   Tenant({required this.name, required this.imagePath});
 }
@@ -29,57 +30,62 @@ class addTenant extends StatefulWidget {
 
 class _HomeState extends State<addTenant> {
 
-  List<House> houses= [
-    House(name: 'Alameda T2'),
-    House(name: 'Areeiro T3'),
-  ];
+  CollectionReference profiles = FirebaseFirestore.instance.collection('profile');
+  CollectionReference houses = FirebaseFirestore.instance.collection('house');
 
-  List<Tenant> tenants= [
-    Tenant(name: 'Carolina Oliveira', imagePath: 'assets/carolina.jpeg'),
-    Tenant(name: 'Beatriz Dias', imagePath: 'assets/beatriz.jpg'),
-  ];
+  List<Tenant> tenants = [];
+  List<House> nameHouses = [];
+  List<String> imageTenants = [];
 
-  @override
   Widget templateT(tt) {
     return Card(
-      margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
+      margin: const EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
       child: Column(
         children: <Widget>[
           Row(
             children: [
-              new Align(
-                alignment: new Alignment(-1.1, 0.0),
+              Align(
+                alignment: const Alignment(-1.1, 0.0),
                 child:Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child:  Container(
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage(tt.imagePath),
-                      radius: 20.0,
-                    ),),),),
-              SizedBox(height: 50.0),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Checkbox(
+                      value: tt.value,
+                      activeColor: const Color(0xFF48ACBE),
+                      onChanged: (bool? value) {
+                        setState(() {
+                          tt.value = value;
+                        });
+                      },
+                    ),),),
+              const SizedBox(height: 50.0),
               Text(
                 tt.name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18.0,
                   color: Colors.black,
                   letterSpacing: 2.0,
                 ),
                 textAlign: TextAlign.center,
               ),
+              Padding(
+               padding: const EdgeInsets.only(left: 40),
+                  child:  CircleAvatar(
+                    backgroundImage: AssetImage(tt.imagePath),
+                    radius: 20.0,
+                  ),),
             ],
           )
            ] ),
     );
   }
 
-  @override
   Widget templateH(tt) {
     return Card(
-      margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
+      margin: const EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
       child: Column(
         children: <Widget>[
-          new Align(
-              alignment: new Alignment(-1.1, 0.0),
+          Align(
+              alignment: const Alignment(-1.1, 0.0),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -87,7 +93,7 @@ class _HomeState extends State<addTenant> {
                   padding: const EdgeInsets.all(8.0),
                   child: Checkbox(
                     value: tt.value,
-                    activeColor: Color(0xFF48ACBE),
+                    activeColor: const Color(0xFF48ACBE),
                     onChanged: (bool? value) {
                       setState(() {
                         tt.value = value;
@@ -95,14 +101,14 @@ class _HomeState extends State<addTenant> {
                     },
                   ),
                 ),
-                    Container(
+                    SizedBox(
                       width: 287,
                       height: 50.0,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 16),
                         child:Text(
                           tt.name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18.0,
                             color: Colors.black,
                             letterSpacing: 2.0,
@@ -123,30 +129,30 @@ class _HomeState extends State<addTenant> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF48ACBE),
+        color: const Color(0xFF48ACBE),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+          padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
                   color: Colors.white,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.house_outlined,
                     size: 35.0,
                   ), onPressed: () {}
               ),
-              IconButton(icon: Icon(
+              IconButton(icon: const Icon(
                 Icons.star_border,
                 size: 35.0,
               ), onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EvaluateTasks()),
+                  MaterialPageRoute(builder: (context) => const EvaluateTasks()),
                 );
               }),
               IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.cleaning_services_rounded,
                     size: 30.0,
                   ),
@@ -155,7 +161,7 @@ class _HomeState extends State<addTenant> {
                   }
               ),
               IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.chat_bubble_outline_rounded,
                     size: 30.0,
                   ),
@@ -168,7 +174,7 @@ class _HomeState extends State<addTenant> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+        padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -183,11 +189,11 @@ class _HomeState extends State<addTenant> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CarlosProfileLandlord()),
+                      MaterialPageRoute(builder: (context) => const CarlosProfileLandlord()),
                     );
                   },
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Container(
                   width: 235.0,
                   height: 42.0,
@@ -197,7 +203,7 @@ class _HomeState extends State<addTenant> {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
+                    children: const <Widget>[
                       SizedBox(width: 15.0),
                       Icon(
                         Icons.search,
@@ -217,7 +223,7 @@ class _HomeState extends State<addTenant> {
                     ],
                   ),
                 ),
-                SizedBox(width: 8.0),
+                const SizedBox(width: 8.0),
                 IconButton(
                   icon: const Icon(
                     Icons.notifications_active_outlined,
@@ -233,17 +239,32 @@ class _HomeState extends State<addTenant> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Center(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    for (var i in tenants) templateT(i),
-                  ],
+                    FutureBuilder<QuerySnapshot>(
+                      future: profiles.get(),
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text("Something went wrong");
+                        }
+                        if (snapshot.hasData) {
+                          for (var e in snapshot.data!.docs) {
+                              if (e['role'] == "tenant") {
+                                Tenant t = Tenant(name:e['name'], imagePath: e['image']);
+                                if(!(tenants.any((item) => item.name == t.name))){
+                                    tenants.add(t);
+                            }
+                          }}
+                        }
+                        return const Text("");
+                      }), for (var i in tenants) templateT(i),],
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -255,7 +276,7 @@ class _HomeState extends State<addTenant> {
                     color: Colors.grey[200],
                   ),
                   child: Row(
-                    children: <Widget>[
+                    children: const <Widget>[
                       SizedBox(width: 15.0),
                       Icon(
                         Icons.search,
@@ -283,10 +304,27 @@ class _HomeState extends State<addTenant> {
               Column(mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                for (var i in houses) templateH(i),
+                  FutureBuilder<QuerySnapshot>(
+                      future: houses.get(),
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text("Something went wrong");
+                        }
+                        if (snapshot.hasData) {
+                          for (var e in snapshot.data!.docs) {
+                            House h = House(name:e['name']);
+                            if(!(nameHouses.any((item) => item.name == h.name))){
+                              nameHouses.add(h);
+                            }
+
+                          }}
+
+                        return const Text("");
+                        }
+                      ), for (var i in nameHouses) templateH(i),
               ],
             )]),
-            SizedBox(height:20),
+            const SizedBox(height:20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -297,7 +335,7 @@ class _HomeState extends State<addTenant> {
                       builder: (BuildContext context) => _buildPopupConfirmation(context),
                     );
                   },
-                  child:Icon(Icons.person_add_alt_1 ),
+                  child:const Icon(Icons.person_add_alt_1 ),
                 ),
 
               ],
@@ -310,7 +348,7 @@ class _HomeState extends State<addTenant> {
 }
 
 Widget _buildPopupConfirmation(BuildContext context) {
-  return new AlertDialog(
+  return AlertDialog(
     alignment: Alignment.center,
     title: const Text(
       'Add Tenant(s)',
@@ -322,11 +360,11 @@ Widget _buildPopupConfirmation(BuildContext context) {
       ),
       textAlign: TextAlign.center,
     ),
-    backgroundColor: Color(0xFF48ACBE),
-    content: new Column(
+    backgroundColor: const Color(0xFF48ACBE),
+    content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: const <Widget>[
         Text(
           "Are you sure you want to add this tenant(s) to the house(s)?",
           style: TextStyle(
@@ -353,17 +391,17 @@ Widget _buildPopupConfirmation(BuildContext context) {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 1.5,
                   blurRadius: 1.5,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3),
                 ),
               ],
               color: Colors.redAccent,
             ),
-            padding: new EdgeInsets.only(top: 6.0),
-            child: new Row(
+            padding: const EdgeInsets.only(top: 6.0),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                new FlatButton(
+                FlatButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -391,17 +429,17 @@ Widget _buildPopupConfirmation(BuildContext context) {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 1.5,
                   blurRadius: 1.5,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3),
                 ),
               ],
               color: Colors.lightGreen,
             ),
-            padding: new EdgeInsets.only(top: 6.0),
-            child: new Row(
+            padding: const EdgeInsets.only(top: 6.0),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                new FlatButton(
+                FlatButton(
                   onPressed: () {},
                   textColor: Theme.of(context).primaryColor,
                   child: const Text(
@@ -426,7 +464,7 @@ Widget _buildPopupConfirmation(BuildContext context) {
 
 
 Widget _buildPopupNotification(BuildContext context) {
-  return new AlertDialog(
+  return AlertDialog(
     alignment: Alignment.center,
     title: const Text(
       'Notifications',
@@ -438,12 +476,12 @@ Widget _buildPopupNotification(BuildContext context) {
       ),
       textAlign: TextAlign.center,
     ),
-    backgroundColor: Color(0xFF48ACBE),
-    content: new Column(
+    backgroundColor: const Color(0xFF48ACBE),
+    content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           "  - João completed a task, rate him now.",
           style: TextStyle(
             fontFamily: 'Arial',
@@ -452,8 +490,8 @@ Widget _buildPopupNotification(BuildContext context) {
             height: 1,
           ),
         ),
-        SizedBox(height: 20.0),
-        Text(
+        const SizedBox(height: 20.0),
+        const Text(
           "  - Carolina has sent you a message.",
           style: TextStyle(
             fontFamily: 'Arial',
@@ -462,7 +500,7 @@ Widget _buildPopupNotification(BuildContext context) {
             height: 1,
           ),
         ),
-        SizedBox(height: 20.0),
+        const SizedBox(height: 20.0),
         TextButton(
           style: TextButton.styleFrom(
             textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
@@ -470,7 +508,7 @@ Widget _buildPopupNotification(BuildContext context) {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SuggestedTask()),
+              MaterialPageRoute(builder: (context) => const SuggestedTask()),
             );
 
           },
@@ -486,7 +524,7 @@ Widget _buildPopupNotification(BuildContext context) {
       Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          new FlatButton(
+          FlatButton(
             onPressed: () {
               Navigator.of(context).pop();
             },

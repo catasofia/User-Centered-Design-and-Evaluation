@@ -1,8 +1,8 @@
-import 'dart:collection';
-
+import 'package:time_app/landlord/landlordAddNeighbor.dart';
+import 'landlordAddTenant.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Tenant{
   String name;
@@ -45,11 +45,13 @@ class _HomeState extends State<LandlordSeeHouse> {
   List<Tenant> tenants = [Tenant(name:'Carolina')];
   List<Neighbor> neighbors = [Neighbor(name:'Marco')];
   List<Task> tasks = [Task(name:'Clean Halls')];
+  List<String> nameTenants = [];
+  List<String> nameNeighbors = [];
+  String nameHouse = "";
 
   @override
-  Widget template(ref) {
-    print("gostode comer");
-    print(ref);
+  Widget template(tt) {
+    print("ENTROU NO CARD");
     return Card(
       margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
         child: Column(
@@ -60,32 +62,15 @@ class _HomeState extends State<LandlordSeeHouse> {
                 width: 400.0,
                 height: 28.0,
                 child:
-                FutureBuilder<DocumentSnapshot>(
-                    future: profiles.doc(ref).get(),
-                    builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return Text("Something went wrong");
-                      }
-
-                      if (snapshot.hasData && !snapshot.data!.exists) {
-                        return Text("Document does not exist");
-                      }
-
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                        return Text(data['name']);
-
-                      }
-                      return Text("loading");}),
-                /*Text(
-                  name,
+                Text(
+                  tt,
                   style: TextStyle(
                     fontSize: 18.0,
                     color: Colors.black,
                     letterSpacing: 2.0,
                   ),
                   textAlign: TextAlign.center,
-                ),*/
+                ),
               ),
             ),
           ],
@@ -93,6 +78,7 @@ class _HomeState extends State<LandlordSeeHouse> {
     );
   }
 
+/*
   @override
   Widget template1(tt) {
 
@@ -137,7 +123,7 @@ class _HomeState extends State<LandlordSeeHouse> {
       ),
     );
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     Future<DocumentSnapshot<Object?>>? house = houses.doc('ZoMPtra4WxTnMwVAihIz').get();
@@ -260,6 +246,7 @@ class _HomeState extends State<LandlordSeeHouse> {
 
             if (snapshot.connectionState == ConnectionState.done) {
               data = snapshot.data!.data() as Map<String, dynamic>;
+              nameHouse = data['name'];
               return Text(data['name'],
                   style: TextStyle(
                     color: Colors.black,
@@ -275,6 +262,23 @@ class _HomeState extends State<LandlordSeeHouse> {
               height: 25.0,
               color: Colors.white,
             ),
+            FutureBuilder<QuerySnapshot>(
+              future: profiles.get(), //.doc('VRWodus2pN2wXXHSz8JH').get(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                nameTenants = [];
+                if (snapshot.hasError) {
+                  return Text("Something went wrong");
+                }
+                if (snapshot.hasData) {
+                  snapshot.data!.docs.forEach((e) {
+                    if(e['house'] != null && e['house'] == nameHouse && e['role'] == "tenant"){
+                      nameTenants.add(e['name']);
+                    };
+                  });
+                }
+                return Text(" ");
+              },
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -289,7 +293,11 @@ class _HomeState extends State<LandlordSeeHouse> {
                 ),
                ButtonTheme(
                   height: 30,
-                  child: OutlineButton(onPressed: (){},
+                  child: OutlineButton(onPressed: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => addTenant()),);
+                  },
                   shape: new CircleBorder(),
                   borderSide: BorderSide(color: Color(0xFF48ACBE)),
                   child:Icon(Icons.add,
@@ -302,20 +310,32 @@ class _HomeState extends State<LandlordSeeHouse> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-              children:[
-
-                  for(var i in data.values)
-                    for(var z in i['reference']) template(z)
-                ]
-
-                /*children: <Widget>[
-                  for (var i in tenants) template(i),
-                ],*/
+                children: <Widget>[
+                  for (var i in nameTenants) template(i),
+                ],
               ),
             ),
             Divider(
               height: 50.0,
               color: Colors.white,
+            ),
+            FutureBuilder<QuerySnapshot>(
+              future: profiles.get(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text("Something went wrong");
+                }
+                if (snapshot.hasData) {
+                  snapshot.data!.docs.forEach((e) {
+                    print("ENTROUUU");
+                    if(e['house'] != null && e['house'] == nameHouse && e['role'] == 'neighbor'){
+                      print("ENTROUUU2");
+                      nameNeighbors.add(e['name']);
+                    }
+                  });
+                }
+                return Text(" ");
+              },
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -331,7 +351,11 @@ class _HomeState extends State<LandlordSeeHouse> {
                   ),
                   ButtonTheme(
                     height: 30,
-                    child: OutlineButton(onPressed: (){},
+                    child: OutlineButton(onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => addNeighbor()),);
+                    },
                         shape: new CircleBorder(),
                         borderSide: BorderSide(color: Color(0xFF48ACBE)),
                         child:Icon(Icons.add,
@@ -344,16 +368,16 @@ class _HomeState extends State<LandlordSeeHouse> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-               /* children: <Widget>[
-                  for (var i in neighbors) template(i),
-                ],*/
+                children: <Widget>[
+                  for (var i in nameNeighbors) template(i),
+                ],
               ),
             ),
             Divider(
               height: 50.0,
               color: Colors.white,
             ),
-            Row(
+            /*Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
@@ -375,13 +399,13 @@ class _HomeState extends State<LandlordSeeHouse> {
                     ),
                   ),
                 ]
-            ),
+            ),*/
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  for (var i in tasks) template1(i),
+                //  for (var i in tasks) template1(i),
                 ],
               ),
             ),
