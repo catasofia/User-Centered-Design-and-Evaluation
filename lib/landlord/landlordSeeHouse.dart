@@ -1,4 +1,8 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Tenant{
   String name;
@@ -18,6 +22,15 @@ class Task{
   Task({required this.name});
 }
 
+class House{
+  String description;
+  String name;
+  String price;
+  String location;
+
+  House({required this.description, required this.name, required this.price, required this.location});
+}
+
 class LandlordSeeHouse extends StatefulWidget {
   const LandlordSeeHouse({Key? key}) : super(key: key);
 
@@ -26,13 +39,17 @@ class LandlordSeeHouse extends StatefulWidget {
 }
 
 class _HomeState extends State<LandlordSeeHouse> {
+  CollectionReference houses = FirebaseFirestore.instance.collection('house');
+  CollectionReference profiles = FirebaseFirestore.instance.collection('profile');
 
   List<Tenant> tenants = [Tenant(name:'Carolina')];
   List<Neighbor> neighbors = [Neighbor(name:'Marco')];
   List<Task> tasks = [Task(name:'Clean Halls')];
 
   @override
-  Widget template(tt) {
+  Widget template(ref) {
+    print("gostode comer");
+    print(ref);
     return Card(
       margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
         child: Column(
@@ -42,15 +59,33 @@ class _HomeState extends State<LandlordSeeHouse> {
               child: Container(
                 width: 400.0,
                 height: 28.0,
-                child: Text(
-                  tt.name,
+                child:
+                FutureBuilder<DocumentSnapshot>(
+                    future: profiles.doc(ref).get(),
+                    builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text("Something went wrong");
+                      }
+
+                      if (snapshot.hasData && !snapshot.data!.exists) {
+                        return Text("Document does not exist");
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                        return Text(data['name']);
+
+                      }
+                      return Text("loading");}),
+                /*Text(
+                  name,
                   style: TextStyle(
                     fontSize: 18.0,
                     color: Colors.black,
                     letterSpacing: 2.0,
                   ),
                   textAlign: TextAlign.center,
-                ),
+                ),*/
               ),
             ),
           ],
@@ -60,6 +95,7 @@ class _HomeState extends State<LandlordSeeHouse> {
 
   @override
   Widget template1(tt) {
+
     return Card(
       margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
       child: Column(
@@ -71,7 +107,9 @@ class _HomeState extends State<LandlordSeeHouse> {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(left: 10.0),
-                  child: Text(
+                  child:
+
+                  Text(
                     tt.name,
                     style: TextStyle(
                       fontSize: 18.0,
@@ -102,6 +140,9 @@ class _HomeState extends State<LandlordSeeHouse> {
 
   @override
   Widget build(BuildContext context) {
+    Future<DocumentSnapshot<Object?>>? house = houses.doc('ZoMPtra4WxTnMwVAihIz').get();
+    Map<String, dynamic>  data = {};
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -201,16 +242,35 @@ class _HomeState extends State<LandlordSeeHouse> {
             Divider(
               height: 40.0,
               color: Colors.white,
+
             ),
-            Text(
-              'Saldanha T3',
-              style: TextStyle(
-                color: Colors.black,
-                letterSpacing: 2.0,
-                fontSize: 25.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+        FutureBuilder<DocumentSnapshot>(
+          future: house,
+          builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+            if (snapshot.hasError) {
+              data = {};
+              return Text("Something went wrong");
+            }
+
+            if (snapshot.hasData && !snapshot.data!.exists) {
+              data = {};
+              return Text("Document does not exist");
+            }
+
+            if (snapshot.connectionState == ConnectionState.done) {
+              data = snapshot.data!.data() as Map<String, dynamic>;
+              return Text(data['name'],
+                  style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.bold,));
+            }
+            data = {};
+            return Text("loading");
+          },
+        ),
             Divider(
               height: 25.0,
               color: Colors.white,
@@ -242,9 +302,15 @@ class _HomeState extends State<LandlordSeeHouse> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
+              children:[
+
+                  for(var i in data.values)
+                    for(var z in i['reference']) template(z)
+                ]
+
+                /*children: <Widget>[
                   for (var i in tenants) template(i),
-                ],
+                ],*/
               ),
             ),
             Divider(
@@ -278,9 +344,9 @@ class _HomeState extends State<LandlordSeeHouse> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
+               /* children: <Widget>[
                   for (var i in neighbors) template(i),
-                ],
+                ],*/
               ),
             ),
             Divider(
