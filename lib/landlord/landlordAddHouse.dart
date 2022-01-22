@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 
 import 'carlosProfileLandlord.dart';
 import 'landlordHomeScreen.dart';
@@ -26,14 +26,14 @@ final location = TextEditingController();
 class _AddHouseState extends State<AddHouse> {
   File? image;
   Future getImage() async{
-    try{
+    /*try{
       final image = await ImagePicker().getImage(source: ImageSource.gallery);
       if (image == null) return;
       final imageTemporary = File(image.path);
       setState(() => this.image = imageTemporary);
     } on PlatformException catch (e){
       print('Failed to load image: $e');
-    }
+    }*/
   }
 
   Future deleteImage() async{
