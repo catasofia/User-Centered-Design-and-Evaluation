@@ -1,6 +1,41 @@
+import 'package:time_app/landlord/landlordAddNeighbor.dart';
+import 'landlordAddTenant.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+//FALTA DAR PARA CLICAR NOS PERFIS
+
+class Tenant{
+  String name;
+  String image;
+
+  Tenant({required this.name, required this.image});
+}
+
+class Neighbor{
+  String name;
+  String image;
+
+  Neighbor({required this.name, required this.image});
+}
+
+class Task{
+  String name;
+
+  Task({required this.name});
+}
+
+class House{
+  String description = "";
+  String name = "";
+  String price = "";
+  String location = "";
+  List tenants = [];
+  List neighbors = [];
+  List tasks = [];
+
+  House({required this.description, required this.name, required this.price, required this.location, required this.tenants, required this.neighbors, required this.tasks});
+}
 
 class LandlordSeeHouse extends StatefulWidget {
   const LandlordSeeHouse({Key? key}) : super(key: key);
@@ -10,30 +45,148 @@ class LandlordSeeHouse extends StatefulWidget {
 }
 
 class _HomeState extends State<LandlordSeeHouse> {
-  CollectionReference houses = FirebaseFirestore.instance.collection('house');
-  CollectionReference profiles = FirebaseFirestore.instance.collection('profile');
+  House housea = House(description: "",
+  name: "",
+  price: "",
+  location: "",
+  neighbors: [],
+  tenants: [],
+  tasks: []);
+
+  List<Tenant> tenants = [];
+  List<Neighbor> neighbors = [];
+  List<Task> tasks = [];
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('house').get();
+
+    snapshot.docs.forEach((doc) {
+      if (doc.id == 'ZoMPtra4WxTnMwVAihIz') {
+        House house1 = House(description: doc['description'],
+            name: doc['name'],
+            price: doc['price'],
+            location: doc['location'],
+            neighbors: doc['neighbors'],
+            tenants: doc['tenants'],
+            tasks: doc['tasks']);
+        housea = house1;
+      }});
+
+    QuerySnapshot snapshot1 = await FirebaseFirestore.instance.collection('profile').get();
+
+    if (tenants.isNotEmpty){
+      tenants = [];
+    }
+
+    if (neighbors.isNotEmpty){
+      neighbors = [];
+    }
+
+    snapshot1.docs.forEach((doc) {
+      housea.tenants.forEach((element) {
+        if (doc['name'] == element) {
+          Tenant tenant = Tenant(name: doc['name'], image: doc['image']);
+          tenants.add(tenant);
+        }});
+      housea.neighbors.forEach((element) {
+        if (doc['name'] == element){
+          Neighbor neighbor = Neighbor(name: doc['name'], image: doc['image']);
+          neighbors.add(neighbor);
+        }
+      });
+      });
+
+    QuerySnapshot snapshot2 = await FirebaseFirestore.instance.collection('task').get();
+
+    if (tasks.isNotEmpty){
+      tasks = [];
+    }
+
+    snapshot2.docs.forEach((doc) {
+      housea.tasks.forEach((element) {
+        if (doc['name'] == element) {
+          Task task = Task(name: doc['name']);
+          tasks.add(task);
+        }
+      });
+    });
+
+    setState((){});
+  }
 
   @override
   Widget template(tt) {
     return Card(
       margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
       child: Column(
+          children: <Widget>[
+            Row(
+              children: [
+                new Align(
+                  alignment: new Alignment(-1.1, 0.0),
+                  child:Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child:  Container(
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage(tt.image),
+                        radius: 20.0,
+                      ),),),),
+                SizedBox(height: 50.0),
+                Text(
+                  tt.name,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )
+          ] ),
+    );
+  }
+
+
+  @override
+  Widget template1(tt) {
+
+    return Card(
+      margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
+      child: Column(
         children: <Widget>[
           new Align(
             alignment: new Alignment(-1.1, 0.0),
-            child: Container(
-              width: 400.0,
-              height: 28.0,
-              child: Text(
-                tt[0],
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.black,
-                  letterSpacing: 2.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child:
+
+                  Text(
+                    tt.name,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ),
+                RaisedButton(onPressed: (){},
+                    padding: EdgeInsets.only(top:14.0, bottom:14.0, left:10.0, right: 10.0),
+                    child: Text('Edit',
+                    style: TextStyle(
+                    fontFamily: 'Arial',
+                    fontSize: 18,
+                    color: Colors.black,
+                    height: 1,
+                  ),
+                ),
+            color: Color(0xFF48ACBE),),
+              ]
+            )
           ),
         ],
       ),
@@ -43,8 +196,8 @@ class _HomeState extends State<LandlordSeeHouse> {
   @override
   Widget build(BuildContext context) {
 
-    Future<DocumentSnapshot<Object?>>? house = houses.doc('ZoMPtra4WxTnMwVAihIz').get();
-    Map<String, dynamic>  data = {};
+    getData();
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -145,138 +298,61 @@ class _HomeState extends State<LandlordSeeHouse> {
               Divider(
                 height: 40.0,
                 color: Colors.white,
+
               ),
-              FutureBuilder<DocumentSnapshot>(
-                future: house,
-                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            Text(housea.name,
+                    style: TextStyle(
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,)
+            ),
 
-                  if (snapshot.hasError) {
-                    data = {};
-                    return Text("Something went wrong");
-                  }
-
-                  if (snapshot.hasData && !snapshot.data!.exists) {
-                    data = {};
-                    return Text("Document does not exist");
-                  }
-
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    data = snapshot.data!.data() as Map<String, dynamic>;
-                    return Text(data['name'],
-                        style: TextStyle(
-                          color: Colors.black,
-                          letterSpacing: 2.0,
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.bold,));
-                  }
-                  data = {};
-                  return Text("loading");
-                },
-              ),
-              /*return ListView(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    children: snapshot.data!.docs.map((house){
-                      return Center(
-                          child: Text(house['name']),
-                          );
-                    }).toList(),
-                  );
-                }
-            ),*/
               Divider(
                 height: 25.0,
                 color: Colors.white,
               ),
               Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Tenants',
-                      style: TextStyle(
-                        color: Colors.black,
-                        letterSpacing: 2.0,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Tenants',
+                    style: TextStyle(
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    ButtonTheme(
-                      height: 30,
-                      child: OutlineButton(onPressed: (){},
-                          shape: new CircleBorder(),
-                          borderSide: BorderSide(color: Color(0xFF48ACBE)),
-                          child:Icon(Icons.add,
-                              color: Color(0xFF48ACBE))
-                      ),
+                  ),
+                 ButtonTheme(
+                    height: 30,
+                    child: OutlineButton(onPressed: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => addTenant()),);
+                    },
+                    shape: new CircleBorder(),
+                    borderSide: BorderSide(color: Color(0xFF48ACBE)),
+                    child:Icon(Icons.add,
+                    color: Color(0xFF48ACBE))
                     ),
-                  ]
+                  ),
+                ]
               ),
               Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    FutureBuilder<DocumentSnapshot>(
-                      future: house,
-                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
-                        if (snapshot.hasError) {
-                          data = {};
-                          return Text("Something went wrong");
-                        }
-
-                        if (snapshot.hasData && !snapshot.data!.exists) {
-                          data = {};
-                          return Text("Document does not exist");
-                        }
-
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          data = snapshot.data!.data() as Map<String, dynamic>;
-                          List<dynamic> nameTenants = data['tenants'];
-                          Function eq = const ListEquality().equals;
-                          if (!eq(nameTenants, [""])) {
-                            return ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                padding: const EdgeInsets.all(8),
-                                itemCount: nameTenants.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Container(
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black26, width: 2),
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        color: Colors.blueGrey[100],
-                                      ),
-                                      child: Center(child: Text('${nameTenants[index]}', style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        letterSpacing: 2.0,
-                                      ),)),
-                                    ),
-                                  );
-                                }
-                            );
-                          }
-                        }
-                        data = {};
-                        return Text("No tenants yet.", style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.black,
-                          letterSpacing: 2.0,
-                        ),);
-                      },
-                    ),
-                    //for (var i in tenants) template(i),
+                    for (var i in tenants) template(i),
                   ],
                 ),
               ),
               Divider(
-                height: 20.0,
+                height: 50.0,
                 color: Colors.white,
               ),
+
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -291,7 +367,11 @@ class _HomeState extends State<LandlordSeeHouse> {
                     ),
                     ButtonTheme(
                       height: 30,
-                      child: OutlineButton(onPressed: (){},
+                      child: OutlineButton(onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => addNeighbor()),);
+                      },
                           shape: new CircleBorder(),
                           borderSide: BorderSide(color: Color(0xFF48ACBE)),
                           child:Icon(Icons.add,
@@ -305,65 +385,12 @@ class _HomeState extends State<LandlordSeeHouse> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    FutureBuilder<DocumentSnapshot>(
-                      future: house,
-                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
-                        if (snapshot.hasError) {
-                          data = {};
-                          return Text("Something went wrong");
-                        }
-
-                        if (snapshot.hasData && !snapshot.data!.exists) {
-                          data = {};
-                          return Text("Document does not exist");
-                        }
-
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          data = snapshot.data!.data() as Map<String, dynamic>;
-                          List<dynamic> nameNeighbors = data['neighbors'];
-                          Function eq = const ListEquality().equals;
-                          if (!eq(nameNeighbors, [""])) {
-                            return ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                padding: const EdgeInsets.all(8),
-                                itemCount: nameNeighbors.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Container(
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black26, width: 2),
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        color: Colors.blueGrey[100],
-                                      ),
-                                      child: Center(child: Text('${nameNeighbors[index]}', style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        letterSpacing: 2.0,
-                                      ),)),
-                                    ),
-                                  );
-                                }
-                            );
-                          }
-                        }
-                        data = {};
-                        return Text("No neighbors yet.", style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.black,
-                          letterSpacing: 2.0,
-                        ),);
-                      },
-                    ),
-                    //for (var i in neighbors) template(i),
+                    for (var i in neighbors) template(i),
                   ],
                 ),
               ),
               Divider(
-                height: 20.0,
+                height: 50.0,
                 color: Colors.white,
               ),
               Row(
@@ -394,62 +421,13 @@ class _HomeState extends State<LandlordSeeHouse> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    FutureBuilder<DocumentSnapshot>(
-                      future: house,
-                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
-                        if (snapshot.hasError) {
-                          data = {};
-                          return Text("Something went wrong");
-                        }
-
-                        if (snapshot.hasData && !snapshot.data!.exists) {
-                          data = {};
-                          return Text("Document does not exist");
-                        }
-
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          data = snapshot.data!.data() as Map<String, dynamic>;
-                          List<dynamic> nameTasks = data['tasks'];
-                          Function eq = const ListEquality().equals;
-                          if (!eq(nameTasks, [""])) {
-                            return ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                padding: const EdgeInsets.all(8),
-                                itemCount: nameTasks.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Container(
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black26, width: 2),
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        color: Colors.blueGrey[100],
-                                      ),
-                                      child: Center(child: Text('${nameTasks[index]}', style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.black,
-                                        letterSpacing: 2.0,
-                                      ),)),
-                                    ),
-                                  );
-                                }
-                            );
-                          }
-                        }
-                        data = {};
-                        return Text("No tasks yet.", style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.black,
-                          letterSpacing: 2.0,
-                        ),);
-                      },
-                    ),
-                    //for (var i in neighbors) template(i),
+                   for (var i in tasks) template1(i),
                   ],
                 ),
+              ),
+              Divider(
+                height: 50.0,
+                color: Colors.white,
               ),
             ],
           ),

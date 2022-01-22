@@ -4,12 +4,11 @@ import 'carlosProfileLandlord.dart';
 import 'landlordSuggestedTask.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//FALTA DAR GUARDAR NA BD
+//FALTA DAR GUARDAR NA BD E METER O BOTÃO A FICAR VERDE??
 
 class House{
   String name;
   bool? value = false;
-
   House({required this.name});
 }
 
@@ -30,12 +29,45 @@ class addTenant extends StatefulWidget {
 
 class _HomeState extends State<addTenant> {
 
-  CollectionReference profiles = FirebaseFirestore.instance.collection('profile');
-  CollectionReference houses = FirebaseFirestore.instance.collection('house');
-
   List<Tenant> tenants = [];
-  List<House> nameHouses = [];
-  List<String> imageTenants = [];
+  List<House> houses = [];
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('house').get();
+
+    snapshot.docs.forEach((doc) {
+        House house1 = House(name: doc['name']);
+        bool aux = true;
+
+        houses.forEach((element) {
+          if(element.name == doc['name']){
+            aux = false;
+          }
+        });
+        if(aux) {
+          houses.add(house1);
+        }
+      });
+
+    QuerySnapshot snapshot1 = await FirebaseFirestore.instance.collection('profile').get();
+
+    snapshot1.docs.forEach((doc) {
+        if (doc['role'] == 'tenant') {
+          Tenant tenant = Tenant(name: doc['name'], imagePath: doc['image']);
+          bool aux = true;
+
+          tenants.forEach((element) {
+            if(element.name == doc['name']){
+              aux = false;
+            }
+          });
+          if(aux) {
+            tenants.add(tenant);
+          }
+        }});
+
+    setState((){});
+  }
 
   Widget templateT(tt) {
     return Card(
@@ -126,6 +158,9 @@ class _HomeState extends State<addTenant> {
 
   @override
   Widget build(BuildContext context) {
+
+    getData();
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -173,7 +208,8 @@ class _HomeState extends State<addTenant> {
           ),
         ),
       ),
-      body: Padding(
+    body: SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,23 +281,7 @@ class _HomeState extends State<addTenant> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    FutureBuilder<QuerySnapshot>(
-                      future: profiles.get(),
-                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text("Something went wrong");
-                        }
-                        if (snapshot.hasData) {
-                          for (var e in snapshot.data!.docs) {
-                              if (e['role'] == "tenant") {
-                                Tenant t = Tenant(name:e['name'], imagePath: e['image']);
-                                if(!(tenants.any((item) => item.name == t.name))){
-                                    tenants.add(t);
-                            }
-                          }}
-                        }
-                        return const Text("");
-                      }), for (var i in tenants) templateT(i),],
+                    for (var i in tenants) templateT(i),],
               ),
             ),
             const SizedBox(height: 50),
@@ -304,24 +324,7 @@ class _HomeState extends State<addTenant> {
               Column(mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  FutureBuilder<QuerySnapshot>(
-                      future: houses.get(),
-                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text("Something went wrong");
-                        }
-                        if (snapshot.hasData) {
-                          for (var e in snapshot.data!.docs) {
-                            House h = House(name:e['name']);
-                            if(!(nameHouses.any((item) => item.name == h.name))){
-                              nameHouses.add(h);
-                            }
-
-                          }}
-
-                        return const Text("");
-                        }
-                      ), for (var i in nameHouses) templateH(i),
+                  for (var i in houses) templateH(i),
               ],
             )]),
             const SizedBox(height:20),
@@ -343,7 +346,7 @@ class _HomeState extends State<addTenant> {
           ],
         ),
       ),
-    );
+    ),);
   }
 }
 
