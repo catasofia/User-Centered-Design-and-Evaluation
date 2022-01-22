@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_app/signUp.dart';
 import 'neighborHomeScreen.dart';
 import '../signInOrUp.dart';
 
@@ -172,7 +173,7 @@ class _NeighborProfileState extends State<NeighborProfile> {
                       onPressed: (){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Signs()),
+                          MaterialPageRoute(builder: (context) => SignUp()),
                         );
                       },
                       child: Text('Logout',

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'neighborProfile.dart';
 import 'suggestTasks.dart';
-import 'neighborEvaluationCarlos.dart';
-import 'neighborEvaluationCarolina.dart';
-import 'neighborEvaluationJoao.dart';
-import 'neighborEvaluationMarco.dart';
+
+class Task {
+  String name;
+  String date;
+
+  Task({required this.name, required this.date});
+}
 
 class NeighborHome extends StatefulWidget {
   const NeighborHome({Key? key}) : super(key: key);
@@ -15,230 +18,157 @@ class NeighborHome extends StatefulWidget {
 
 class _NeighborHomeState extends State<NeighborHome> {
   @override
+  List<Task> tasksToEvaluate= [
+    Task(name: 'Clean Stairs', date: '7 - 14 Nov'),
+    Task(name: 'Clean Elevator', date: '7 - 20 Nov'),
+    Task(name: 'Exchange Lightbulb', date: '15 - 16 Nov'),
+    Task(name: 'ATA', date: '6 - 18 Nov'),
+  ];
+
+  List<Task> tasksEvaluated= [
+    Task(name: 'Clean Stairs', date: '25 - 30 Oct'),
+  ];
+
+  @override
+  Widget tasksCard(tt) {
+    return Card(
+      margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
+      color: Color(0xFF48ACBE),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                      tt.name,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      )
+                  ),
+                  Text(
+                      tt.date,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black,
+                      )
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.star_border, size: 25),
+                Icon(Icons.star_border, size: 25),
+                Icon(Icons.star_border, size: 25),
+                Icon(Icons.star_border, size: 25),
+                Icon(Icons.star_border, size: 25),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                  child: ElevatedButton(
+                    onPressed: (){},
+                    child: Text("Submit", style: TextStyle(color: Colors.black),),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.grey[400],
+                      shape: RoundedRectangleBorder( //to set border radius to button
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-          padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
-              children: <Widget>[
-                IconButton(onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => NeighborProfile()),
-                  );
-                },
-                    icon: Icon(Icons.person_outline,
+                children: <Widget>[
+                  IconButton(
+                    icon: const Icon(
+                      Icons.person_outline,
                       color: Colors.black,
-                      size: 38,)),
-              SizedBox(width: 8.0),
-              Container(
-                width: 240.0,
-                height: 42.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24.0),
-                  color: Colors.grey[200],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(width: 15.0),
-                    Icon(
-                      Icons.search,
-                      color: Colors.black,
+                      size: 40.0,
                     ),
-                    SizedBox(width: 8.0),
-                    Text(
-                      'Search',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 20,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                      textAlign: TextAlign.center,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NeighborProfile()),
+                      );
+                    },
+                  ),
+                  SizedBox(width: 10.0),
+                  Container(
+                    width: 235.0,
+                    height: 42.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24.0),
+                      color: Colors.grey[200],
                     ),
-                  ],
-                ),
-              ),
-                SizedBox(width: 7.0),
-                IconButton(onPressed: (){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) => _buildPopupNotification(context),
-                  );
-                },
-                    icon: Icon(Icons.notifications_active_outlined,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(width: 15.0),
+                        Icon(
+                          Icons.search,
+                          color: Colors.black,
+                        ),
+                        SizedBox(width: 10.0),
+                        Text(
+                          'Search',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 20,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 8.0),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.notifications_active_outlined,
                       color: Colors.black,
-                      size: 38,)),
-              ],
-            ),
-            Divider(
-              height: 40.0,
-              color: Colors.white,
-            ),
-             Row(
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Container(
-                   width: 100,
-                   height: 100,
-                   child: FloatingActionButton(
-                     heroTag: null,
-                     onPressed: () {
-                       Navigator.push(
-                         context,
-                         MaterialPageRoute(builder: (context) => NeigEvaluationCarlos()),
-                       );
-                     },
-                     elevation: 0,
-                    child: new ConstrainedBox(constraints: new BoxConstraints.expand(),
-                      child: new CircleAvatar(backgroundImage: AssetImage('assets/carlos.jfif'),
-                          ),),),
-                 ),
-                 SizedBox(width: 55,),
-                 Container(
-                   width: 100,
-                   height: 100,
-                   child: FloatingActionButton(
-                     heroTag: null,
-                     onPressed: () {
-                       Navigator.push(
-                         context,
-                         MaterialPageRoute(builder: (context) => NeigEvaluationCarolina()),
-                       );
-                     },
-                     elevation: 0,
-                     child: new ConstrainedBox(constraints: new BoxConstraints.expand(),
-                       child: new CircleAvatar(backgroundImage: AssetImage('assets/carolina.jpeg'),
-                       ),),),
-                 ),
-               ],
-             ),
-              SizedBox(height: 7,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Colors.white,
-                        elevation: 0
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NeigEvaluationCarlos()),
-                        );
-                      },
-                      child: Text('Carlos', style: TextStyle(color: Colors.black,
-                      fontSize: 16),)
-                  ),
-                  SizedBox(width: 70,),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          onPrimary: Colors.white,
-                          elevation: 0
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NeigEvaluationCarolina()),
-                        );
-                      },
-                      child: Text('Carolina', style: TextStyle(color: Colors.black,
-                      fontSize: 16),)
+                      size: 38.0,
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _buildPopupNotification(context),
+                      );
+                    },
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: FloatingActionButton(
-                      heroTag: null,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NeigEvaluationJoao()),
-                        );
-                      },
-                      elevation: 0,
-                      child: new ConstrainedBox(constraints: new BoxConstraints.expand(),
-                        child: new CircleAvatar(backgroundImage: AssetImage('assets/joao.jpg'),
-                        ),),),
-                  ),
-                  SizedBox(width: 55,),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: FloatingActionButton(
-                      heroTag: null,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NeigEvaluationMarco()),
-                        );
-                      },
-                      elevation: 0,
-                      child: new ConstrainedBox(constraints: new BoxConstraints.expand(),
-                        child: new CircleAvatar(backgroundImage: AssetImage('assets/marco.jpg'),
-                        ),),),
-                  ),
-                ],
-              ),
-              SizedBox(height: 7,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          onPrimary: Colors.white,
-                          elevation: 0
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NeigEvaluationJoao()),
-                        );
-                      },
-                      child: Text('João', style: TextStyle(color: Colors.black,
-                      fontSize: 16),)
-                  ),
-                  SizedBox(width: 80,),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          onPrimary: Colors.white,
-                          elevation: 0
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NeigEvaluationMarco()),
-                        );
-                      },
-                      child: Text('Marco', style: TextStyle(color: Colors.black,
-                      fontSize: 16),)
-                  ),
-                ],
-              ),
-              SizedBox(height: 90,),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
+              SizedBox(height: 20,),
+              Center(
                 child: Container(
-                  width: 175,
+                  width: 220,
                   height: 60,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF48ACBE)
+                          primary: Color(0xFF48ACBE)
                       ),
                       onPressed: (){
                         Navigator.push(
@@ -247,10 +177,55 @@ class _NeighborHomeState extends State<NeighborHome> {
                         );
                       },
                       child: Text('Suggest new task',
-                      style: TextStyle(color: Colors.black),)),
+                        style: TextStyle(color: Colors.black,
+                        letterSpacing: 1.0,
+                        fontSize: 20,),)),
                 ),
               ),
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+                child: Text(
+                  'Tasks to Evaluate',
+                  style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    for (var i in tasksToEvaluate) tasksCard(i),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+                child: Text(
+                  'Tasks Evaluated',
+                  style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 2.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    for (var i in tasksEvaluated) tasksCard(i),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -276,7 +251,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "- João completed a task, rate him now.",
+          "- There's a new task to evaluate, rate it now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -285,15 +260,6 @@ Widget _buildPopupNotification(BuildContext context) {
           ),
         ),
         SizedBox(height: 20.0),
-        Text(
-          "- Carolina completed a task, rate her now.",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
-          ),
-        ),
       ],
     ),
     actions: <Widget>[

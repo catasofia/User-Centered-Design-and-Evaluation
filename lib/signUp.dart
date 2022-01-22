@@ -31,12 +31,12 @@ class _SignUpState extends State<SignUp> {
               children: [
                 Image.asset('assets/buildingsSmaller.jpg', fit: BoxFit.fill,),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0,213,0,0),
+                  padding: const EdgeInsets.fromLTRB(0,233,0,0),
                   child: Image.asset('assets/logoS.jpg', height: 110,),
                 ),
               ],
             ),
-            SizedBox(height: 8,),
+            SizedBox(height: 25,),
             Text(
               'Sign up as',
               style: TextStyle(
@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 12,),
+            SizedBox(height: 25,),
             Row(
                 //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -88,7 +88,7 @@ class _SignUpState extends State<SignUp> {
                   )
                 ],
             ),
-            SizedBox(height: 7,),
+            SizedBox(height: 12,),
             Row(
               children: [
                 SizedBox(width: 145,),
@@ -129,7 +129,7 @@ class _SignUpState extends State<SignUp> {
                   ),)
               ],
             ),
-            SizedBox(height: 7,),
+            SizedBox(height: 12,),
             Row(
               children: [
                 SizedBox(width: 145,),
@@ -170,39 +170,7 @@ class _SignUpState extends State<SignUp> {
                   ),)
               ],
             ),
-
-            SizedBox(height: 15,),
-            Container(
-              width: 240.0,
-              height: 45.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14.0),
-                color: Colors.grey[300],
-              ),
-              child:
-              TextField(
-                decoration: InputDecoration(
-
-                    hintText: "Insert email or phone"
-                ),
-              ),
-            ),
-            SizedBox(height: 10,),
-            Container(
-              width: 240.0,
-              height: 45.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14.0),
-                color: Colors.grey[300],
-              ),
-              child:
-              TextField(
-                decoration: InputDecoration(
-                    hintText: "Insert password"
-                ),
-              ),
-            ),
-            SizedBox(height: 15,),
+            SizedBox(height: 55,),
             Row(
               children: [
                 Row(
