@@ -11,6 +11,8 @@ import 'landlordSuggestedTask.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//FALTA GUARDAR NA HOUSE
+
 class AddTask extends StatefulWidget {
   const AddTask({Key? key}) : super(key: key);
 
@@ -199,7 +201,9 @@ class _AddTaskState extends State<AddTask> {
                             'discount': discount.text,
                             'products': products.text,
                             'description': description.text,
-                            'date': description.text,
+                            'date': date.text,
+                            'tenant': "",
+                            'landlord': "Carlos Silva"
                           });
                           clearText();
                           showDialog(

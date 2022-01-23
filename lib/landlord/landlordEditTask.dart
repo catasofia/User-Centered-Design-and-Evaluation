@@ -2,27 +2,81 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'carlosProfileLandlord.dart';
 import 'landlordAlameda.dart';
+import 'landlordHomeScreen.dart';
 import 'landlordSuggestedTask.dart';
 
-class EditTask extends StatefulWidget {
-  const EditTask({Key? key}) : super(key: key);
+//FALTA REMOVER
 
-  @override
-  _EditTaskState createState() => _EditTaskState();
+class Task{
+  String name;
+  String date;
+  String description;
+  String discount;
+  String landlord;
+  String products;
+  String tenant;
+
+  Task({required this.name, required this.date, required this.description, required this.discount, required this.products,required this.landlord, required this.tenant });
 }
 
+class EditTask extends StatefulWidget {
+  final String id;
+  const EditTask({Key? key, required this.id}) : super(key: key);
+
+  @override
+  _EditTaskState createState() => _EditTaskState(id);
+}
+
+
+final task_name = TextEditingController();
+final discount = TextEditingController();
+final description = TextEditingController();
+final products = TextEditingController();
+final date = TextEditingController();
+
 class _EditTaskState extends State<EditTask> {
+  String taskid;
+
+  _EditTaskState(this.taskid);
+
+  Task taska = Task(description: "",
+      name: "",
+      tenant: '',
+      products: '',
+      discount: '',
+      date: '',
+      landlord: '');
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
+
+    snapshot.docs.forEach((doc) {
+      if (doc.id == taskid) {
+        Task task1 = Task(description: doc['description'],
+            name: doc['name'],
+            discount: doc['discount'],
+            landlord: doc['landlord'],
+            products: doc['products'],
+            tenant: doc['tenant'],
+            date: doc['date']);
+        taska = task1;
+      }});
+    setState((){});
+  }
 
   @override
   Widget build(BuildContext context) {
+    getData();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body:
-      Column(
+      SingleChildScrollView(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
@@ -95,8 +149,9 @@ class _EditTaskState extends State<EditTask> {
                     ],
                   ),
                   new TextField(
+                    controller: task_name,
                     decoration: InputDecoration(
-                        hintText: "Clean Halls"
+                        hintText: taska.name
                     ),
                   ),
                   SizedBox(height: 20,),
@@ -109,8 +164,9 @@ class _EditTaskState extends State<EditTask> {
                     ],
                   ),
                   new TextField(
+                    controller: discount,
                     decoration: InputDecoration(
-                        hintText: "20€"
+                        hintText: taska.discount
                     ),
                   ),
                   SizedBox(height: 20,),
@@ -123,8 +179,9 @@ class _EditTaskState extends State<EditTask> {
                     ],
                   ),
                   new TextField(
+                    controller: description,
                     decoration: InputDecoration(
-                        hintText: "Clean the halls twice a week"
+                        hintText: taska.description
                     ),
                   ),
                   SizedBox(height: 20,),
@@ -137,8 +194,24 @@ class _EditTaskState extends State<EditTask> {
                     ],
                   ),
                   new TextField(
+                    controller: products,
                     decoration: InputDecoration(
-                        hintText: "Cif"
+                        hintText: taska.products
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  Row(
+                    children: [
+                      Text('Date',
+                        style: TextStyle(
+                            fontSize: 20
+                        ),),
+                    ],
+                  ),
+                  new TextField(
+                    controller: date,
+                    decoration: InputDecoration(
+                        hintText: taska.date
                     ),
                   ),
                 ],
@@ -161,7 +234,21 @@ class _EditTaskState extends State<EditTask> {
                             borderRadius: BorderRadius.circular(14)
                         ),
                       ),
-                      onPressed: () { },
+                      onPressed: () {
+                        if(checkTextFieldEmptyOrNot()){
+                          updatedb(taskid);
+                          clearText();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => _buildPopupEditTask(context),
+                          );
+                        } else{
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => _errorPopup(context),
+                          );
+                        }
+                      },
                       child: Text('Confirm',
                         style: TextStyle(
                           fontFamily: 'Arial',
@@ -187,7 +274,9 @@ class _EditTaskState extends State<EditTask> {
                             borderRadius: BorderRadius.circular(14)
                         ),
                       ),
-                      onPressed: () { },
+                      onPressed: () {
+
+                      },
                       child: Text('Remove',
                         style: TextStyle(
                           fontFamily: 'Arial',
@@ -216,13 +305,13 @@ class _EditTaskState extends State<EditTask> {
                             MaterialPageRoute(builder: (context) => LandlordAlameda()),
                           );
                         },
-                      )
+                      ),
                   ),
                 ],
               ),
             )
           ]
-      ),
+      ),),
     );
   }
 }
@@ -301,4 +390,183 @@ Widget _buildPopupNotification(BuildContext context) {
       ),
     ],
   );
+}
+
+
+Widget _buildPopupEditTask(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check,
+              size: 20.0,
+              color: Colors.lightGreen,
+            ),
+            SizedBox(width: 3.0),
+          ],
+        ),
+        SizedBox(height: 12.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Task edited!",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 90.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.grey[300],
+            ),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeLandlord()),
+                    );
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 15,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+
+Widget _errorPopup(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Center(child: Icon(Icons.error, color: Colors.red[700], size: 100,)),
+        SizedBox(height: 15,),
+        Text(
+          "You need to edit some field in order to confirm.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Icon(
+              Icons.highlight_remove,
+              color: Colors.black,
+              size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+void updatedb (taskid) {
+  if (task_name.text != '') {
+    FirebaseFirestore.instance.collection('task')
+        .doc(taskid)
+        .update({'name': task_name.text});
+  }
+  if (description.text != '') {
+    FirebaseFirestore.instance.collection('task')
+        .doc(taskid)
+        .update({'description': description.text});
+  }
+  if (date.text != '') {
+    FirebaseFirestore.instance.collection('task')
+        .doc(taskid)
+        .update({'description': date.text});
+  }
+  if (products.text != '') {
+    FirebaseFirestore.instance.collection('task')
+        .doc(taskid)
+        .update({'description': products.text});
+  }
+  if (discount.text != '') {
+    FirebaseFirestore.instance.collection('task')
+        .doc(taskid)
+        .update({'description': discount.text});
+  }
+}
+
+void remove(taskid){
+  FirebaseFirestore.instance.collection("tasks").doc(taskid).delete();
+}
+
+checkTextFieldEmptyOrNot(){
+  String name = task_name.text;
+  String desc = description.text;
+  String disc = discount.text;
+  String da = date.text;
+  String pro = products.text;
+  return name != '' || desc != '' || disc != '' || da != '' || pro != '';
+}
+
+clearText(){
+  task_name.clear();
+  description.clear();
+  discount.clear();
+  products.clear();
+  date.clear();
 }
