@@ -249,6 +249,10 @@ class _AddHouseState extends State<AddHouse> {
                               'price': price.text,
                               'location': location.text,
                               'description': description.text,
+                              'neighbors': [],
+                              'tenants': [],
+                              'landlord': 'Carlos Silva',
+                              'tasks': []
                             });
                             clearText();
                             showDialog(
@@ -439,7 +443,6 @@ Widget _buildPopupAddHouse(BuildContext context) {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      //MUDAR P PAGINA HOME MAS C A CASA NOVA
                       MaterialPageRoute(builder: (context) => HomeLandlord()),
                     );
                   },

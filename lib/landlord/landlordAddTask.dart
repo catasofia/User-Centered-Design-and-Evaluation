@@ -199,7 +199,9 @@ class _AddTaskState extends State<AddTask> {
                             'discount': discount.text,
                             'products': products.text,
                             'description': description.text,
-                            'date': description.text,
+                            'date': date.text,
+                            'tenant': "",
+                            'landlord': "Carlos Silva"
                           });
                           clearText();
                           showDialog(
