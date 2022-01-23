@@ -1,28 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:time_app/landlord/landlordEvaluate.dart';
-import 'package:time_app/landlord/landlordEvaluateTasks.dart';
-import 'package:time_app/landlord/landlordSeeHouse.dart';
-import 'package:time_app/landlord/landlordSuggestedTask.dart';
-import 'package:time_app/neighbor/suggestTasks.dart';
-import 'package:time_app/signIn.dart';
-import 'package:time_app/signUp.dart';
-import 'package:time_app/tenant/tenantEvaluatePage.dart';
-import 'package:time_app/tenant/tenantHomescreen.dart';
-import 'landlord/landlordAddHouse.dart';
-import 'landlord/landlordAlameda.dart';
-import 'loading.dart';
-import 'tenant/tenantContacts.dart';
-import 'tenant/tenantTasks.dart';
-import 'neighbor/neighborEvaluationCarolina.dart';
-import 'tenant/tenantContacts.dart';
 import 'homeScreen.dart';
-import 'landlord/landlordEvaluatePage1.dart';
-import 'landlord/landlordEvaluatePage3.dart';
-import 'landlord/landlordHomeScreen.dart';
-import 'landlord/landlordAddTask.dart';
-import 'landlord/landlordEditTask.dart';
-import 'neighbor/suggestTasks.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:time_app/contract_linking.dart';
@@ -120,7 +98,7 @@ class MyApp extends StatelessWidget {
         //'/home': (context) => Task(),
         //'/': (context) => HomeScreen(),
         //}
-        home: LandlordSeeHouse(),
+        home: HomeScreen(),
       ),
     );
   }
