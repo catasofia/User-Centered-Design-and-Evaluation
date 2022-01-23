@@ -211,38 +211,46 @@ class _CleanState extends State<CleanElevator>{
                     tasks= [
                       Types(type: 'Description', task: data['description']),
                       Types(type: 'Products', task: data['products']),
-                      Types(type: 'Price', task: 'This task has a discount on the rent of $discount €'),
+                      Types(type: 'Price', task: 'This task has a discount on the rent of $discount€.'),
                       Types(type: 'Date', task: data['date'])
                     ];
-                    return Text(data['name'],
-                        style: TextStyle(
-                          color: Colors.black,
-                          letterSpacing: 2.0,
-                          fontSize: 28.0,
-                          fontWeight: FontWeight.bold,));
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0.0, 0.0, 170.0, 0.0),
+                          child: Text(data['name'],
+                          style: TextStyle(
+                            color: Colors.black,
+                            letterSpacing: 2.0,
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.bold,)),
+                        ),
+                        Container(
+                          height: 440,
+                          child: Scrollbar(
+                            isAlwaysShown: true,
+                            controller: _scrollController,
+                            child: SingleChildScrollView(
+                              controller: _scrollController,
+                              child: SizedBox(
+                                width: 400,
+                                child:Column(
+                                  children: [
+                                    for(var i in tasks) template(i),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ) ,
+                        ),
+                      ],
+                    );
                   }
                   data = {};
                   return Text("loading");
                 },
               ),
-              Container(
-                height: 440,
-                child: Scrollbar(
-                  isAlwaysShown: true,
-                  controller: _scrollController,
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    child: SizedBox(
-                      width: 400,
-                      child:Column(
-                        children: [
-                          for(var i in tasks) template(i),
-                        ],
-                      ),
-                    ),
-                  ),
-                ) ,
-              ),
+
               SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

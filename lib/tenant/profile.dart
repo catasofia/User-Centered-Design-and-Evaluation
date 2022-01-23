@@ -186,10 +186,10 @@ class _ProfileState extends State<Profile> {
                   return Text("loading");
                 },
               ),
-              SizedBox(height: 17.0),
+              SizedBox(height: 10.0),
               Container(
                 width: 270,
-                height: 165,
+                height: 180,
                 child: Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14)
@@ -198,7 +198,7 @@ class _ProfileState extends State<Profile> {
                   elevation: 5,
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 17,),
+                      SizedBox(height: 12,),
                       Row(
                         children: [
                           SizedBox(width: 20,),
@@ -211,7 +211,7 @@ class _ProfileState extends State<Profile> {
                                 fontSize: 18),),
                         ],
                       ),
-                      SizedBox(height: 17,),
+                      SizedBox(height: 12,),
                       Row(
                         children: [
                           SizedBox(width: 20,),
@@ -224,7 +224,7 @@ class _ProfileState extends State<Profile> {
                                 fontSize: 18),),
                         ],
                       ),
-                      SizedBox(height: 17,),
+                      SizedBox(height: 12,),
                       Row(
                         children: [
                           SizedBox(width: 20,),
@@ -233,6 +233,19 @@ class _ProfileState extends State<Profile> {
                                 fontSize: 20),),
                           SizedBox(width: 40,),
                           Text('$rating',
+                            style: TextStyle(color: Color(0xFF7AC8D7),
+                                fontSize: 18),),
+                        ],
+                      ),
+                      SizedBox(height: 12,),
+                      Row(
+                        children: [
+                          SizedBox(width: 20,),
+                          Text('Total Discount:',
+                            style: TextStyle(color: Color(0xFF48ACBE),
+                                fontSize: 20),),
+                          SizedBox(width: 40,),
+                          Text('$totalDiscount €',
                             style: TextStyle(color: Color(0xFF7AC8D7),
                                 fontSize: 18),),
                         ],
