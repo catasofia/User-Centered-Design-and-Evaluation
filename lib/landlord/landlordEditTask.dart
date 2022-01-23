@@ -9,7 +9,7 @@ import 'landlordAlameda.dart';
 import 'landlordHomeScreen.dart';
 import 'landlordSuggestedTask.dart';
 
-//FALTA REMOVER
+//FALTA REMOVER E EDITAR NA LISTA DAS HOUSES
 
 class Task{
   String name;
@@ -24,10 +24,11 @@ class Task{
 }
 
 class EditTask extends StatefulWidget {
-  const EditTask({Key? key}) : super(key: key);
+  final String id;
+  const EditTask({Key? key, required this.id}) : super(key: key);
 
   @override
-  _EditTaskState createState() => _EditTaskState();
+  _EditTaskState createState() => _EditTaskState(id);
 }
 
 
@@ -38,6 +39,10 @@ final products = TextEditingController();
 final date = TextEditingController();
 
 class _EditTaskState extends State<EditTask> {
+  String taskid;
+
+  _EditTaskState(this.taskid);
+
   Task taska = Task(description: "",
       name: "",
       tenant: '',
@@ -50,7 +55,7 @@ class _EditTaskState extends State<EditTask> {
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
 
     snapshot.docs.forEach((doc) {
-      if (doc.id == 'jXmLSylXNl6l1EoZsx5S') {
+      if (doc.id == taskid) {
         Task task1 = Task(description: doc['description'],
             name: doc['name'],
             discount: doc['discount'],
@@ -231,7 +236,7 @@ class _EditTaskState extends State<EditTask> {
                       ),
                       onPressed: () {
                         if(checkTextFieldEmptyOrNot()){
-                          updatedb();
+                          updatedb(taskid);
                           clearText();
                           showDialog(
                             context: context,
@@ -517,36 +522,36 @@ Widget _errorPopup(BuildContext context) {
   );
 }
 
-void updatedb () {
+void updatedb (taskid) {
   if (task_name.text != '') {
     FirebaseFirestore.instance.collection('task')
-        .doc('jXmLSylXNl6l1EoZsx5S')
+        .doc(taskid)
         .update({'name': task_name.text});
   }
   if (description.text != '') {
     FirebaseFirestore.instance.collection('task')
-        .doc('jXmLSylXNl6l1EoZsx5S')
+        .doc(taskid)
         .update({'description': description.text});
   }
   if (date.text != '') {
     FirebaseFirestore.instance.collection('task')
-        .doc('jXmLSylXNl6l1EoZsx5S')
+        .doc(taskid)
         .update({'description': date.text});
   }
   if (products.text != '') {
     FirebaseFirestore.instance.collection('task')
-        .doc('jXmLSylXNl6l1EoZsx5S')
+        .doc(taskid)
         .update({'description': products.text});
   }
   if (discount.text != '') {
     FirebaseFirestore.instance.collection('task')
-        .doc('jXmLSylXNl6l1EoZsx5S')
+        .doc(taskid)
         .update({'description': discount.text});
   }
 }
 
-void remove(){
-  FirebaseFirestore.instance.collection("tasks").doc('jXmLSylXNl6l1EoZsx5S').delete();
+void remove(taskid){
+  FirebaseFirestore.instance.collection("tasks").doc(taskid).delete();
 }
 
 checkTextFieldEmptyOrNot(){

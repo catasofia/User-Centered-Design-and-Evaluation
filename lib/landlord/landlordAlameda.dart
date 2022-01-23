@@ -102,11 +102,11 @@ class _HomeState extends State<LandlordAlameda> {
 
                     ),
                     RaisedButton(onPressed: (){
-                      Navigator.push(
+                      /*Navigator.push(
                         context,
                         //TIRAR DE TODOS OS BOTOES/POR CORRESPONDENCIAS CORRETAS
                         MaterialPageRoute(builder: (context) => EditTask()),
-                      );
+                      );*/
                     },
                       padding: EdgeInsets.only(top:14.0, bottom:14.0, left:10.0, right: 10.0),
                       child: Text('Edit',

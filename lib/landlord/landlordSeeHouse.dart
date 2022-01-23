@@ -1,7 +1,10 @@
 import 'package:time_app/landlord/landlordAddNeighbor.dart';
+import 'landlordAddTask.dart';
 import 'landlordAddTenant.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'landlordEditTask.dart';
 
 //FALTA DAR PARA CLICAR NOS PERFIS
 
@@ -21,8 +24,9 @@ class Neighbor{
 
 class Task{
   String name;
+  String id;
 
-  Task({required this.name});
+  Task({required this.name, required this.id});
 }
 
 class House{
@@ -111,7 +115,7 @@ class _HomeState extends State<LandlordSeeHouse> {
     snapshot2.docs.forEach((doc) {
       housea.tasks.forEach((element) {
         if (doc['name'] == element) {
-          Task task = Task(name: doc['name']);
+          Task task = Task(name: doc['name'], id: doc.id);
           tasks.add(task);
         }
       });
@@ -180,7 +184,12 @@ class _HomeState extends State<LandlordSeeHouse> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                RaisedButton(onPressed: (){},
+                RaisedButton(onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EditTask(id:tt.id)),
+                  );
+                },
                     padding: EdgeInsets.only(top:14.0, bottom:14.0, left:10.0, right: 10.0),
                     child: Text('Edit',
                     style: TextStyle(
@@ -413,7 +422,11 @@ class _HomeState extends State<LandlordSeeHouse> {
                     ),
                     ButtonTheme(
                       height: 30,
-                      child: OutlineButton(onPressed: (){},
+                      child: OutlineButton(onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddTask()),);
+                      },
                           shape: new CircleBorder(),
                           borderSide: BorderSide(color: Color(0xFF48ACBE)),
                           child:Icon(Icons.add,
