@@ -11,6 +11,8 @@ import 'landlordSuggestedTask.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//FALTA GUARDAR NA LISTA DAS TASKS DA HOUSE (SO ESTA A GUARDAR NA COLECAO TASKS)
+
 class AddTask extends StatefulWidget {
   const AddTask({Key? key}) : super(key: key);
 
