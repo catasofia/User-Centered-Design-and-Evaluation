@@ -1,16 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:time_app/landlord/landlordEvaluateTasks.dart';
 import 'carlosProfileLandlord.dart';
 import 'landlordAddHouse.dart';
 import 'landlordAlameda.dart';
 import 'landlordEvaluate.dart';
+import 'landlordSeeHouse.dart';
 import 'landlordSuggestedTask.dart';
+
+//RATES, SCROLL
 
 class House{
   String name;
   String description;
-  House({required this.name, required this.description});
+  String id;
+  List aux = [];
+  List<Tenant> tenants= [];
+
+  House({required this.name, required this.description, required this.id, required this.aux});
 }
+
+class Tenant{
+  String name;
+  String image;
+
+  Tenant({required this.name, required this.image});
+}
+
 
 class HomeLandlord extends StatefulWidget {
   const HomeLandlord({Key? key}) : super(key: key);
@@ -21,21 +37,79 @@ class HomeLandlord extends StatefulWidget {
 
 class _HomeState extends State<HomeLandlord> {
 
-  List<House> houses= [
-    House(name: 'Alameda T2', description: 'T2 apartment with great location in apartment with individual rooms.'),
-    House(name: 'Saldanha T3', description: 'T3 apartment with a lot of space and shared rooms.'),
-  ];
+  List<House> houses= [];
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('house').get();
+
+    if (houses.isNotEmpty){
+      houses = [];
+    }
+
+    snapshot.docs.forEach((doc) {
+      House house1 = House(description: doc['description'],
+          name: doc['name'],
+          aux: doc['tenants'],
+          id: doc.id);
+      houses.add(house1);
+    });
+
+    for(var i = 0; i < houses.length; i++){
+      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('profile').get();
+
+      if (houses[i].tenants.isNotEmpty){
+        houses[i].tenants = [];
+      }
+
+      snapshot.docs.forEach((doc) {
+        houses[i].aux.forEach((element) {
+          if (doc['name'] == element) {
+            Tenant tenant = Tenant(name: doc['name'], image: doc['image']);
+            houses[i].tenants.add(tenant);
+          }});
+      });
+    }
+
+    setState((){});
+  }
+
+
+  Widget tenants(p){
+    return Padding(
+      padding: EdgeInsets.only(right: 15.0),
+      child:Column(
+      children: [
+        Container(
+          child: CircleAvatar(
+          backgroundImage: AssetImage(p.image),
+          radius: 20.0,
+          ),
+          ),
+        SizedBox(height: 10.0),
+        Text(
+          p.name,
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 14,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+      ],
+    ),
+    );
+  }
 
   @override
   Widget template(tt) {
     return Card(
       margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
       color: Color(0xFF48ACBE),
-      child: new InkWell(
+      child: InkWell(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => LandlordAlameda()),
+          MaterialPageRoute(builder: (context) => LandlordSeeHouse(id:tt.id)),
         );
       },
         child: Padding(
@@ -78,74 +152,27 @@ class _HomeState extends State<HomeLandlord> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
                   children: <Widget>[
                     SizedBox(width: 50.0),
                     Column(
-                      children: [
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/carolina.jpeg'),
-                            radius: 20.0,
-                          ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Text(
-                          'Carolina',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 14,
-                            color: Colors.black,
-                            height: 1,
-                          ),
-                        ),
-                      ],
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                           for(var i in tt.tenants)tenants(i)]
+                          ,
+                        )
+                        ],
                     ),
                     SizedBox(width: 50.0),
-                    Column(
-                      children: [
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/joao.jpg'),
-                            radius: 20.0,
-                          ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Text(
-                          'João',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 14,
-                            color: Colors.black,
-                            height: 1,
-                          ),
-                        ),
+
                       ],
                     ),
-                    SizedBox(width: 50.0),
-                    Column(
-                      children: [
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/marco.jpg'),
-                            radius: 20.0,
-                          ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Text(
-                          'Marco',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 14,
-                            color: Colors.black,
-                            height: 1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
                 ),
-              ),
+                ),
               RichText(
                 text: TextSpan(
                   children: [
@@ -166,80 +193,12 @@ class _HomeState extends State<HomeLandlord> {
     );
   }
 
-  @override
-  Widget saldanha(tt) {
-    return Card(
-      margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
-      color: Color(0xFF48ACBE),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: <Widget>[
-            new Align(
-              alignment: new Alignment(-1.1, 0.0),
-              child: Container(
-                width: 400.0,
-                height: 28.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Color(0xFF006D77),
-                    width: 2,
-                  ),
-                ),
-                child: Text(
-                  tt.name,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.black,
-                    letterSpacing: 2.0,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  tt.description,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.black,
-                  )
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  'No tenants yet.',
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.grey[300],
-                  )
-              ),
-            ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "- ",
-                    style: TextStyle(fontSize: 14, color: Colors.black),
-                  ),
-                  WidgetSpan(
-                    child: Icon(Icons.star_border, size: 16),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
+
+    getData();
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -381,11 +340,9 @@ class _HomeState extends State<HomeLandlord> {
             Center(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                template(houses[0]),
-                saldanha(houses[1]),
-                ],
+                  children:[
+                        for (var i in houses) template(i)
+                      ]
               ),
             ),
           ],
