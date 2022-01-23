@@ -38,13 +38,19 @@ class House{
 }
 
 class LandlordSeeHouse extends StatefulWidget {
-  const LandlordSeeHouse({Key? key}) : super(key: key);
+  final String id;
+
+  const LandlordSeeHouse({Key? key, required this.id}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _HomeState createState() => _HomeState(id);
 }
 
 class _HomeState extends State<LandlordSeeHouse> {
+  String houseid;
+
+  _HomeState(this.houseid);
+
   House housea = House(description: "",
   name: "",
   price: "",
@@ -61,7 +67,7 @@ class _HomeState extends State<LandlordSeeHouse> {
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('house').get();
 
     snapshot.docs.forEach((doc) {
-      if (doc.id == 'ZoMPtra4WxTnMwVAihIz') {
+      if (doc.id == houseid) {
         House house1 = House(description: doc['description'],
             name: doc['name'],
             price: doc['price'],
