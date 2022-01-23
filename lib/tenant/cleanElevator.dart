@@ -5,6 +5,7 @@ import 'tenantTasks.dart';
 import 'tenantTasks4.dart';
 import 'profile.dart';
 import 'tenantEvaluateMain.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Types{
   String type;
@@ -21,13 +22,9 @@ class CleanElevator extends StatefulWidget{
 }
 
 class _CleanState extends State<CleanElevator>{
-
-  List<Types> tasks= [
-    Types(type: 'Description', task: 'You will have to clean and desinfect the elevator.\nAfter that, you will have to wash all the instruments used and put it back on the place where you have grabbed them.\nThis task has to be done once per week.'),
-    Types(type: 'Products', task: '- Cif Lava-Tudo;\n- Sonasol;\n- Ajax.\n\nNote: the fabrics, the mop and the mop bucket are on the layoff of the building.'),
-    Types(type: 'Price', task: 'This task has a discount on the rent of 20€.'),
-    Types(type: 'Date', task: 'This task has to be done on February 1st and February 11th.')
-  ];
+  CollectionReference tasksDB = FirebaseFirestore.instance.collection('task');
+  List<Types> tasks = [];
+  int discount = 0;
 
   @override
   Widget template(tt) {
@@ -78,6 +75,8 @@ class _CleanState extends State<CleanElevator>{
   final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
+    Future<DocumentSnapshot<Object?>>? task = tasksDB.doc('gRuBK9IHu2z6aIfKIqVv').get();
+    Map<String, dynamic>  data = {};
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -134,8 +133,7 @@ class _CleanState extends State<CleanElevator>{
       ),
       body: SafeArea(
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.fromLTRB(30.0, 12.0, 0.0, 0.0),
@@ -193,16 +191,39 @@ class _CleanState extends State<CleanElevator>{
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 4.0, 199.0, 0.0),
-                child: Text(
-                  'Clean Elevator',
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
+              FutureBuilder<DocumentSnapshot>(
+                future: task,
+                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+                  if (snapshot.hasError) {
+                    data = {};
+                    return Text("Something went wrong");
+                  }
+
+                  if (snapshot.hasData && !snapshot.data!.exists) {
+                    data = {};
+                    return Text("Document does not exist");
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    data = snapshot.data!.data() as Map<String, dynamic>;
+                    discount = data['discount'];
+                    tasks= [
+                      Types(type: 'Description', task: data['description']),
+                      Types(type: 'Products', task: data['products']),
+                      Types(type: 'Price', task: 'This task has a discount on the rent of $discount €'),
+                      Types(type: 'Date', task: data['date'])
+                    ];
+                    return Text(data['name'],
+                        style: TextStyle(
+                          color: Colors.black,
+                          letterSpacing: 2.0,
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.bold,));
+                  }
+                  data = {};
+                  return Text("loading");
+                },
               ),
               Container(
                 height: 440,

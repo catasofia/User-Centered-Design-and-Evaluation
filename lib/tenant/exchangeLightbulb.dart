@@ -5,6 +5,8 @@ import 'tenantTasks.dart';
 import 'tenantTasks4.dart';
 import 'profile.dart';
 import 'tenantEvaluateMain.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Types{
   String type;
@@ -21,13 +23,9 @@ class ExchangeLightbulb extends StatefulWidget{
 }
 
 class _LightbulbState extends State<ExchangeLightbulb>{
-
-  List<Types> tasks= [
-    Types(type: 'Description', task: 'You will have to change the lightbulb in the hall of the building.\nAfter this task is performed, make sure to write the lightbulb used on the notepad so we can replace it in time for next time.'),
-    Types(type: 'Products', task: '- Lightbulb: LED E27 A60 12W.\n\nNote: the ladder and the lightbulb are on the layoff of the building.'),
-    Types(type: 'Price', task: 'This task has a discount on the rent of 5€.'),
-    Types(type: 'Date', task: 'This task has to be done on February 2nd.')
-  ];
+  CollectionReference tasksDB = FirebaseFirestore.instance.collection('task');
+  List<Types> tasks = [];
+  int discount = 0;
 
   @override
   Widget template(tt) {
@@ -78,6 +76,8 @@ class _LightbulbState extends State<ExchangeLightbulb>{
   final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
+    Future<DocumentSnapshot<Object?>>? task = tasksDB.doc('jXmLSylXNl6l1EoZsx5S').get();
+    Map<String, dynamic>  data = {};
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -137,8 +137,7 @@ class _LightbulbState extends State<ExchangeLightbulb>{
       ),
       body: SafeArea(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.fromLTRB(30.0, 12.0, 0.0, 0.0),
@@ -196,18 +195,40 @@ class _LightbulbState extends State<ExchangeLightbulb>{
                     ],
                   ),
                 ),
+                FutureBuilder<DocumentSnapshot>(
+                  future: task,
+                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
 
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 4.0, 132.0, 0.0),
-                      child: Text(
-                        'Exchange Lightbulb',
-                        style: TextStyle(
-                          fontSize: 28.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
+                    if (snapshot.hasError) {
+                      data = {};
+                      return Text("Something went wrong");
+                    }
+
+                    if (snapshot.hasData && !snapshot.data!.exists) {
+                      data = {};
+                      return Text("Document does not exist");
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      data = snapshot.data!.data() as Map<String, dynamic>;
+                      discount = data['discount'];
+                      tasks= [
+                        Types(type: 'Description', task: data['description']),
+                        Types(type: 'Products', task: data['products']),
+                        Types(type: 'Price', task: 'This task has a discount on the rent of $discount €'),
+                        Types(type: 'Date', task: data['date'])
+                      ];
+                      return Text(data['name'],
+                          style: TextStyle(
+                            color: Colors.black,
+                            letterSpacing: 2.0,
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.bold,));
+                    }
+                    data = {};
+                    return Text("loading");
+                  },
+                ),
                 Container(
                   height: 420,
                   child: Scrollbar(

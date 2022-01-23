@@ -5,6 +5,8 @@ import 'tenantTasks.dart';
 import '../signInOrUp.dart';
 import 'tenantEvaluateMain.dart';
 import 'tenantCarlosProfile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -14,9 +16,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  CollectionReference tenantDB = FirebaseFirestore.instance.collection('profile');
+  String image = "";
+  String name = "";
+  String gender = "";
+  int age = 0;
+  String role = "";
+  double rating = 0;
+  int totalDiscount = 0;
 
   @override
   Widget build(BuildContext context) {
+    Future<DocumentSnapshot<Object?>>? tenant = tenantDB.doc('aQXN0IZC6JE9rgW8eMYc').get();
+    Map<String, dynamic>  data = {};
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -136,15 +148,43 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               SizedBox(height: 20.0),
-              Center(
-                child: CircleAvatar(
-                  radius: 79.0,
-                  backgroundColor: Colors.black54,
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/carolina.jpeg'),
-                    radius: 75.0,
-                  ),
-                ),
+              FutureBuilder<DocumentSnapshot>(
+                future: tenant,
+                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+                  if (snapshot.hasError) {
+                    data = {};
+                    return Text("Something went wrong");
+                  }
+
+                  if (snapshot.hasData && !snapshot.data!.exists) {
+                    data = {};
+                    return Text("Document does not exist");
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    data = snapshot.data!.data() as Map<String, dynamic>;
+                    image = data['image'];
+                    name = data['name'];
+                    gender = data['gender'];
+                    age = data['age'];
+                    role = data['role'];
+                    rating = data['rating'];
+                    totalDiscount = data['totalDiscount'];
+                    return Center(
+                      child: CircleAvatar(
+                        radius: 79.0,
+                        backgroundColor: Colors.black54,
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage(image),
+                          radius: 75.0,
+                        ),
+                      ),
+                    );
+                  }
+                  data = {};
+                  return Text("loading");
+                },
               ),
               SizedBox(height: 17.0),
               Container(
@@ -166,7 +206,7 @@ class _ProfileState extends State<Profile> {
                             style: TextStyle(color: Color(0xFF48ACBE),
                                 fontSize: 20),),
                           SizedBox(width: 60,),
-                          Text('Carolina Oliveira\nFemale, 18',
+                          Text('$name\n$gender, $age',
                             style: TextStyle(color: Color(0xFF7AC8D7),
                                 fontSize: 18),),
                         ],
@@ -179,7 +219,7 @@ class _ProfileState extends State<Profile> {
                             style: TextStyle(color: Color(0xFF48ACBE),
                                 fontSize: 20),),
                           SizedBox(width: 56,),
-                          Text('Tenant',
+                          Text('$role',
                             style: TextStyle(color: Color(0xFF7AC8D7),
                                 fontSize: 18),),
                         ],
@@ -191,8 +231,8 @@ class _ProfileState extends State<Profile> {
                           Text('Rating:',
                             style: TextStyle(color: Color(0xFF48ACBE),
                                 fontSize: 20),),
-                          SizedBox(width: 56,),
-                          Text('4.87',
+                          SizedBox(width: 40,),
+                          Text('$rating',
                             style: TextStyle(color: Color(0xFF7AC8D7),
                                 fontSize: 18),),
                         ],

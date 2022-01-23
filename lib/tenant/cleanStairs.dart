@@ -5,6 +5,8 @@ import 'tenantTasks.dart';
 import 'tenantTasks3.dart';
 import 'profile.dart';
 import 'tenantEvaluateMain.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Types{
   String type;
@@ -21,13 +23,9 @@ class CleanStairs extends StatefulWidget{
 }
 
 class _CleanState extends State<CleanStairs>{
-
-  List<Types> tasks= [
-    Types(type: 'Description', task: 'You will have to clean all the stairs.\nAfter the stairs have been cleaned, you will have to wash the mop and the mop bucket, and put it back on the place where you have grabbed them.\nThis task has to be done twice per month.'),
-    Types(type: 'Products', task: '- Cif Lava-Tudo;\n- Sonasol;\n- Neo Blanc.\n\nNote: the mop and the mop bucket are on the layoff of the building.'),
-    Types(type: 'Price', task: 'This task has a discount on the rent of 30€.'),
-    Types(type: 'Date', task: 'This task has to be done on February 5th and February 12th.')
-  ];
+  CollectionReference tasksDB = FirebaseFirestore.instance.collection('task');
+  List<Types> tasks = [];
+  int discount = 0;
 
   @override
   Widget template(tt) {
@@ -78,6 +76,8 @@ class _CleanState extends State<CleanStairs>{
   final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
+    Future<DocumentSnapshot<Object?>>? task = tasksDB.doc('zKt4wGRIhxRDaixYE6u4').get();
+    Map<String, dynamic>  data = {};
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -137,8 +137,7 @@ class _CleanState extends State<CleanStairs>{
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.fromLTRB(30.0, 12.0, 0.0, 0.0),
@@ -196,16 +195,39 @@ class _CleanState extends State<CleanStairs>{
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 4.0, 220.0, 0.0),
-              child: Text(
-                  'Clean Stairs',
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
+            FutureBuilder<DocumentSnapshot>(
+              future: task,
+              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+                if (snapshot.hasError) {
+                  data = {};
+                  return Text("Something went wrong");
+                }
+
+                if (snapshot.hasData && !snapshot.data!.exists) {
+                  data = {};
+                  return Text("Document does not exist");
+                }
+
+                if (snapshot.connectionState == ConnectionState.done) {
+                  data = snapshot.data!.data() as Map<String, dynamic>;
+                  discount = data['discount'];
+                  tasks= [
+                    Types(type: 'Description', task: data['description']),
+                    Types(type: 'Products', task: data['products']),
+                    Types(type: 'Price', task: 'This task has a discount on the rent of $discount €'),
+                    Types(type: 'Date', task: data['date'])
+                  ];
+                  return Text(data['name'],
+                      style: TextStyle(
+                        color: Colors.black,
+                        letterSpacing: 2.0,
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,));
+                }
+                data = {};
+                return Text("loading");
+              },
             ),
             Container(
               height: 420,

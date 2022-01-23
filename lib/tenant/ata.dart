@@ -5,6 +5,8 @@ import 'tenantTasks.dart';
 import 'tenantTasks4.dart';
 import 'profile.dart';
 import 'tenantEvaluateMain.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Types{
   String type;
@@ -21,13 +23,9 @@ class ATA extends StatefulWidget{
 }
 
 class _ATAState extends State<ATA>{
-
-  List<Types> tasks= [
-    Types(type: 'Description', task: 'You will have to take notes about the neighbors that were at the meeting, the subjects discussed, what every person said, what was voted on, the time, and the place.'),
-    Types(type: 'Products', task: '- ATA;\n- Black pen.\n\nNote: the ATA is in the office room, inside the desk drawer. The pen is on yourself but is preferably a black one.'),
-    Types(type: 'Price', task: 'This task has a discount on the rent of 15€.'),
-    Types(type: 'Date', task: 'The meeting will take place on February 23rd.')
-  ];
+  CollectionReference tasksDB = FirebaseFirestore.instance.collection('task');
+  List<Types> tasks = [];
+  int discount = 0;
 
   @override
   Widget template(tt) {
@@ -78,6 +76,8 @@ class _ATAState extends State<ATA>{
   final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
+    Future<DocumentSnapshot<Object?>>? task = tasksDB.doc('PGUavfw2UZjYQ07qFVS1').get();
+    Map<String, dynamic>  data = {};
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -137,8 +137,7 @@ class _ATAState extends State<ATA>{
       ),
       body: SafeArea(
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.fromLTRB(30.0, 12.0, 0.0, 0.0),
@@ -196,16 +195,39 @@ class _ATAState extends State<ATA>{
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 4.0, 310.0, 0.0),
-                child: Text(
-                  'ATA',
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
+              FutureBuilder<DocumentSnapshot>(
+                future: task,
+                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+                  if (snapshot.hasError) {
+                    data = {};
+                    return Text("Something went wrong");
+                  }
+
+                  if (snapshot.hasData && !snapshot.data!.exists) {
+                    data = {};
+                    return Text("Document does not exist");
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    data = snapshot.data!.data() as Map<String, dynamic>;
+                    discount = data['discount'];
+                    tasks= [
+                      Types(type: 'Description', task: data['description']),
+                      Types(type: 'Products', task: data['products']),
+                      Types(type: 'Price', task: 'This task has a discount on the rent of $discount €'),
+                      Types(type: 'Date', task: data['date'])
+                    ];
+                    return Text(data['name'],
+                        style: TextStyle(
+                          color: Colors.black,
+                          letterSpacing: 2.0,
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.bold,));
+                  }
+                  data = {};
+                  return Text("loading");
+                },
               ),
               Container(
                 height: 420,

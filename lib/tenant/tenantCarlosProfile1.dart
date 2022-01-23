@@ -3,6 +3,7 @@ import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'tenantCarlosProfile.dart';
 import 'tenantEvaluateMain.dart';import 'tenantContacts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class CarlosProfile1 extends StatefulWidget {
@@ -14,9 +15,18 @@ class CarlosProfile1 extends StatefulWidget {
 }
 
 class _CarlosProfile1State extends State<CarlosProfile1> {
+  CollectionReference landlordDB = FirebaseFirestore.instance.collection('profile');
+  String image = "";
+  String name = "";
+  String gender = "";
+  int age = 0;
+  String role = "";
+  double rating = 0;
 
   @override
   Widget build(BuildContext context) {
+    Future<DocumentSnapshot<Object?>>? landlord = landlordDB.doc('NzP8xVGu1fOcqTWb4JNt').get();
+    Map<String, dynamic>  data = {};
     String _description = widget.description;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -137,30 +147,42 @@ class _CarlosProfile1State extends State<CarlosProfile1> {
               ],
             ),
             SizedBox(height: 15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  children: [
-                    Container(
+            FutureBuilder<DocumentSnapshot>(
+              future: landlord,
+              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+                if (snapshot.hasError) {
+                  data = {};
+                  return Text("Something went wrong");
+                }
+
+                if (snapshot.hasData && !snapshot.data!.exists) {
+                  data = {};
+                  return Text("Document does not exist");
+                }
+
+                if (snapshot.connectionState == ConnectionState.done) {
+                  data = snapshot.data!.data() as Map<String, dynamic>;
+                  image = data['image'];
+                  name = data['name'];
+                  gender = data['gender'];
+                  age = data['age'];
+                  role = data['role'];
+                  rating = data['rating'];
+                  return Center(
+                    child: CircleAvatar(
+                      radius: 70.0,
+                      backgroundColor: Colors.black54,
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/carlos.jfif'),
-                        radius: 55.0,
+                        backgroundImage: AssetImage(image),
+                        radius: 66.0,
                       ),
                     ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Carlos',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                  );
+                }
+                data = {};
+                return Text("loading");
+              },
             ),
             SizedBox(height: 12.0),
             Center(
@@ -198,7 +220,7 @@ class _CarlosProfile1State extends State<CarlosProfile1> {
                           ),
                           SizedBox(width: 50.0),
                           Text(
-                            'Carlos Silva\nMale, 55',
+                            '$name\n$gender, $age',
                             style: TextStyle(
                               fontFamily: 'Arial',
                               fontSize: 20,
@@ -221,7 +243,7 @@ class _CarlosProfile1State extends State<CarlosProfile1> {
                           ),
                           SizedBox(width: 45.0),
                           Text(
-                            'Landlord',
+                            '$role',
                             style: TextStyle(
                               fontFamily: 'Arial',
                               fontSize: 20,
@@ -244,7 +266,7 @@ class _CarlosProfile1State extends State<CarlosProfile1> {
                           ),
                           SizedBox(width: 30.0),
                           Text(
-                            '4.54',
+                            '$rating',
                             style: TextStyle(
                               fontFamily: 'Arial',
                               fontSize: 20,

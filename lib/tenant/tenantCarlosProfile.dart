@@ -4,6 +4,8 @@ import 'tenantHomescreen.dart';
 import 'tenantCarlosProfile1.dart';
 import 'tenantEvaluateMain.dart';
 import 'tenantContacts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class CarlosProfile extends StatefulWidget {
   const CarlosProfile({Key? key}) : super(key: key);
@@ -13,6 +15,13 @@ class CarlosProfile extends StatefulWidget {
 }
 
 class _CarlosProfileState extends State<CarlosProfile> {
+  CollectionReference landlordDB = FirebaseFirestore.instance.collection('profile');
+  String image = "";
+  String name = "";
+  String gender = "";
+  int age = 0;
+  String role = "";
+  double rating = 0;
 
   final _description = TextEditingController();
 
@@ -25,6 +34,8 @@ class _CarlosProfileState extends State<CarlosProfile> {
 
   @override
   Widget build(BuildContext context) {
+    Future<DocumentSnapshot<Object?>>? landlord = landlordDB.doc('NzP8xVGu1fOcqTWb4JNt').get();
+    Map<String, dynamic>  data = {};
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -144,30 +155,42 @@ class _CarlosProfileState extends State<CarlosProfile> {
               ],
             ),
             SizedBox(height: 15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  children: [
-                    Container(
+            FutureBuilder<DocumentSnapshot>(
+              future: landlord,
+              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+                if (snapshot.hasError) {
+                  data = {};
+                  return Text("Something went wrong");
+                }
+
+                if (snapshot.hasData && !snapshot.data!.exists) {
+                  data = {};
+                  return Text("Document does not exist");
+                }
+
+                if (snapshot.connectionState == ConnectionState.done) {
+                  data = snapshot.data!.data() as Map<String, dynamic>;
+                  image = data['image'];
+                  name = data['name'];
+                  gender = data['gender'];
+                  age = data['age'];
+                  role = data['role'];
+                  rating = data['rating'];
+                  return Center(
+                    child: CircleAvatar(
+                      radius: 70.0,
+                      backgroundColor: Colors.black54,
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/carlos.jfif'),
-                        radius: 55.0,
+                        backgroundImage: AssetImage(image),
+                        radius: 66.0,
                       ),
                     ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Carlos',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                  );
+                }
+                data = {};
+                return Text("loading");
+              },
             ),
             SizedBox(height: 12.0),
             Center(
@@ -205,7 +228,7 @@ class _CarlosProfileState extends State<CarlosProfile> {
                           ),
                           SizedBox(width: 50.0),
                           Text(
-                            'Carlos Silva\nMale, 55',
+                            '$name\n$gender, $age',
                             style: TextStyle(
                               fontFamily: 'Arial',
                               fontSize: 20,
@@ -228,7 +251,7 @@ class _CarlosProfileState extends State<CarlosProfile> {
                           ),
                           SizedBox(width: 45.0),
                           Text(
-                            'Landlord',
+                            '$role',
                             style: TextStyle(
                               fontFamily: 'Arial',
                               fontSize: 20,
@@ -251,7 +274,7 @@ class _CarlosProfileState extends State<CarlosProfile> {
                           ),
                           SizedBox(width: 30.0),
                           Text(
-                            '4.54',
+                            '$rating',
                             style: TextStyle(
                               fontFamily: 'Arial',
                               fontSize: 20,
