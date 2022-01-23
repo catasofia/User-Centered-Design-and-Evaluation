@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'signInOrUp.dart';
+import 'signUp.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   route() {
     Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) => Signs()
+        builder: (context) => SignUp()
     )
     );
   }
