@@ -9,7 +9,7 @@ import 'landlordAlameda.dart';
 import 'landlordHomeScreen.dart';
 import 'landlordSuggestedTask.dart';
 
-//FALTA REMOVER E EDITAR NA LISTA DAS HOUSES
+//FALTA REMOVER
 
 class Task{
   String name;

@@ -114,7 +114,7 @@ class _HomeState extends State<LandlordSeeHouse> {
 
     snapshot2.docs.forEach((doc) {
       housea.tasks.forEach((element) {
-        if (doc['name'] == element) {
+        if (doc.id == element) {
           Task task = Task(name: doc['name'], id: doc.id);
           tasks.add(task);
         }
