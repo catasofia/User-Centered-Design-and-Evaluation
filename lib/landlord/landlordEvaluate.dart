@@ -1,8 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:time_app/landlord/landlordEvaluatePage1.dart';
 import 'package:time_app/landlord/landlordEvaluatePage2.dart';
 import 'package:time_app/landlord/landlordEvaluatePage3.dart';
+import 'carlosProfileLandlord.dart';
 import 'landlordHomeScreen.dart';
+
+
+class Task {
+  String name;
+  String date;
+  int stars;
+  String id;
+
+  Task({required this.name, required this.date, required this.stars, required this.id});
+}
+
 
 class LandlordEvaluate extends StatefulWidget {
   const LandlordEvaluate({Key? key}) : super(key: key);
@@ -12,225 +25,172 @@ class LandlordEvaluate extends StatefulWidget {
 }
 
 class _EvaluateState extends State<LandlordEvaluate> {
+  @override
+  List<Task> allTasks= [];
+
+  List<Task> tasksToEvaluate= [];
+
+  List<Task> tasksEvaluated= [];
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
+
+    if (tasksToEvaluate.isNotEmpty){
+      tasksToEvaluate = [];
+    }
+
+    if (tasksEvaluated.isNotEmpty){
+      tasksEvaluated = [];
+    }
+
+    snapshot.docs.forEach((doc) {
+      Task task1 = Task(name: doc['name'],
+          date: doc['date'],
+          stars: doc['stars'],
+          id: doc.id);
+      bool aux = true;
+      allTasks.forEach((element) {
+        if (element.id == doc.id) {
+          aux = false;
+        }
+      });
+      if (aux) {
+        allTasks.add(task1);
+      }
+    });
+
+    snapshot.docs.forEach((element) {
+      for(var i = 0; i < allTasks.length; i++){
+        if(allTasks[i].id == element.id){
+          if(element['stars'] == 0 ){
+            tasksToEvaluate.add(allTasks[i]);
+          }
+          else if(element['stars'] != 0) {
+            tasksEvaluated.add(allTasks[i]);
+          }
+        }
+      }
+    });
+    setState((){});
+  }
+
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF48ACBE),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.house_outlined,
-                  size: 35.0,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeLandlord()),
-                  );
-                },
-              ),
-              IconButton(
-                color: Colors.white,
-                  icon: Icon(
-                Icons.star_border,
-                size: 35.0,
-              ), onPressed: () {}),
-              IconButton(
-                  icon: Icon(
-                    Icons.cleaning_services_rounded,
-                    size: 30.0,
-                  ),
-                  onPressed: () {
-                  }
-              ),
-              IconButton(
-                  icon: Icon(
-                    Icons.chat_bubble_outline_rounded,
-                    size: 30.0,
-                  ), onPressed: () {}),
-            ],
-          ),
-        ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+  Widget tasksCard(tt) {
+
+    return Card(
+      margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
+      color: Color(0xFF48ACBE),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.person_outline,
-                  color: Colors.black,
-                  size: 40.0,
-                ),
-                SizedBox(width: 15.0),
-                Container(
-                  width: 240.0,
-                  height: 42.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24.0),
-                    color: Colors.grey[200],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(width: 15.0),
-                      Icon(
-                        Icons.search,
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 10.0),
-                      Text(
-                        'Search',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 20,
-                          color: Colors.black,
-                          height: 1,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 8.0),
-                IconButton(
-                  icon: const Icon(
-                    Icons.notifications_active_outlined,
-                    color: Colors.black,
-                    size: 38.0,
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => _buildPopupNotification(context),
-                    );
-                  },
-                ),
-              ],
-            ),
-            Divider(
-              height: 40.0,
-              color: Colors.white,
-            ),
-            SizedBox(height: 15.0),
-            Row(
-              children: <Widget>[
-                SizedBox(width: 20.0),
-                Column(
-                  children: [
-                    Container(
-                        child: Material(
-                            color: Colors.blue,
-                            elevation: 8,
-                            shape: CircleBorder(),
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: InkWell(
-                                splashColor: Colors.white70,
-                                onTap: () {
-                                  Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => LandlordEvaluatePage1()),
-                                );},
-                                child: Ink.image(
-                                    image: AssetImage('assets/carolina.jpeg'), height: 130.0, width: 130.0, fit: BoxFit.cover)
-                            )
-                        )
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      'Carolina',
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                      tt.name,
                       style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
+                        fontSize: 18.0,
                         color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(width: 50.0),
-                Column(
-                  children: [
-                    Container(
-                        child: Material(
-                            color: Colors.blue,
-                            elevation: 8,
-                            shape: CircleBorder(),
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: InkWell(
-                                splashColor: Colors.white70,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => LandlordEvaluatePage2()),
-                                  );
-                                },
-                                child: Ink.image(
-                                    image: AssetImage('assets/joao.jpg'), height: 130.0, width: 130.0, fit: BoxFit.cover)
-                            )
-                        )
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      'João',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 200.0, 0.0, 0.0),
-                  child: SizedBox(width: 20.0),
-                ),
-                Column(
-                  children: [
-                    Container(
-                      child: Material(
-                        color: Colors.blue,
-                        elevation: 8,
-                        shape: CircleBorder(),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: InkWell(
-                          splashColor: Colors.white70,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => LandlordEvaluatePage3()),
-                            );
-                          },
-                          child: Ink.image(
-                            image: AssetImage('assets/marco.jpg'), height: 130.0, width: 130.0, fit: BoxFit.cover)
-                        )
+                        fontWeight: FontWeight.bold,
                       )
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      'Marco',
+                  ),
+                  Text(
+                      tt.date,
                       style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
+                        fontSize: 14.0,
                         color: Colors.black,
-                        height: 1,
+                      )
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //Icon(Icons.star_border, size: 25,),
+                IconButton(onPressed: (){
+                  setState(() {
+                    tt.stars = 1;
+                  });
+                },
+                  icon: Icon(Icons.star), color: tt.stars >= 1 ? Colors.yellow : Colors.white, iconSize: 25,),
+                IconButton(onPressed: (){
+                  setState(() {
+                    tt.stars = 2;
+                  });
+                },
+                  icon: Icon(Icons.star), color:  tt.stars >= 2 ? Colors.yellow : Colors.white, iconSize: 25,),
+                IconButton(onPressed: (){
+                  setState(() {
+                    tt.stars = 3;
+                  });
+                },
+                  icon: Icon(Icons.star), color:  tt.stars >= 3 ? Colors.yellow : Colors.white, iconSize: 25,),
+                IconButton(onPressed: (){
+                  setState(() {
+                    tt.stars = 4;
+                  });
+                },
+                  icon: Icon(Icons.star), color:  tt.stars >= 4 ? Colors.yellow : Colors.white, iconSize: 25,),
+                IconButton(onPressed: (){
+                  setState(() {
+                    tt.stars = 5;
+                  });
+                },
+                  icon: Icon(Icons.star), color:  tt.stars >= 5 ? Colors.yellow : Colors.white, iconSize: 25,),
+                tasksEvaluated.contains(tt) ? SizedBox() :
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: ElevatedButton(
+                    onPressed: (){
+                      if(tt.stars == 1){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'stars': 1});
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupEvaluate(context),
+                        );
+                      }
+                      if(tt.stars == 2){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'stars': 2});
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupEvaluate(context),
+                        );
+                      }
+                      if(tt.stars == 3){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'stars': 3});
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupEvaluate(context),
+                        );
+                      }
+                      if(tt.stars == 4){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'stars': 4});
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupEvaluate(context),
+                        );
+                      }
+                      if(tt.stars == 5){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'stars': 5});
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupEvaluate(context),
+                        );
+                      }
+                    },
+                    child: Text("Submit", style: TextStyle(color: Colors.black),),
+                    style: ElevatedButton.styleFrom(
+                      primary: tt.stars == 0 ? Colors.grey[400] : Colors.green,
+                      shape: RoundedRectangleBorder( //to set border radius to button
+                          borderRadius: BorderRadius.circular(10)
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -238,6 +198,128 @@ class _EvaluateState extends State<LandlordEvaluate> {
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    getData();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 30.0),
+        child:
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    IconButton(
+                      icon: const Icon(
+                        Icons.person_outline,
+                        color: Colors.black,
+                        size: 40.0,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CarlosProfileLandlord()),
+                        );
+                      },
+                    ),
+                    SizedBox(width: 10.0),
+                    Container(
+                      width: 235.0,
+                      height: 42.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        color: Colors.grey[200],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(width: 15.0),
+                          Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
+                          SizedBox(width: 10.0),
+                          Text(
+                            'Search',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 20,
+                              color: Colors.black,
+                              height: 1,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 8.0),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.notifications_active_outlined,
+                        color: Colors.black,
+                        size: 38.0,
+                      ),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupNotification(context),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+                  child: Text(
+                    'Tasks to Evaluate',
+                    style: TextStyle(
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      for (var i in tasksToEvaluate) tasksCard(i),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+                  child: Text(
+                    'Tasks Evaluated',
+                    style: TextStyle(
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      for (var i in tasksEvaluated) tasksCard(i),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
   }
 }
 
@@ -303,6 +385,90 @@ Widget _buildPopupNotification(BuildContext context) {
               Icons.remove_circle_outline,
               color: Colors.black,
               size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+
+Widget _buildPopupEvaluate(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check,
+              size: 20.0,
+              color: Colors.lightGreen,
+            ),
+            SizedBox(width: 3.0),
+          ],
+        ),
+        SizedBox(height: 12.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Evaluation submited!",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 90.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.grey[300],
+            ),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 15,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
