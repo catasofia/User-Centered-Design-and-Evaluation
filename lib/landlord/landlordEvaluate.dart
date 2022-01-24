@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:time_app/landlord/landlordEvaluatePage1.dart';
 import 'package:time_app/landlord/landlordEvaluatePage2.dart';
 import 'package:time_app/landlord/landlordEvaluatePage3.dart';
-import 'carlosProfileLandlord.dart';
+import 'package:time_app/landlord/profileLandlord.dart';
 import 'landlordHomeScreen.dart';
 
 
@@ -223,7 +223,7 @@ class _EvaluateState extends State<LandlordEvaluate> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => CarlosProfileLandlord()),
+                          MaterialPageRoute(builder: (context) => ProfileLandlord()),
                         );
                       },
                     ),
