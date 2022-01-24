@@ -24,7 +24,7 @@ class CleanElevator extends StatefulWidget{
 class _CleanState extends State<CleanElevator>{
   CollectionReference tasksDB = FirebaseFirestore.instance.collection('task');
   List<Types> tasks = [];
-  int discount = 0;
+  String discount = "";
 
   Future<void> getData() async{
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
