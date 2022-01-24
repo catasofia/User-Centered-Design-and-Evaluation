@@ -387,77 +387,41 @@ Widget _buildPopupAddHouse(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.check,
-              size: 20.0,
-              color: Colors.lightGreen,
-            ),
-            SizedBox(width: 3.0),
-          ],
-        ),
-        SizedBox(height: 12.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "House added!",
-              style: TextStyle(
-                fontFamily: 'Arial',
-                fontSize: 20,
-                color: Colors.black,
-                height: 1,
-              ),
-            ),
-          ],
+        Center(child: Icon(Icons.check, color: Colors.green[800], size: 100,)),
+        SizedBox(height: 15,),
+        Text(
+          "House successfully added.",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
         ),
       ],
     ),
     actions: <Widget>[
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Container(
-            width: 90.0,
-            height: 30.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1.5,
-                  blurRadius: 1.5,
-                  offset: Offset(0, 3), // changes position of shadow
+          new FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              textColor: Theme.of(context).primaryColor,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[400]
                 ),
-              ],
-              color: Colors.grey[300],
-            ),
-            child: new Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new FlatButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeLandlord()),
-                    );
-                  },
-                  textColor: Theme.of(context).primaryColor,
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(
-                      fontFamily: 'Arial',
-                      fontSize: 15,
-                      color: Colors.black,
-                      height: 1,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                onPressed: (){
+                  clearText();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeLandlord()),
+                  );
+                },
+                child: Text('Ok', style: TextStyle(color: Colors.black),),
+              )
           ),
         ],
       ),

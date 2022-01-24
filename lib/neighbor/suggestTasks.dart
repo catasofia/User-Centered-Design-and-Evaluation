@@ -1,3 +1,6 @@
+//NEIGHBOR PROFILE?
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'neighborProfile.dart';
 import 'neighborHomeScreen.dart';
@@ -9,10 +12,11 @@ class SuggestTask extends StatefulWidget {
   _SuggestTaskState createState() => _SuggestTaskState();
 }
 
-final textController_1 = TextEditingController();
-final textController_2 = TextEditingController();
+final task_name = TextEditingController();
+final description = TextEditingController();
 
 class _SuggestTaskState extends State<SuggestTask> {
+  CollectionReference task = FirebaseFirestore.instance.collection('suggested_task');
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +103,7 @@ class _SuggestTaskState extends State<SuggestTask> {
               child: new Column(
                 children: <Widget>[
                   new TextField(
-                    controller: textController_1,
+                    controller: task_name,
                     decoration: InputDecoration(
                       hintText: "Insert name"
                     ),
@@ -114,7 +118,7 @@ class _SuggestTaskState extends State<SuggestTask> {
                     ],
                   ),
                   new TextField(
-                    controller: textController_2,
+                    controller: description,
                     decoration: InputDecoration(
                       hintText: "Insert description"
                     ),
@@ -145,6 +149,10 @@ class _SuggestTaskState extends State<SuggestTask> {
                           builder: (BuildContext context) => _errorPopup(context),
                         );
                       } else{
+                        task.add({
+                          'name': task_name.text,
+                          'description': description.text
+                        });
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _confirmationPopup(context),
@@ -163,24 +171,23 @@ class _SuggestTaskState extends State<SuggestTask> {
                 ),
               ],
             ),
-            SizedBox(height: 30,),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    elevation: 0,
-                  ),
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => NeighborHome()),
-                    );
-                    clearText();
-                  },
-                  child: Text('Cancel',
-                    style: TextStyle(color: Colors.grey[700]),)),
-            )
+            Row(
+              children: [
+                SizedBox(width: 20,),
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back_ios),
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NeighborHome()),
+                        );
+                      },
+                    )
+                ),
+              ],
+            ),
           ]
       ),
     );
@@ -188,15 +195,15 @@ class _SuggestTaskState extends State<SuggestTask> {
 }
 
 clearText(){
-  textController_1.clear();
-  textController_2.clear();
+  task_name.clear();
+  description.clear();
 }
 
 checkTextFieldEmptyOrNot(){
   String text1,text2;
 
-  text1 = textController_1.text;
-  text2 = textController_2.text;
+  text1 = task_name.text;
+  text2 = description.text;
 
   if(text1 == '' || text2 == '') {
     return true;
@@ -258,7 +265,7 @@ Widget _confirmationPopup(BuildContext context) {
         Center(child: Icon(Icons.check, color: Colors.green[800], size: 100,)),
         SizedBox(height: 15,),
         Text(
-          "Task successfully added.",
+          "Task successfully suggested.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
