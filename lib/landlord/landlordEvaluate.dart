@@ -10,10 +10,11 @@ import 'landlordHomeScreen.dart';
 class Task {
   String name;
   String date;
-  int stars;
+  int landStars;
+  int neigStars;
   String id;
 
-  Task({required this.name, required this.date, required this.stars, required this.id});
+  Task({required this.name, required this.date, required this.landStars, required this.neigStars, required this.id});
 }
 
 
@@ -46,7 +47,8 @@ class _EvaluateState extends State<LandlordEvaluate> {
     snapshot.docs.forEach((doc) {
       Task task1 = Task(name: doc['name'],
           date: doc['date'],
-          stars: doc['stars'],
+          landStars: doc['landStars'],
+          neigStars: doc['neigStars'],
           id: doc.id);
       bool aux = true;
       allTasks.forEach((element) {
@@ -62,10 +64,10 @@ class _EvaluateState extends State<LandlordEvaluate> {
     snapshot.docs.forEach((element) {
       for(var i = 0; i < allTasks.length; i++){
         if(allTasks[i].id == element.id){
-          if(element['stars'] == 0 ){
+          if(element['landStars'] == 0 ){
             tasksToEvaluate.add(allTasks[i]);
           }
-          else if(element['stars'] != 0) {
+          else if(element['landStars'] != 0) {
             tasksEvaluated.add(allTasks[i]);
           }
         }
@@ -114,69 +116,69 @@ class _EvaluateState extends State<LandlordEvaluate> {
                 //Icon(Icons.star_border, size: 25,),
                 IconButton(onPressed: (){
                   setState(() {
-                    tt.stars = 1;
+                    tt.landStars = 1;
                   });
                 },
-                  icon: Icon(Icons.star), color: tt.stars >= 1 ? Colors.yellow : Colors.white, iconSize: 25,),
+                  icon: Icon(Icons.star), color: tt.landStars >= 1 ? Colors.yellow : Colors.white, iconSize: 25,),
                 IconButton(onPressed: (){
                   setState(() {
-                    tt.stars = 2;
+                    tt.landStars = 2;
                   });
                 },
-                  icon: Icon(Icons.star), color:  tt.stars >= 2 ? Colors.yellow : Colors.white, iconSize: 25,),
+                  icon: Icon(Icons.star), color:  tt.landStars >= 2 ? Colors.yellow : Colors.white, iconSize: 25,),
                 IconButton(onPressed: (){
                   setState(() {
-                    tt.stars = 3;
+                    tt.landStars = 3;
                   });
                 },
-                  icon: Icon(Icons.star), color:  tt.stars >= 3 ? Colors.yellow : Colors.white, iconSize: 25,),
+                  icon: Icon(Icons.star), color:  tt.landStars >= 3 ? Colors.yellow : Colors.white, iconSize: 25,),
                 IconButton(onPressed: (){
                   setState(() {
-                    tt.stars = 4;
+                    tt.landStars = 4;
                   });
                 },
-                  icon: Icon(Icons.star), color:  tt.stars >= 4 ? Colors.yellow : Colors.white, iconSize: 25,),
+                  icon: Icon(Icons.star), color:  tt.landStars >= 4 ? Colors.yellow : Colors.white, iconSize: 25,),
                 IconButton(onPressed: (){
                   setState(() {
-                    tt.stars = 5;
+                    tt.landStars = 5;
                   });
                 },
-                  icon: Icon(Icons.star), color:  tt.stars >= 5 ? Colors.yellow : Colors.white, iconSize: 25,),
+                  icon: Icon(Icons.star), color:  tt.landStars >= 5 ? Colors.yellow : Colors.white, iconSize: 25,),
                 tasksEvaluated.contains(tt) ? SizedBox() :
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                   child: ElevatedButton(
                     onPressed: (){
-                      if(tt.stars == 1){
-                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'stars': 1});
+                      if(tt.landStars == 1){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'landStars': 1});
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
                         );
                       }
-                      if(tt.stars == 2){
-                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'stars': 2});
+                      if(tt.landStars == 2){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'landStars': 2});
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
                         );
                       }
-                      if(tt.stars == 3){
-                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'stars': 3});
+                      if(tt.landStars == 3){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'landStars': 3});
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
                         );
                       }
-                      if(tt.stars == 4){
-                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'stars': 4});
+                      if(tt.landStars == 4){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'landStars': 4});
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
                         );
                       }
-                      if(tt.stars == 5){
-                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'stars': 5});
+                      if(tt.landStars == 5){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'landStars': 5});
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -185,7 +187,7 @@ class _EvaluateState extends State<LandlordEvaluate> {
                     },
                     child: Text("Submit", style: TextStyle(color: Colors.black),),
                     style: ElevatedButton.styleFrom(
-                      primary: tt.stars == 0 ? Colors.grey[400] : Colors.green,
+                      primary: tt.landStars == 0 ? Colors.grey[400] : Colors.green,
                       shape: RoundedRectangleBorder( //to set border radius to button
                           borderRadius: BorderRadius.circular(10)
                       ),

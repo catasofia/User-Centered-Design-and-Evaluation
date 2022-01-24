@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_app/contract_linking.dart';
@@ -8,9 +9,11 @@ import 'suggestTasks.dart';
 class Task {
   String name;
   String date;
-  int stars;
+  int landStars;
+  int neigStars;
+  String id;
 
-  Task({required this.name, required this.date, required this.stars});
+  Task({required this.name, required this.date, required this.landStars, required this.neigStars, required this.id});
 }
 
 class NeighborHome extends StatefulWidget {
@@ -22,16 +25,55 @@ class NeighborHome extends StatefulWidget {
 
 class _NeighborHomeState extends State<NeighborHome> {
   @override
-  List<Task> tasksToEvaluate= [
-    Task(name: 'Clean Stairs', date: '7 - 14 Nov', stars: 0),
-    Task(name: 'Clean Elevator', date: '7 - 20 Nov', stars: 0),
-    Task(name: 'Exchange Lightbulb', date: '15 - 16 Nov', stars: 0),
-    Task(name: 'ATA', date: '6 - 18 Nov', stars: 0),
-  ];
+  List<Task> allTasks= [];
 
-  List<Task> tasksEvaluated= [
-    Task(name: 'Clean Stairs', date: '25 - 30 Oct', stars: 3),
-  ];
+  List<Task> tasksToEvaluate= [];
+
+  List<Task> tasksEvaluated= [];
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
+
+    if (tasksToEvaluate.isNotEmpty){
+      tasksToEvaluate = [];
+    }
+
+    if (tasksEvaluated.isNotEmpty){
+      tasksEvaluated = [];
+    }
+
+    snapshot.docs.forEach((doc) {
+      Task task1 = Task(name: doc['name'],
+          date: doc['date'],
+          landStars: doc['landStars'],
+          neigStars: doc['neigStars'],
+          id: doc.id);
+      bool aux = true;
+      allTasks.forEach((element) {
+        if (element.id == doc.id) {
+          aux = false;
+        }
+      });
+      if (aux) {
+        allTasks.add(task1);
+      }
+    });
+
+    snapshot.docs.forEach((element) {
+      for(var i = 0; i < allTasks.length; i++){
+        if(allTasks[i].id == element.id){
+          if(element['neigStars'] == 0 ){
+            tasksToEvaluate.add(allTasks[i]);
+          }
+          else if(element['neigStars'] != 0) {
+            tasksEvaluated.add(allTasks[i]);
+          }
+        }
+      }
+    });
+    setState((){});
+  }
+
 
   @override
   Widget tasksCard(tt) {
@@ -71,42 +113,78 @@ class _NeighborHomeState extends State<NeighborHome> {
                 //Icon(Icons.star_border, size: 25,),
                 IconButton(onPressed: (){
                   setState(() {
-                    tt.stars = 1;
+                    tt.neigStars = 1;
                   });
                 },
-                    icon: Icon(Icons.star), color: tt.stars >= 1 ? Colors.yellow : Colors.white, iconSize: 25,),
+                  icon: Icon(Icons.star), color: tt.neigStars >= 1 ? Colors.yellow : Colors.white, iconSize: 25,),
                 IconButton(onPressed: (){
                   setState(() {
-                    tt.stars = 2;
+                    tt.neigStars = 2;
                   });
                 },
-                  icon: Icon(Icons.star), color: tt.stars >= 2 ? Colors.yellow : Colors.white, iconSize: 25,),
+                  icon: Icon(Icons.star), color:  tt.neigStars >= 2 ? Colors.yellow : Colors.white, iconSize: 25,),
                 IconButton(onPressed: (){
                   setState(() {
-                    tt.stars = 3;
+                    tt.neigStars = 3;
                   });
                 },
-                  icon: Icon(Icons.star), color: tt.stars >= 3 ? Colors.yellow : Colors.white, iconSize: 25,),
+                  icon: Icon(Icons.star), color:  tt.neigStars >= 3 ? Colors.yellow : Colors.white, iconSize: 25,),
                 IconButton(onPressed: (){
                   setState(() {
-                    tt.stars = 4;
+                    tt.neigStars = 4;
                   });
                 },
-                  icon: Icon(Icons.star), color: tt.stars >= 4 ? Colors.yellow : Colors.white, iconSize: 25,),
+                  icon: Icon(Icons.star), color:  tt.neigStars >= 4 ? Colors.yellow : Colors.white, iconSize: 25,),
                 IconButton(onPressed: (){
                   setState(() {
-                    tt.stars = 5;
+                    tt.neigStars = 5;
                   });
                 },
-                  icon: Icon(Icons.star), color: tt.stars >= 5 ? Colors.yellow : Colors.white, iconSize: 25,),
+                  icon: Icon(Icons.star), color:  tt.neigStars >= 5 ? Colors.yellow : Colors.white, iconSize: 25,),
                 tasksEvaluated.contains(tt) ? SizedBox() :
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                   child: ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      if(tt.neigStars == 1){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'neigStars': 1});
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupEvaluate(context),
+                        );
+                      }
+                      if(tt.neigStars == 2){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'neigStars': 2});
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupEvaluate(context),
+                        );
+                      }
+                      if(tt.neigStars == 3){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'neigStars': 3});
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupEvaluate(context),
+                        );
+                      }
+                      if(tt.neigStars == 4){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'neigStars': 4});
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupEvaluate(context),
+                        );
+                      }
+                      if(tt.neigStars == 5){
+                        FirebaseFirestore.instance.collection('task').doc(tt.id).update({'neigStars': 5});
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupEvaluate(context),
+                        );
+                      }
+                    },
                     child: Text("Submit", style: TextStyle(color: Colors.black),),
                     style: ElevatedButton.styleFrom(
-                      primary: tt.stars == 0 ? Colors.grey[400] : Colors.green,
+                      primary: tt.neigStars == 0 ? Colors.grey[400] : Colors.green,
                       shape: RoundedRectangleBorder( //to set border radius to button
                           borderRadius: BorderRadius.circular(10)
                       ),
@@ -123,15 +201,17 @@ class _NeighborHomeState extends State<NeighborHome> {
 
   @override
   Widget build(BuildContext context) {
-    final contractLink = Provider.of<ContractLinking>(context);
+    //final contractLink = Provider.of<ContractLinking>(context);
+    getData();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
           padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 30.0),
           child: Center(
-            child: contractLink.isLoading
-            ? CircularProgressIndicator()
-            : SingleChildScrollView(
+            //child: contractLink.isLoading
+           // ? CircularProgressIndicator()
+           // :
+            child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -311,6 +391,89 @@ Widget _buildPopupNotification(BuildContext context) {
               Icons.remove_circle_outline,
               color: Colors.black,
               size: 25.0,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+Widget _buildPopupEvaluate(BuildContext context) {
+  return new AlertDialog(
+    alignment: Alignment.center,
+    backgroundColor: Color(0xFF48ACBE),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check,
+              size: 20.0,
+              color: Colors.lightGreen,
+            ),
+            SizedBox(width: 3.0),
+          ],
+        ),
+        SizedBox(height: 12.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Evaluation submited!",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 90.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.grey[300],
+            ),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 15,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
