@@ -25,7 +25,25 @@ class ATA extends StatefulWidget{
 class _ATAState extends State<ATA>{
   CollectionReference tasksDB = FirebaseFirestore.instance.collection('task');
   List<Types> tasks = [];
-  int discount = 0;
+  String discount = "";
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
+
+    snapshot.docs.forEach((doc) {
+      if (doc.id == 'PGUavfw2UZjYQ07qFVS1') {
+        discount = doc['discount'];
+        tasks= [
+          Types(type: 'Description', task: doc['description']),
+          Types(type: 'Products', task: doc['products']),
+          Types(type: 'Price', task: 'This task has a discount on the rent of $discount€.'),
+          Types(type: 'Date', task: doc['date'])
+        ];
+      };
+    });
+
+    setState((){});
+  }
 
   @override
   Widget template(tt) {
@@ -76,7 +94,7 @@ class _ATAState extends State<ATA>{
   final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    Future<DocumentSnapshot<Object?>>? task = tasksDB.doc('PGUavfw2UZjYQ07qFVS1').get();
+    getData();
     Map<String, dynamic>  data = {};
     return Scaffold(
       backgroundColor: Colors.white,
@@ -195,39 +213,15 @@ class _ATAState extends State<ATA>{
                   ],
                 ),
               ),
-              FutureBuilder<DocumentSnapshot>(
-                future: task,
-                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
-                  if (snapshot.hasError) {
-                    data = {};
-                    return Text("Something went wrong");
-                  }
-
-                  if (snapshot.hasData && !snapshot.data!.exists) {
-                    data = {};
-                    return Text("Document does not exist");
-                  }
-
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    data = snapshot.data!.data() as Map<String, dynamic>;
-                    discount = data['discount'];
-                    tasks= [
-                      Types(type: 'Description', task: data['description']),
-                      Types(type: 'Products', task: data['products']),
-                      Types(type: 'Price', task: 'This task has a discount on the rent of $discount €'),
-                      Types(type: 'Date', task: data['date'])
-                    ];
-                    return Text(data['name'],
-                        style: TextStyle(
-                          color: Colors.black,
-                          letterSpacing: 2.0,
-                          fontSize: 28.0,
-                          fontWeight: FontWeight.bold,));
-                  }
-                  data = {};
-                  return Text("loading");
-                },
+              Padding(
+                padding: EdgeInsets.fromLTRB(11.0, 10.0, 0.0, 0.0),
+                child: Text('ATA',
+                    style: TextStyle(
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                      fontSize: 28.0,
+                      fontWeight: FontWeight.bold,)
+                ),
               ),
               Container(
                 height: 420,

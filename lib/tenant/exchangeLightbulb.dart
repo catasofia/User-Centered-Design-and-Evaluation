@@ -25,7 +25,7 @@ class ExchangeLightbulb extends StatefulWidget{
 class _LightbulbState extends State<ExchangeLightbulb>{
   CollectionReference tasksDB = FirebaseFirestore.instance.collection('task');
   List<Types> tasks = [];
-  int discount = 0;
+  String discount = "";
 
   Future<void> getData() async{
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
