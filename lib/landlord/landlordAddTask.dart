@@ -6,6 +6,7 @@ import 'package:time_app/landlord/landlordAlameda.dart';
 
 import 'carlosProfileLandlord.dart';
 import 'landlordHomeScreen.dart';
+import 'landlordSeeHouse.dart';
 import 'landlordSuggestedTask.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -13,11 +14,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 //FALTA GUARDAR NA HOUSE
 
+class House{
+  String description = "";
+  String name = "";
+  String price = "";
+  String location = "";
+  List tenants = [];
+  List neighbors = [];
+  List tasks = [];
+
+  House({required this.description, required this.name, required this.price, required this.location, required this.tenants, required this.neighbors, required this.tasks});
+}
+
+
 class AddTask extends StatefulWidget {
-  const AddTask({Key? key}) : super(key: key);
+  final String id;
+  const AddTask({Key? key, required this.id}) : super(key: key);
 
   @override
-  _AddTaskState createState() => _AddTaskState();
+  _AddTaskState createState() => _AddTaskState(id);
 }
 
 final task_name = TextEditingController();
@@ -28,10 +43,39 @@ final date = TextEditingController();
 
 class _AddTaskState extends State<AddTask> {
 
+  String houseid;
+
+  _AddTaskState(this.houseid);
+
+  House housea = House(description: "",
+      name: "",
+      price: "",
+      location: "",
+      neighbors: [],
+      tenants: [],
+      tasks: []);
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('house').get();
+
+    snapshot.docs.forEach((doc) {
+      if (doc.id == houseid) {
+        House house1 = House(description: doc['description'],
+            name: doc['name'],
+            price: doc['price'],
+            location: doc['location'],
+            neighbors: doc['neighbors'],
+            tenants: doc['tenants'],
+            tasks: doc['tasks']);
+        housea = house1;
+      }});
+    setState((){});
+  }
+
   @override
   Widget build(BuildContext context) {
     CollectionReference task = FirebaseFirestore.instance.collection('task');
-
+    getData();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -203,7 +247,8 @@ class _AddTaskState extends State<AddTask> {
                             'description': description.text,
                             'date': date.text,
                             'tenant': "",
-                            'landlord': "Carlos Silva"
+                            'landlord': "Carlos Silva",
+                            'house': housea.name
                           });
                           clearText();
                           showDialog(
@@ -241,7 +286,7 @@ class _AddTaskState extends State<AddTask> {
                       onPressed: (){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LandlordAlameda()),
+                          MaterialPageRoute(builder: (context) => LandlordSeeHouse(id: houseid,)),
                         );
                       },
                     )

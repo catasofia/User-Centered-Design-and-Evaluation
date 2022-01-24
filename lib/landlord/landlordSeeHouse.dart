@@ -113,12 +113,12 @@ class _HomeState extends State<LandlordSeeHouse> {
     }
 
     snapshot2.docs.forEach((doc) {
-      housea.tasks.forEach((element) {
-        if (doc.id == element) {
+      //housea.tasks.forEach((element) {
+        if (doc['house'] == housea.name) {
           Task task = Task(name: doc['name'], id: doc.id);
           tasks.add(task);
         }
-      });
+      //});
     });
 
     setState((){});
@@ -210,7 +210,6 @@ class _HomeState extends State<LandlordSeeHouse> {
 
   @override
   Widget build(BuildContext context) {
-
     getData();
 
     return Scaffold(
@@ -425,7 +424,7 @@ class _HomeState extends State<LandlordSeeHouse> {
                       child: OutlineButton(onPressed: (){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AddTask()),);
+                          MaterialPageRoute(builder: (context) => AddTask(id:houseid)),);
                       },
                           shape: new CircleBorder(),
                           borderSide: BorderSide(color: Color(0xFF48ACBE)),

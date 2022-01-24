@@ -341,10 +341,10 @@ class _HomeState extends State<LandlordAlameda> {
                       ButtonTheme(
                         height: 30,
                         child: OutlineButton(onPressed: (){
-                          Navigator.push(
+                          /*Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => AddTask()),
-                          );
+                          );*/
                         },
                             shape: new CircleBorder(),
                             borderSide: BorderSide(color: Color(0xFF48ACBE)),

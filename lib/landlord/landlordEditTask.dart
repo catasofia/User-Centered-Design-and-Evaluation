@@ -221,7 +221,7 @@ class _EditTaskState extends State<EditTask> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 85.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
                   child: Container(
                     width: 150,
                     height: 50,
@@ -260,34 +260,6 @@ class _EditTaskState extends State<EditTask> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(30.0, 85.0, 0.0, 0.0),
-                  child: Container(
-                    width: 150,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFEF5350),
-                        elevation: 3,
-                        padding: EdgeInsets.all(10),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14)
-                        ),
-                      ),
-                      onPressed: () {
-
-                      },
-                      child: Text('Remove',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 20,
-                          color: Colors.black, //font color
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
             Padding(
@@ -302,7 +274,7 @@ class _EditTaskState extends State<EditTask> {
                         onPressed: (){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LandlordAlameda()),
+                            MaterialPageRoute(builder: (context) => HomeLandlord()),
                           );
                         },
                       ),
@@ -548,10 +520,6 @@ void updatedb (taskid) {
         .doc(taskid)
         .update({'description': discount.text});
   }
-}
-
-void remove(taskid){
-  FirebaseFirestore.instance.collection("tasks").doc(taskid).delete();
 }
 
 checkTextFieldEmptyOrNot(){
