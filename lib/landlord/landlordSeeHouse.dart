@@ -1,4 +1,5 @@
 import 'package:time_app/landlord/landlordAddNeighbor.dart';
+import 'package:time_app/landlord/tenantProfile.dart';
 import 'landlordAddTask.dart';
 import 'landlordAddTenant.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'landlordEditTask.dart';
 
-//FALTA DAR PARA CLICAR NOS PERFIS
 
 class Tenant{
   String name;
@@ -114,9 +114,9 @@ class _HomeState extends State<LandlordSeeHouse> {
 
     snapshot2.docs.forEach((doc) {
       //housea.tasks.forEach((element) {
-        if (doc['house'] == housea.name) {
-          Task task = Task(name: doc['name'], id: doc.id);
-          tasks.add(task);
+      if (doc['house'] == housea.name) {
+        Task task = Task(name: doc['name'], id: doc.id);
+        tasks.add(task);
         }
       //});
     });
@@ -128,6 +128,12 @@ class _HomeState extends State<LandlordSeeHouse> {
   Widget template(tt) {
     return Card(
       margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
+      child: InkWell(onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TenantProfile(id:tt.name)),
+        );
+      },
       child: Column(
           children: <Widget>[
             Row(
@@ -154,7 +160,40 @@ class _HomeState extends State<LandlordSeeHouse> {
               ],
             )
           ] ),
-    );
+      ),);
+  }
+
+  @override
+  Widget templaten(tt) {
+    return Card(
+      margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
+        child: Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  new Align(
+                    alignment: new Alignment(-1.1, 0.0),
+                    child:Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child:  Container(
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage(tt.image),
+                          radius: 20.0,
+                        ),),),),
+                  SizedBox(height: 50.0),
+                  Text(
+                    tt.name,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )
+            ] ),
+      );
   }
 
 
@@ -210,6 +249,7 @@ class _HomeState extends State<LandlordSeeHouse> {
 
   @override
   Widget build(BuildContext context) {
+
     getData();
 
     return Scaffold(
@@ -399,7 +439,7 @@ class _HomeState extends State<LandlordSeeHouse> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    for (var i in neighbors) template(i),
+                    for (var i in neighbors) templaten(i),
                   ],
                 ),
               ),
@@ -424,7 +464,7 @@ class _HomeState extends State<LandlordSeeHouse> {
                       child: OutlineButton(onPressed: (){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AddTask(id:houseid)),);
+                          MaterialPageRoute(builder: (context) => AddTask(id: houseid)),);
                       },
                           shape: new CircleBorder(),
                           borderSide: BorderSide(color: Color(0xFF48ACBE)),

@@ -1,15 +1,95 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class CarolinaProfileLandlord extends StatefulWidget {
-  const CarolinaProfileLandlord({Key? key}) : super(key: key);
+class TenantProfile extends StatefulWidget {
+  final String id;
 
+  const TenantProfile({Key? key, required this.id}) : super(key: key);
   @override
-  _CarolinaProfileState createState() => _CarolinaProfileState();
+  _TenantProfileState createState() => _TenantProfileState(id);
 }
 
-class _CarolinaProfileState extends State<CarolinaProfileLandlord> {
+class Task{
+  String name;
+  String discount;
+
+  Task({required this.name, required this.discount});
+}
+
+class _TenantProfileState extends State<TenantProfile> {
+  final String id;
+
+  _TenantProfileState(this.id);
+
+  String name = "";
+  int age = 0;
+  String gender = "";
+  String image = "";
+  String role = "";
+  List<Task> tasks = [];
+
+
+
+  Future<void> getProfile() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('profile').get();
+
+    snapshot.docs.forEach((doc) {
+      if (doc['name'] == id) {
+        name = doc['name'];
+        age = doc['age'];
+        gender = doc['gender'];
+        image = doc['image'];
+        role = doc['role'];
+      }});
+
+    QuerySnapshot snapshot1 = await FirebaseFirestore.instance.collection('task').get();
+
+    if (tasks.isNotEmpty){
+      tasks = [];
+    }
+
+    snapshot1.docs.forEach((doc){
+      if(doc['tenant'] == id) {
+        Task task = Task(name: doc['name'], discount: doc['discount']);
+        tasks.add(task);
+      }
+    });
+    setState(() {});
+
+  }
+
+  Widget template(tt){
+    return
+    Row(
+        children: <Widget> [
+          SizedBox(width: 30.0, height:30),
+          Text(
+            tt.name + ":",
+            style: TextStyle(
+              fontFamily: 'Arial',
+              fontSize: 20,
+              color: Color(0xFF48ACBE),
+              height: 1,
+            ),
+          ),
+          SizedBox(width: 20,),
+          Text(
+            tt.discount + '€',
+            style: TextStyle(
+              fontFamily: 'Arial',
+              fontSize: 20,
+              color: Color(0xFF48ACBE),
+              height: 1,
+            ),
+          ),
+        ]);
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    getProfile();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -76,13 +156,13 @@ class _CarolinaProfileState extends State<CarolinaProfileLandlord> {
                   children: [
                     Container(
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/carolina.jpeg'),
+                        backgroundImage: AssetImage(image),
                         radius: 55.0,
                       ),
                     ),
                     SizedBox(height: 16.0),
                     Text(
-                      'Carolina',
+                      name,
                       style: TextStyle(
                         fontFamily: 'Arial',
                         fontSize: 18,
@@ -129,7 +209,7 @@ class _CarolinaProfileState extends State<CarolinaProfileLandlord> {
                         ),
                         SizedBox(width: 50.0),
                         Text(
-                          'Carolina Oliveira\nFemale, 18',
+                          name +"\n" + gender +", " + age.toString(),
                           style: TextStyle(
                             fontFamily: 'Arial',
                             fontSize: 20,
@@ -153,7 +233,7 @@ class _CarolinaProfileState extends State<CarolinaProfileLandlord> {
                         ),
                         SizedBox(width: 45.0),
                         Text(
-                          'Tenant',
+                          role,
                           style: TextStyle(
                             fontFamily: 'Arial',
                             fontSize: 20,
@@ -223,7 +303,7 @@ class _CarolinaProfileState extends State<CarolinaProfileLandlord> {
                         Container(
                           padding: EdgeInsets.only(left: 30.0),
                           child: Text(
-                          'Tasks:',
+                          'Tasks',
                           style: TextStyle(
                             fontFamily: 'Arial',
                             fontSize: 20,
@@ -231,44 +311,12 @@ class _CarolinaProfileState extends State<CarolinaProfileLandlord> {
                             height: 1,
                           ),
                         ),),
-                        Container(
-                          padding: EdgeInsets.only(right: 30.0),
-                          child:
-                          RaisedButton(onPressed: (){},
-                            padding: EdgeInsets.only(top:5.0, bottom:5.0),
-                            child: Text('Edit',
-                              style: TextStyle(
-                                fontFamily: 'Arial',
-                                fontSize: 18,
-                                color: Colors.black,
-                                height: 1,
-                              ),
-                            ),
-                          color: Color(0xFF48ACBE),),
-                        )]),
-                        Row(
-                        children: <Widget> [
-                          SizedBox(width: 30.0, height:30),
-                        Text(
-                          'Clean Halls:',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 20,
-                            color: Color(0xFF48ACBE),
-                            height: 1,
-                          ),
-                        ),
-                        SizedBox(width: 20,),
-                        Text(
-                          '20€',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 20,
-                            color: Color(0xFF48ACBE),
-                            height: 1,
-                          ),
-                        ),
                         ]),
+                        Column(
+                          children: [
+                            for(var i in tasks) template(i),
+                          ],
+                        )
                       ],
                     ),
                 ),
