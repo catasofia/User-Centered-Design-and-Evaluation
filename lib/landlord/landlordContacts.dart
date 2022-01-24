@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LandlordContacts extends StatefulWidget {
@@ -7,10 +8,77 @@ class LandlordContacts extends StatefulWidget {
   _ContactsState createState() => _ContactsState();
 }
 
+class Contact{
+  String name;
+  String image;
+
+  Contact({required this.name, required this.image});
+}
+
 class _ContactsState extends State<LandlordContacts> {
+
+  List<Contact> contacts = [];
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('house').get();
+
+    List tenants = [];
+
+    snapshot.docs.forEach((doc) {
+      if (doc['landlord'] == "Carlos Silva") {
+        doc['tenants'].forEach((ten){
+          tenants.add(ten);
+        });
+      }});
+
+    QuerySnapshot snapshot1 = await FirebaseFirestore.instance.collection('profile').get();
+
+    if (contacts.isNotEmpty){
+      contacts = [];
+    }
+
+    snapshot1.docs.forEach((doc) {
+      tenants.forEach((element) {
+        if (doc['name'] == element) {
+          Contact contact = Contact(name: doc['name'], image: doc['image']);
+          contacts.add(contact);
+        }});
+    });
+
+    setState((){});
+  }
+
+  Widget template(tt){
+
+    return  Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child:Column(
+        children: [
+        Container(
+          child: CircleAvatar(
+          backgroundImage: AssetImage(tt.image),
+          radius: 65.0,
+          ),
+          ),
+        SizedBox(height: 10.0),
+        Text(
+          tt.name,
+          style: TextStyle(
+          fontFamily: 'Arial',
+          fontSize: 18,
+          color: Colors.black,
+          height: 1,
+          ),
+        ),
+        ],),
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    getData();
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -122,52 +190,13 @@ class _ContactsState extends State<LandlordContacts> {
               ),
             ),
             SizedBox(height: 15.0),
-            Row(
-              children: <Widget>[
-                SizedBox(width: 20.0),
-                Column(
+            SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
                   children: [
-                    Container(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/joao.jpg'),
-                        radius: 65.0,
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      'João',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
+                    for (var i in contacts) template(i)
                   ],
-                ),
-                SizedBox(width: 50.0),
-                Column(
-                  children: [
-                    Container(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/marco.jpg'),
-                        radius: 65.0,
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      'Marco',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                ),),
             SizedBox(height: 30.0),
             Text(
               'Contacts',
@@ -183,7 +212,7 @@ class _ContactsState extends State<LandlordContacts> {
               children: [
                 Container(
                   child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/marco.jpg'),
+                    backgroundImage: AssetImage('assets/carolina.jpeg'),
                     radius: 25.0,
                   ),
                 ),
@@ -212,7 +241,7 @@ class _ContactsState extends State<LandlordContacts> {
                         Row(
                           children: [
                             Text(
-                              'Marco',
+                              'Carolina Oliveira',
                               style: TextStyle(
                                 fontFamily: 'Arial',
                                 fontSize: 18,
@@ -221,7 +250,7 @@ class _ContactsState extends State<LandlordContacts> {
                               ),
                               textAlign: TextAlign.left,
                             ),
-                            SizedBox(width: 190.0),
+                            SizedBox(width: 110.0),
                             Icon(
                               Icons.plus_one_outlined,
                               color: Color(0xFF48ACBE),
@@ -253,73 +282,6 @@ class _ContactsState extends State<LandlordContacts> {
               ],
             ),
             SizedBox(height: 15.0),
-            Row(
-              children: [
-                Container(
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/joao.jpg'),
-                    radius: 25.0,
-                  ),
-                ),
-                SizedBox(width: 10.0),
-                Container(
-                  width: 290.0,
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1.5,
-                        blurRadius: 1.5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: Colors.grey[100],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(width: 10.0),
-                        Row(
-                          children: [
-                            Text(
-                              'João',
-                              style: TextStyle(
-                                fontFamily: 'Arial',
-                                fontSize: 18,
-                                color: Colors.black,
-                                height: 1,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                            SizedBox(width: 215.0),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.black,
-                              size: 12,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 5.0),
-                        Text(
-                          'Sure, 9:30am is fine.',
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            fontSize: 14,
-                            color: Colors.black,
-                            height: 1,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
