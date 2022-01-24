@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:time_app/landlord/landlordEvaluateTasks.dart';
-import 'carlosProfileLandlord.dart';
+import 'package:time_app/landlord/profileLandlord.dart';
 import 'landlordAddHouse.dart';
 import 'landlordAlameda.dart';
 import 'landlordEvaluate.dart';
 import 'landlordSeeHouse.dart';
 import 'landlordSuggestedTask.dart';
 
-//RATES, SCROLL
+//RATES
 
 class House{
   String name;
@@ -262,7 +262,7 @@ class _HomeState extends State<HomeLandlord> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CarlosProfileLandlord()),
+                      MaterialPageRoute(builder: (context) => ProfileLandlord()),
                     );
                   },
                 ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_app/landlord/landlordEvaluateTasks.dart';
 import 'package:time_app/landlord/landlordHomeScreen.dart';
-import 'carlosProfileLandlord.dart';
+import 'package:time_app/landlord/profileLandlord.dart';
 import 'landlordSuggestedTask.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -280,7 +280,7 @@ class _HomeState extends State<addTenant> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (
-                            context) => const CarlosProfileLandlord()),
+                            context) => const ProfileLandlord()),
                       );
                     },
                   ),

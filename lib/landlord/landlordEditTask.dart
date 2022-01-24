@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:time_app/landlord/profileLandlord.dart';
 
-import 'carlosProfileLandlord.dart';
 import 'landlordAlameda.dart';
 import 'landlordHomeScreen.dart';
 import 'landlordSuggestedTask.dart';
@@ -86,7 +86,7 @@ class _EditTaskState extends State<EditTask> {
                   IconButton(onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CarlosProfileLandlord()),
+                      MaterialPageRoute(builder: (context) =>ProfileLandlord()),
                     );
                   },
                       icon: Icon(Icons.person_outline,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:time_app/landlord/profileLandlord.dart';
 
-import 'carlosProfileLandlord.dart';
 import 'landlordAddTask.dart';
 import 'landlordEditTask.dart';
 import 'landlordEvaluate.dart';
@@ -193,7 +193,7 @@ class _HomeState extends State<LandlordAlameda> {
                   IconButton(onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CarlosProfileLandlord()),
+                      MaterialPageRoute(builder: (context) => ProfileLandlord()),
                     );
                   },
                       icon: Icon(Icons.person_outline,

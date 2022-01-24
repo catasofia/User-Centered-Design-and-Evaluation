@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:time_app/landlord/profileLandlord.dart';
 // import 'package:image_picker/image_picker.dart';
-
-import 'carlosProfileLandlord.dart';
 import 'landlordHomeScreen.dart';
 import 'landlordSuggestedTask.dart';
 
@@ -62,7 +61,7 @@ class _AddHouseState extends State<AddHouse> {
                       IconButton(onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => CarlosProfileLandlord()),
+                          MaterialPageRoute(builder: (context) => ProfileLandlord()),
                         );
                       },
                           icon: Icon(Icons.person_outline,

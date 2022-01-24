@@ -1,15 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class CarlosProfileLandlord extends StatefulWidget {
-  const CarlosProfileLandlord({Key? key}) : super(key: key);
+class ProfileLandlord extends StatefulWidget {
+  const ProfileLandlord({Key? key}) : super(key: key);
 
   @override
-  _CarlosProfileState createState() => _CarlosProfileState();
+  _LandlordProfileState createState() => _LandlordProfileState();
 }
 
-class _CarlosProfileState extends State<CarlosProfileLandlord> {
+class _LandlordProfileState extends State<ProfileLandlord> {
+  String name = "";
+  int age = 0;
+  String gender = "";
+  String image = "";
+  String role = "";
+
+  Future<void> getProfile() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('profile').get();
+
+    snapshot.docs.forEach((doc) {
+      if (doc['name'] == "Carlos Silva") {
+        name = doc['name'];
+        age = doc['age'];
+        gender = doc['gender'];
+        image = doc['image'];
+        role = doc['role'];
+      }});
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    getProfile();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -122,7 +145,7 @@ class _CarlosProfileState extends State<CarlosProfileLandlord> {
                     ),
                     SizedBox(height: 16.0),
                     Text(
-                      'Carlos',
+                      name,
                       style: TextStyle(
                         fontFamily: 'Arial',
                         fontSize: 18,
@@ -169,7 +192,7 @@ class _CarlosProfileState extends State<CarlosProfileLandlord> {
                           ),
                           SizedBox(width: 50.0),
                           Text(
-                            'Carlos Silva\nMale, 55',
+                            name + "\n" + gender + ", " + age.toString(),
                             style: TextStyle(
                               fontFamily: 'Arial',
                               fontSize: 20,
@@ -193,7 +216,7 @@ class _CarlosProfileState extends State<CarlosProfileLandlord> {
                           ),
                           SizedBox(width: 45.0),
                           Text(
-                            'Landlord',
+                            role,
                             style: TextStyle(
                               fontFamily: 'Arial',
                               fontSize: 20,
