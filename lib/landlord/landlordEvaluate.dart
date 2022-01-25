@@ -49,6 +49,7 @@ class _EvaluateState extends State<LandlordEvaluate> {
     }
 
     snapshot.docs.forEach((doc) {
+      if(doc['done'] == true){
       Task task1 = Task(name: doc['name'],
           date: doc['date'],
           landStars: doc['landStars'],
@@ -64,7 +65,7 @@ class _EvaluateState extends State<LandlordEvaluate> {
       if (aux) {
         allTasks.add(task1);
       }
-    });
+    }});
 
     snapshot.docs.forEach((element) {
       for(var i = 0; i < allTasks.length; i++){

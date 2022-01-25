@@ -119,13 +119,13 @@ class _HomeState extends State<LandlordSeeHouse> {
     }
 
     snapshot2.docs.forEach((doc) {
-      //housea.tasks.forEach((element) {
-      if (doc['house'] == housea.name) {
-        Task task = Task(name: doc['name'], id: doc.id);
-        tasks.add(task);
-        }
+      if(doc['done'] == false){
+        if (doc['house'] == housea.name) {
+          Task task = Task(name: doc['name'], id: doc.id);
+          tasks.add(task);
+          }
       //});
-    });
+    }});
 
     setState((){});
   }
