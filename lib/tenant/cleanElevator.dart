@@ -7,6 +7,9 @@ import 'profile.dart';
 import 'tenantEvaluateMain.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//APAGAR ESTE FILE
+
+
 class Types{
   String type;
   String task;

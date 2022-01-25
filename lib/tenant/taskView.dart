@@ -7,8 +7,6 @@ import 'profile.dart';
 import 'tenantEvaluateMain.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//APAGAR ESTE FILE
-
 class Types{
   String type;
   String task;
@@ -16,23 +14,29 @@ class Types{
   Types({required this.type, required this.task});
 }
 
-class ATA extends StatefulWidget{
-  const ATA({Key? key}) : super(key: key);
+class taskView extends StatefulWidget{
+  final String taskId;
+
+  const taskView({Key? key, required this.taskId}) : super(key: key);
 
   @override
-  _ATAState createState() => _ATAState();
+  _taskViewState createState() => _taskViewState(taskId);
 }
 
-class _ATAState extends State<ATA>{
-  CollectionReference tasksDB = FirebaseFirestore.instance.collection('task');
+class _taskViewState extends State<taskView>{
+  String taskId;
   List<Types> tasks = [];
   String discount = "";
+  String name = "";
+
+  _taskViewState(this.taskId);
 
   Future<void> getData() async{
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
 
     snapshot.docs.forEach((doc) {
-      if (doc.id == 'PGUavfw2UZjYQ07qFVS1') {
+      if (doc.id == taskId) {
+        name = doc['name'];
         discount = doc['discount'];
         tasks= [
           Types(type: 'Description', task: doc['description']),
@@ -216,7 +220,7 @@ class _ATAState extends State<ATA>{
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(11.0, 10.0, 0.0, 0.0),
-                child: Text('ATA',
+                child: Text( name,
                     style: TextStyle(
                       color: Colors.black,
                       letterSpacing: 2.0,
