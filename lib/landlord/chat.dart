@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'tenantTasks.dart';
-import 'tenantHomescreen.dart';
-import 'tenantChat2.dart';
-import 'tenantEvaluateMain.dart';
-import 'tenantContacts.dart';
-
+import 'package:time_app/landlord/landlordContacts.dart';
+import 'package:time_app/landlord/landlordEvaluate.dart';
+import 'package:time_app/landlord/landlordHomeScreen.dart';
 
 class Chat extends StatefulWidget {
   const Chat({Key? key}) : super(key: key);
@@ -45,7 +42,7 @@ class _ChatState extends State<Chat> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Home()),
+                    MaterialPageRoute(builder: (context) => HomeLandlord()),
                   );
                 },
               ),
@@ -55,7 +52,7 @@ class _ChatState extends State<Chat> {
               ), onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EvaluateMain()),
+                  MaterialPageRoute(builder: (context) => LandlordEvaluate()),
                 );
               }),
               IconButton(
@@ -64,10 +61,7 @@ class _ChatState extends State<Chat> {
                     size: 30.0,
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Task()),
-                    );
+
                   }
               ),
               IconButton(
@@ -79,7 +73,7 @@ class _ChatState extends State<Chat> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Contacts()),
+                      MaterialPageRoute(builder: (context) => LandlordContacts()),
                     );
                   }
               ),
@@ -321,10 +315,6 @@ class _ChatState extends State<Chat> {
                     color: Color(0xFF48ACBE),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Chat2(description: _description.text)),
-                    );
                   },
                 ),
               ],
