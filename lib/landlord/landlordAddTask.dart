@@ -249,7 +249,8 @@ class _AddTaskState extends State<AddTask> {
                             'landlord': "Carlos Silva",
                             'house': housea.name,
                             'landStars': 0,
-                            'neigStars': 0
+                            'neigStars': 0,
+                            'done': false
                           });
                           clearText();
                           showDialog(

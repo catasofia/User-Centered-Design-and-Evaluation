@@ -1,10 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantContacts.dart';
 import 'profile.dart';
 import 'tenantEvaluateMain.dart';
 import 'cleanElevator.dart';
-import 'exchangeLightbulb.dart';
 import 'tenantMap.dart';
 
 class Home extends StatefulWidget {
@@ -14,10 +14,91 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+class TaskInfo{
+  String name;
+  String id;
+
+  TaskInfo({required this.name, required this.id});
+}
+
 class _HomeState extends State<Home> {
+
+  List<TaskInfo> tasks = [];
+
+  Future<void> getData() async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
+
+    if (tasks.isNotEmpty) {
+      tasks = [];
+    }
+
+    snapshot.docs.forEach((doc) {
+      if(doc['tenant'] == "Carolina Oliveira"){
+        if(doc['done'] == false){
+          TaskInfo t = TaskInfo(name: doc['name'], id: doc.id);
+
+          tasks.add(t);
+        }
+      }
+    });
+
+    setState(() {});
+
+  }
+
+  Widget template(tt){
+    return Padding(
+      padding: EdgeInsets.only(right: 15),
+        child: Column(
+        children: [
+          Container(
+            width: 140,
+            height:120,
+            child: Stack(
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CleanElevator()), //AQUI
+                    );
+                  },
+                  color: Color(0xFF48ACBE),
+                  child: Text('                                 \n\n\n\n\n'),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
+                  child: Icon(
+                      Icons.clean_hands_sharp,
+                      color: Colors.white,
+                      size: 35.0),
+                ),
+                      Positioned.fill(
+                        child: Align(
+                      alignment: Alignment.center,
+                          child: Text(
+                            tt.name,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 18,
+                            color: Colors.white,
+                            height: 1.0)
+                      ), //SCROLL
+                  ),
+                ),
+                ],
+            ),
+        ),
+        ]),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    getData();
+
     return Scaffold(
         backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -196,80 +277,14 @@ class _HomeState extends State<Home> {
                ),
              ),
              SizedBox(height: 15.0),
-             Row(
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
                children: <Widget>[
-                 Container(
-                   child: Stack(
-                     children: <Widget>[
-                       RaisedButton(
-                         onPressed: (){
-                           Navigator.push(
-                             context,
-                             MaterialPageRoute(builder: (context) => CleanElevator()),
-                           );
-                         },
-                         color: Color(0xFF48ACBE),
-                         child: Text('                                 \n\n\n\n\n'),
-                       ),
-                       Padding(
-                         padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
-                         child: Icon(
-                             Icons.clean_hands_sharp,
-                             color: Colors.white,
-                             size: 35.0),
-                       ),
-                       Padding(
-                         padding: EdgeInsets.fromLTRB(25.0, 65.0, 0.0, 0.0),
-                         child: Text(
-                             'Clean Elevator',
-                             style: TextStyle(
-                                 fontFamily: 'Arial',
-                                 fontSize: 16,
-                                 color: Colors.white,
-                                 height: 1.0)
-                         ),
-                       ),
-                     ],
-                   ),
-                 ),
-                 SizedBox(width: 45.0),
-                 Container(
-                   child: Stack(
-                     children: <Widget>[
-                       RaisedButton(
-                         onPressed: (){
-                           Navigator.push(
-                             context,
-                             MaterialPageRoute(builder: (context) => ExchangeLightbulb()),
-                           );
-                         },
-                         color: Color(0xFF48ACBE),
-                         child: Text('                                 \n\n\n\n\n'),
-                       ),
-                       Padding(
-                         padding: EdgeInsets.fromLTRB(57.0, 13.0, 0.0, 0.0),
-                         child: Icon(
-                             Icons.lightbulb,
-                             color: Colors.white,
-                             size: 35.0),
-                       ),
-                       Padding(
-                         padding: EdgeInsets.fromLTRB(5.0, 65.0, 0.0, 0.0),
-                         child: Text(
-                             'Exchange Lightbulb',
-                             style: TextStyle(
-                                 fontFamily: 'Arial',
-                                 fontSize: 16,
-                                 color: Colors.white,
-                                 height: 1.0)
-                         ),
-                       ),
-                     ],
-                   ),
-                 ),
+                 for (var i in tasks) template(i)
                ],
              )
-           ],
+            ),],
          ),
        ),
     );
