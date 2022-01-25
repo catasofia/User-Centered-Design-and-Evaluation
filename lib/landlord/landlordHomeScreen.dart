@@ -105,7 +105,7 @@ class _HomeState extends State<HomeLandlord> {
   @override
   Widget template(tt) {
     return Card(
-      margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
+      margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 12.0),
       color: Color(0xFF48ACBE),
       child: InkWell(
       onTap: () {
@@ -254,108 +254,110 @@ class _HomeState extends State<HomeLandlord> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                IconButton(
-                  icon: const Icon(
-                    Icons.person_outline,
-                    color: Colors.black,
-                    size: 40.0,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: const Icon(
+                      Icons.person_outline,
+                      color: Colors.black,
+                      size: 40.0,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProfileLandlord()),
+                      );
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ProfileLandlord()),
-                    );
-                  },
-                ),
-                SizedBox(width: 10.0),
-                Container(
-                  width: 235.0,
-                  height: 42.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24.0),
-                    color: Colors.grey[200],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(width: 15.0),
-                      Icon(
-                        Icons.search,
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 10.0),
-                      Text(
-                        'Search',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 20,
+                  SizedBox(width: 10.0),
+                  Container(
+                    width: 235.0,
+                    height: 42.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24.0),
+                      color: Colors.grey[200],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(width: 15.0),
+                        Icon(
+                          Icons.search,
                           color: Colors.black,
-                          height: 1,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                        SizedBox(width: 10.0),
+                        Text(
+                          'Search',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 20,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 8.0),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.notifications_active_outlined,
+                      color: Colors.black,
+                      size: 38.0,
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _buildPopupNotification(context),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+                child: Text(
+                  'Welcome Home, Carlos!',
+                  style: TextStyle(
+                    color: Color(0xFF48ACBE),
+                    letterSpacing: 2.0,
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 8.0),
-                IconButton(
-                  icon: const Icon(
-                    Icons.notifications_active_outlined,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+                child: Text(
+                  'Your Houses',
+                  style: TextStyle(
                     color: Colors.black,
-                    size: 38.0,
+                    letterSpacing: 2.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => _buildPopupNotification(context),
-                    );
-                  },
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
-              child: Text(
-                'Welcome Home, Carlos!',
-                style: TextStyle(
-                  color: Color(0xFF48ACBE),
-                  letterSpacing: 2.0,
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
-              child: Text(
-                'Your Houses',
-                style: TextStyle(
-                  color: Colors.black,
-                  letterSpacing: 2.0,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
+              Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children:[
+                      for (var i in houses) template(i)
+                    ]
                 ),
               ),
-            ),
-
-            Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children:[
-                        for (var i in houses) template(i)
-                      ]
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+     /*  */
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
