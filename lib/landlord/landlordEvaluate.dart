@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:time_app/landlord/landlordEvaluatePage1.dart';
 import 'package:time_app/landlord/landlordEvaluatePage2.dart';
 import 'package:time_app/landlord/landlordEvaluatePage3.dart';
+import 'package:time_app/landlord/landlordTasks.dart';
 import 'package:time_app/landlord/profileLandlord.dart';
+import 'landlordContacts.dart';
 import 'landlordHomeScreen.dart';
+import 'landlordSuggestedTask.dart';
 
 
 class Task {
@@ -13,8 +16,9 @@ class Task {
   int landStars;
   int neigStars;
   String id;
+  String house;
 
-  Task({required this.name, required this.date, required this.landStars, required this.neigStars, required this.id});
+  Task({required this.name, required this.date, required this.landStars, required this.neigStars, required this.id, required this.house});
 }
 
 
@@ -49,7 +53,8 @@ class _EvaluateState extends State<LandlordEvaluate> {
           date: doc['date'],
           landStars: doc['landStars'],
           neigStars: doc['neigStars'],
-          id: doc.id);
+          id: doc.id,
+        house: doc['house']);
       bool aux = true;
       allTasks.forEach((element) {
         if (element.id == doc.id) {
@@ -109,6 +114,20 @@ class _EvaluateState extends State<LandlordEvaluate> {
                   ),
                 ],
               ),
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(6, 0,0,0),
+                  child: Text(
+                    tt.house,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ]
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -207,6 +226,60 @@ class _EvaluateState extends State<LandlordEvaluate> {
     getData();
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: BottomAppBar(
+        color: Color(0xFF48ACBE),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                  icon: Icon(
+                    Icons.house_outlined,
+                    size: 35.0,
+                  ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeLandlord()),
+                );
+              }
+              ),
+              IconButton(
+                  color: Colors.white,
+                  icon: Icon(
+                Icons.star_border,
+                size: 35.0,
+              ), onPressed: () {
+
+              }),
+              IconButton(
+                  icon: Icon(
+                    Icons.cleaning_services_rounded,
+                    size: 30.0,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TasksLandlord()),
+                    );
+                  }
+              ),
+              IconButton(
+                  icon: Icon(
+                    Icons.chat_bubble_outline_rounded,
+                    size: 30.0,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LandlordContacts()),
+                    );
+                  }
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 30.0),
         child:
@@ -344,7 +417,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "- João completed a task, rate him now.",
+          "  - João completed a task, rate him now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -354,7 +427,7 @@ Widget _buildPopupNotification(BuildContext context) {
         ),
         SizedBox(height: 20.0),
         Text(
-          "- Vasco is interested in your apartment in Chiado.",
+          "  - Carolina has sent you a message.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -363,14 +436,22 @@ Widget _buildPopupNotification(BuildContext context) {
           ),
         ),
         SizedBox(height: 20.0),
-        Text(
-          "- Carolina has sent you a message.",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
+        TextButton(
+          style: TextButton.styleFrom(
+            textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
           ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SuggestedTask()),
+            );
+
+          },
+          child: const Text('- Francisca suggested a task for Alameda T2.',
+              style: TextStyle(fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,)),
         ),
       ],
     ),
@@ -394,6 +475,7 @@ Widget _buildPopupNotification(BuildContext context) {
     ],
   );
 }
+
 
 
 Widget _buildPopupEvaluate(BuildContext context) {

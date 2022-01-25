@@ -405,6 +405,25 @@ class _HomeState extends State<addNeighbor> {
                   ),
 
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:50.0),
+                child: Row(
+                  children: [
+                    SizedBox(width: 20,),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        onPressed: (){
+                          Navigator.pop(
+                            context,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               )
             ],
           ),

@@ -1,5 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:time_app/landlord/landlordHomeScreen.dart';
+import 'package:time_app/landlord/landlordTasks.dart';
+import 'package:time_app/landlord/profileLandlord.dart';
+
+import 'landlordEvaluate.dart';
+import 'landlordSuggestedTask.dart';
 
 class LandlordContacts extends StatefulWidget {
   const LandlordContacts({Key? key}) : super(key: key);
@@ -94,18 +100,31 @@ class _ContactsState extends State<LandlordContacts> {
                     size: 35.0,
                   ),
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeLandlord()),
+                    );
                   },
               ),
               IconButton(icon: Icon(
                 Icons.star_border,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LandlordEvaluate()),
+                );
+              }),
               IconButton(
                   icon: Icon(
                     Icons.cleaning_services_rounded,
                     size: 30.0,
                   ),
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TasksLandlord()),
+                    );
                   }
               ),
               IconButton(
@@ -125,14 +144,22 @@ class _ContactsState extends State<LandlordContacts> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Icon(
-                  Icons.person_outline,
-                  color: Colors.black,
-                  size: 40.0,
+                IconButton(
+                  icon: const Icon(
+                    Icons.person_outline,
+                    color: Colors.black,
+                    size: 40.0,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfileLandlord()),
+                    );
+                  },
                 ),
-                SizedBox(width: 15.0),
+                SizedBox(width: 10.0),
                 Container(
-                  width: 240.0,
+                  width: 235.0,
                   height: 42.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24.0),
@@ -309,7 +336,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "- João completed a task, accept the task.",
+          "  - João completed a task, rate him now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -319,7 +346,7 @@ Widget _buildPopupNotification(BuildContext context) {
         ),
         SizedBox(height: 20.0),
         Text(
-          "- Marco assigned himself to a task.",
+          "  - Carolina has sent you a message.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -328,14 +355,22 @@ Widget _buildPopupNotification(BuildContext context) {
           ),
         ),
         SizedBox(height: 20.0),
-        Text(
-          "- Marco rated you with 5 stars",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
+        TextButton(
+          style: TextButton.styleFrom(
+            textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
           ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SuggestedTask()),
+            );
+
+          },
+          child: const Text('- Francisca suggested a task for Alameda T2.',
+              style: TextStyle(fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,)),
         ),
       ],
     ),

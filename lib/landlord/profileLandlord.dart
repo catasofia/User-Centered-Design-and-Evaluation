@@ -44,7 +44,6 @@ class _LandlordProfileState extends State<ProfileLandlord> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                  color: Colors.white,
                   icon: Icon(
                     Icons.house_outlined,
                     size: 35.0,

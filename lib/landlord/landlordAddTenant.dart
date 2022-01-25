@@ -404,7 +404,26 @@ class _HomeState extends State<addTenant> {
                   ),
 
                 ],
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:10.0),
+                child: Row(
+                  children: [
+                    SizedBox(width: 20,),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        onPressed: (){
+                          Navigator.pop(
+                            context,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

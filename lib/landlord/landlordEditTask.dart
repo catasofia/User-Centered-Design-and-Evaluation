@@ -260,6 +260,34 @@ class _EditTaskState extends State<EditTask> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30.0, 60.0, 0.0, 0.0),
+                  child: Container(
+                    width: 150,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFEF5350),
+                        elevation: 3,
+                        padding: EdgeInsets.all(10),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14)
+                        ),
+                      ),
+                      onPressed: () {
+                      //  FirebaseFirestore.instance.collection("tasks").doc(taskid).delete();
+                      },
+                      child: Text('Remove',
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          fontSize: 20,
+                          color: Colors.black, //font color
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             Padding(
@@ -272,9 +300,8 @@ class _EditTaskState extends State<EditTask> {
                       child: IconButton(
                         icon: Icon(Icons.arrow_back_ios),
                         onPressed: (){
-                          Navigator.push(
+                          Navigator.pop(
                             context,
-                            MaterialPageRoute(builder: (context) => HomeLandlord()),
                           );
                         },
                       ),
