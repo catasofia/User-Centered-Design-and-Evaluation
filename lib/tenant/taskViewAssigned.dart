@@ -14,22 +14,22 @@ class Types{
   Types({required this.type, required this.task});
 }
 
-class taskView extends StatefulWidget{
+class taskViewAssigned extends StatefulWidget{
   final String taskId;
 
-  const taskView({Key? key, required this.taskId}) : super(key: key);
+  const taskViewAssigned({Key? key, required this.taskId}) : super(key: key);
 
   @override
-  _taskViewState createState() => _taskViewState(taskId);
+  _taskViewAssignedState createState() => _taskViewAssignedState(taskId);
 }
 
-class _taskViewState extends State<taskView>{
+class _taskViewAssignedState extends State<taskViewAssigned>{
   String taskId;
   List<Types> tasks = [];
   String discount = "";
   String name = "";
 
-  _taskViewState(this.taskId);
+  _taskViewAssignedState(this.taskId);
 
   Future<void> getData() async{
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
@@ -50,10 +50,16 @@ class _taskViewState extends State<taskView>{
     setState((){});
   }
 
-  Future<void> addTask() async{
+  Future<void> markDone() async{
+      FirebaseFirestore.instance.collection('task')
+        .doc(taskId)
+        .update({'done': true});
+  }
+
+  Future<void> removeTask() async{
     FirebaseFirestore.instance.collection('task')
         .doc(taskId)
-        .update({'tenant': "Carolina Oliveira"});
+        .update({'tenant': ""});
   }
 
   @override
@@ -252,34 +258,57 @@ class _taskViewState extends State<taskView>{
                   ),
                 ) ,
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton.extended(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _buildPopupConfirmation(context),
+                      );
+                    },
+                    shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.circular(3.0),
+                      side: BorderSide(color: Colors.black),
+                    ),
+                    label: const Text(
+                        '      Remove       ',
+                        style: TextStyle(
+                          color: Colors.black,
+                        )
+                    ),
+                    backgroundColor: Colors.redAccent,
+                  ),
+                  FloatingActionButton.extended(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _buildPopupConfirmation1(context),
+                      );
+                    },
+                    shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.circular(3.0),
+                      side: BorderSide(color: Colors.black),
+                    ),
+                    label: const Text(
+                        '   Mark as Done   ',
+                        style: TextStyle(
+                          color: Colors.black,
+                        )
+                    ),
+                    backgroundColor: Color(0xFF69BB67),
+                  ),
+                ],
+              )
             ]
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => _buildPopupConfirmation(context),
-          );
-        },
-        shape: BeveledRectangleBorder(
-          borderRadius: BorderRadius.circular(3.0),
-          side: BorderSide(color: Colors.black),
-        ),
-        label: const Text(
-            '        Add        ',
-            style: TextStyle(
-              color: Colors.black,
-            )
-        ),
-        backgroundColor: Color(0xFF69BB67),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
 
-  Widget _buildPopupConfirmation(BuildContext context) {
+  Widget _buildPopupConfirmation1(BuildContext context) {
     return new AlertDialog(
       alignment: Alignment.center,
       title: const Text(
@@ -298,7 +327,7 @@ class _taskViewState extends State<taskView>{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Are you sure you want to add this task?",
+            "Are you you want to mark this task as done?",
             style: TextStyle(
               fontFamily: 'Arial',
               fontSize: 20,
@@ -372,15 +401,136 @@ class _taskViewState extends State<taskView>{
                 children: <Widget>[
                   new FlatButton(
                     onPressed: () {
-                      addTask();
+                      markDone();
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Home()),
+                        MaterialPageRoute(builder: (context) =>Home()),
                       );
                     },
                     textColor: Theme.of(context).primaryColor,
                     child: const Text(
-                      'Add',
+                      'Yes',
+                      style: TextStyle(
+                        fontFamily: 'Arial',
+                        fontSize: 18,
+                        color: Colors.black,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+
+
+  Widget _buildPopupConfirmation(BuildContext context) {
+    return new AlertDialog(
+      alignment: Alignment.center,
+      title: const Text(
+        'Confirmation',
+        style: TextStyle(
+          fontFamily: 'Arial',
+          fontSize: 30,
+          color: Colors.black,
+          height: 1,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      backgroundColor: Color(0xFF48ACBE),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Are you sure you want to remove this task?",
+            style: TextStyle(
+              fontFamily: 'Arial',
+              fontSize: 20,
+              color: Colors.black,
+              height: 1,
+            ),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              width: 100.0,
+              height: 30.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1.5,
+                    blurRadius: 1.5,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+                color: Colors.redAccent,
+              ),
+              padding: new EdgeInsets.only(top: 6.0),
+              child: new Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    textColor: Theme.of(context).primaryColor,
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(
+                        fontFamily: 'Arial',
+                        fontSize: 18,
+                        color: Colors.black,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: 100.0,
+              height: 30.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1.5,
+                    blurRadius: 1.5,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+                color: Colors.lightGreen,
+              ),
+              padding: new EdgeInsets.only(top: 6.0),
+              child: new Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      removeTask();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>Home()),
+                      );
+                    },
+                    textColor: Theme.of(context).primaryColor,
+                    child: const Text(
+                      'Remove',
                       style: TextStyle(
                         fontFamily: 'Arial',
                         fontSize: 18,
@@ -400,5 +550,4 @@ class _taskViewState extends State<taskView>{
 
 
 }
-
 
