@@ -1,55 +1,46 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.5.9;
 
-contract Task {
-    struct Stats {
-        uint discount;
-        uint256 dateTaskDone;
-        string tenant_id;
-        uint[] rates;
-        string[] rater_ids;
-        uint256[] dateEvaluation;
+contract Task{
+    uint public task_id;
+    int public tenant_id;
+    int public rate;
+    int public rater_id;
+    int public discount;
+    uint public dateEvaluation;
+    uint public dateTaskDone;
+
+
+    constructor() public{
+        task_id = 0;
+        tenant_id = 1;
+        rate = 0;
+        rater_id = -1;
+        discount = -1;
     }
 
-    mapping (string => Stats) allStats;
-    string[] public tasksAccts;
 
-    function addingTenantToTask(string memory _taskId, string memory _tenantId, uint _dt) public {
-        var tk = allStats[_taskId];
-
-        tk.tenant_id = _tenantId;
-        tk.discount = _dt;
-
-        tasksAccts.push(_taskId) -1;
+    function setRate(int rt) public {
+        rate = rt;
+        dateEvaluation = block.timestamp;
     }
 
-    function tenantMarkedAsDone(string memory _taskId) public{
-        var tk = allStats[_taskId];
-        tk.dateTaskDone = block.timestamp;
-        tasksAccts.push(_taskId)-1;
+    function setRaterId(int id) public  {
+        rater_id = id;
     }
 
-    function evaluationRate(string memory taskId, uint rate) public{
-        var task = allStats[taskId];
-        task.rates.push(rate);
+    function setDateTaskDone() public  {
+        dateTaskDone = block.timestamp;
     }
 
-    function evaluationDateEvaluation(string memory taskId) public{
-        var task = allStats[taskId];
-        task.dateEvaluation.push(block.timestamp);
+    function setTaskId(uint id) public  {
+        task_id = id;
     }
 
-    function evaluationRaterId(string memory taskId, string memory raterId) public{
-        var task = allStats[taskId];
-        task.rater_ids.push(raterId);
+    function setTenantId(int id) public  {
+        tenant_id = id;
     }
 
-    function getDiscount(string memory tk) view public returns (uint) {
-        return allStats[tk].discount;
+    function setDiscount(int dt) public  {
+        discount = dt;
     }
-
-    function getRate(string memory taskId) public view returns (uint[]){
-        var tk = allStats[taskId];
-        return tk.rates;
-    }
-
 }
