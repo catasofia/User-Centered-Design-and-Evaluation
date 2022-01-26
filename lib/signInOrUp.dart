@@ -49,7 +49,7 @@ class _SignsState extends State<Signs> {
                                     borderRadius: BorderRadius.circular(14)),
                               ),
                               onPressed: () {
-                                contractLink.setRate(new BigInt.from(2));
+                                contractLink.evaluateRate("foenofn", new BigInt.from(2));
                               },
                               child: Text(
                                 "${contractLink.rate}",
