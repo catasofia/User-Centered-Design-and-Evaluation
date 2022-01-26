@@ -1,7 +1,31 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'tenantEvaluateMain.dart';
+
+
+class House{
+  String name;
+  List tenants= [];
+  String landlord= "";
+
+  House({required this.name, required this.tenants, required this.landlord});
+}
+
+class Tenant{
+  String name;
+  String image;
+
+  Tenant({required this.name, required this.image});
+}
+
+class Landlord{
+  String name;
+  String image;
+
+  Landlord({required this.name, required this.image});
+}
 
 class Evaluate extends StatefulWidget {
   const Evaluate({Key? key}) : super(key: key);
@@ -20,15 +44,91 @@ class _EvaluateState extends State<Evaluate> {
   bool _star4 = false;
   bool _star5 = false;
 
+
+  House housea = House(
+      name: "",
+      tenants: [],
+      landlord: "");
+
+  String houseid = "ZoMPtra4WxTnMwVAihIz";
+  List<Tenant> tenants = [];
+  Landlord landlord = Landlord(name: "Carlos Silva", image: "assets/carlos.jfif");
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('house').get();
+
+    snapshot.docs.forEach((doc) {
+      if (doc.id == houseid) {
+        House house1 = House(
+            name: doc['name'],
+            tenants: doc['tenants'],
+            landlord: doc['landlord']);
+        housea = house1;
+      }});
+
+    QuerySnapshot snapshot1 = await FirebaseFirestore.instance.collection('profile').get();
+
+    if (tenants.isNotEmpty){
+      tenants = [];
+    }
+
+    snapshot1.docs.forEach((doc) {
+      housea.tenants.forEach((element) {
+        if (doc['name'] == element) {
+          Tenant tenant = Tenant(name: doc['name'], image: doc['image']);
+          tenants.add(tenant);
+        }});
+      if(doc['name'] == housea.landlord){
+        Landlord landlorda = Landlord(name: doc['name'], image: doc['image']);
+        landlord = landlorda;
+      }
+    });
+    setState((){});
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     _description.dispose();
     super.dispose();
   }
+  Widget profiles(p){
+    return Padding(
+      padding: EdgeInsets.fromLTRB(8.0, 6.0, 8.0, 8.0),
+      child:Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                  child: CircleAvatar(
+                    radius: 49.0,
+                    backgroundColor: Colors.black54,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(p.image),
+                      radius: 45.0,
+                    ),
+                  )
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildText(p.name),
+            ],
+          ),
+          SizedBox(height: 20.0),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    getData();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -148,14 +248,18 @@ class _EvaluateState extends State<Evaluate> {
                 Column(
                   children: [
                     Container(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/carlos.jfif'),
-                        radius: 55.0,
-                      ),
+                        child: CircleAvatar(
+                          radius: 49.0,
+                          backgroundColor: Colors.black54,
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage(landlord.image),
+                            radius: 45.0,
+                          ),
+                        )
                     ),
                     SizedBox(height: 8.0),
                     Text(
-                      'Carlos',
+                      landlord.name,
                       style: TextStyle(
                         fontFamily: 'Arial',
                         fontSize: 18,
@@ -167,287 +271,301 @@ class _EvaluateState extends State<Evaluate> {
                 ),
               ],
             ),
-            Center(
-              child: Container(
-                width: 100.0,
-                height: 30.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1.5,
-                      blurRadius: 1.5,
-                      offset: Offset(0, 3), // changes position of shadow
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0,4,0,0),
+              child: Center(
+                child: ElevatedButton(
+                  child: Text(
+                    'See profile',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                      height: 1,
                     ),
-                  ],
-                  color: Color(0xFF48ACBE),
-                ),
-                padding: new EdgeInsets.only(top: 6.0),
-                child: new Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'See profile',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary:  Color(0xFF48ACBE),
+                    shape: RoundedRectangleBorder( //to set border radius to button
+                        borderRadius: BorderRadius.circular(10)
                     ),
-                  ],
+                  ),
+                  onPressed: () {
+                  },
                 ),
               ),
             ),
             SizedBox(height: 12.0),
             Center(
-              child: Container(
-                width: 350.0,
-                height: 190.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1.5,
-                      blurRadius: 1.5,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                  color: Color(0xFF48ACBE),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(7.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Evaluate:',
-                        style: TextStyle(
-                          fontFamily: 'Arial',
-                          fontSize: 20,
-                          color: Colors.black,
-                          height: 1,
-                        ),
-                        textAlign: TextAlign.center,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0,0,0,7),
+                child: Container(
+                  width: 350.0,
+                  height: 190.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 1.5,
+                        blurRadius: 1.5,
+                        offset: Offset(0, 3), // changes position of shadow
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Leave a comment:',
+                    ],
+                    color: Color(0xFF48ACBE),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(7.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          'Evaluate:',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 20,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        controller: _description,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(onPressed: (){
-                            setState(() {
-                              if(_star2 == true){
-                                _star1 = true;
-                              } else if(_star2 == false && _star1 == true){
-                                _star1 = false;
-                              } else if(_star2 == false && _star1 == false){
-                                _star1 = true;
-                              }
-                              _star2 = false;
-                              _star3 = false;
-                              _star4 = false;
-                              _star5 = false;
-                            });
-                          },
-                              icon: Icon(Icons.star,
-                                color: _star1 ? Colors.yellow : Colors.white,
-                                size: 32,)),
-                          SizedBox(width: 10.0),
-                          IconButton(onPressed: (){
-                            setState(() {
-                              if(_star3 == true){
-                                _star1 = true;
-                                _star2 = true;
-                              } else if(_star3 == false && _star2 == true){
-                                _star1 = false;
-                                _star2 = false;
-                              } else if(_star3 == false && _star2 == false){
-                                _star1 = true;
-                                _star2 = true;
-                              }
-                              _star3 = false;
-                              _star4 = false;
-                              _star5 = false;
-                            });
-                          },
-                              icon: Icon(Icons.star,
-                                color: _star2 ? Colors.yellow: Colors.white,
-                                size: 32,)),
-                          SizedBox(width: 10.0),
-                          IconButton(onPressed: (){
-                            setState(() {
-                              if(_star4 == true){
-                                _star1 = true;
-                                _star2 = true;
-                                _star3 = true;
-                              } else if(_star4 == false && _star3 == true){
-                                _star1 = false;
-                                _star2 = false;
-                                _star3 = false;
-                              } else if(_star4 == false && _star3 == false){
-                                _star1 = true;
-                                _star2 = true;
-                                _star3 = true;
-                              }
-                              _star4 = false;
-                              _star5 = false;
-                            });
-                          },
-                              icon: Icon(Icons.star,
-                                color: _star3 ? Colors.yellow: Colors.white,
-                                size: 32,)),
-                          SizedBox(width: 10.0),
-                          IconButton(onPressed: (){
-                            setState(() {
-                              if(_star5 == true){
-                                _star1 = true;
-                                _star2 = true;
-                                _star3 = true;
-                                _star4 = true;
-                              } else if(_star5 == false && _star4 == true){
-                                _star1 = false;
-                                _star2 = false;
-                                _star3 = false;
-                                _star4 = false;
-                              } else if(_star5 == false && _star4 == false){
-                                _star1 = true;
-                                _star2 = true;
-                                _star3 = true;
-                                _star4 = true;
-                              }
-                              _star5 = false;
-                            });
-                          },
-                              icon: Icon(Icons.star,
-                                color: _star4 ? Colors.yellow: Colors.white,
-                                size: 32,)),
-                          SizedBox(width: 10.0),
-                          IconButton(onPressed: (){
-                            setState(() {
-                              if(_star5 == false){
-                                _star1 = true;
-                                _star2 = true;
-                                _star3 = true;
-                                _star4 = true;
-                                _star5 = true;
-                              } else{
-                                _star1 = false;
+                        TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Leave a comment:',
+                          ),
+                          controller: _description,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(onPressed: (){
+                              setState(() {
+                                if(_star2 == true){
+                                  _star1 = true;
+                                } else if(_star2 == false && _star1 == true){
+                                  _star1 = false;
+                                } else if(_star2 == false && _star1 == false){
+                                  _star1 = true;
+                                }
                                 _star2 = false;
                                 _star3 = false;
                                 _star4 = false;
                                 _star5 = false;
-                              }
-                            });
-                          },
-                              icon: Icon(Icons.star,
-                                color: _star5 ? Colors.yellow: Colors.white,
-                                size: 32,)),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          RaisedButton(
-                            child: Text(
-                              'Cancel:',
-                              style: TextStyle(
-                                fontFamily: 'Arial',
-                                fontSize: 18,
-                                color: Colors.black,
-                                height: 1,
-                              ),
-                            ),
-                            color: Colors.redAccent,
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => _buildPopupEvaluation(context),
-                              );
+                              });
                             },
-                          ),
-                          RaisedButton(
-                            child: Text(
-                              'Submit:',
-                              style: TextStyle(
-                                fontFamily: 'Arial',
-                                fontSize: 18,
-                                color: Colors.black,
-                                height: 1,
-                              ),
-                            ),
-                            color: Colors.lightGreen,
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => _buildPopupEvaluation2(context),
-                              );
+                                icon: Icon(Icons.star,
+                                  color: _star1 ? Colors.yellow : Colors.white,
+                                  size: 32,)),
+                            SizedBox(width: 10.0),
+                            IconButton(onPressed: (){
+                              setState(() {
+                                if(_star3 == true){
+                                  _star1 = true;
+                                  _star2 = true;
+                                } else if(_star3 == false && _star2 == true){
+                                  _star1 = false;
+                                  _star2 = false;
+                                } else if(_star3 == false && _star2 == false){
+                                  _star1 = true;
+                                  _star2 = true;
+                                }
+                                _star3 = false;
+                                _star4 = false;
+                                _star5 = false;
+                              });
                             },
-                          ),
-                        ],
-                      ),
-                    ],
+                                icon: Icon(Icons.star,
+                                  color: _star2 ? Colors.yellow: Colors.white,
+                                  size: 32,)),
+                            SizedBox(width: 10.0),
+                            IconButton(onPressed: (){
+                              setState(() {
+                                if(_star4 == true){
+                                  _star1 = true;
+                                  _star2 = true;
+                                  _star3 = true;
+                                } else if(_star4 == false && _star3 == true){
+                                  _star1 = false;
+                                  _star2 = false;
+                                  _star3 = false;
+                                } else if(_star4 == false && _star3 == false){
+                                  _star1 = true;
+                                  _star2 = true;
+                                  _star3 = true;
+                                }
+                                _star4 = false;
+                                _star5 = false;
+                              });
+                            },
+                                icon: Icon(Icons.star,
+                                  color: _star3 ? Colors.yellow: Colors.white,
+                                  size: 32,)),
+                            SizedBox(width: 10.0),
+                            IconButton(onPressed: (){
+                              setState(() {
+                                if(_star5 == true){
+                                  _star1 = true;
+                                  _star2 = true;
+                                  _star3 = true;
+                                  _star4 = true;
+                                } else if(_star5 == false && _star4 == true){
+                                  _star1 = false;
+                                  _star2 = false;
+                                  _star3 = false;
+                                  _star4 = false;
+                                } else if(_star5 == false && _star4 == false){
+                                  _star1 = true;
+                                  _star2 = true;
+                                  _star3 = true;
+                                  _star4 = true;
+                                }
+                                _star5 = false;
+                              });
+                            },
+                                icon: Icon(Icons.star,
+                                  color: _star4 ? Colors.yellow: Colors.white,
+                                  size: 32,)),
+                            SizedBox(width: 10.0),
+                            IconButton(onPressed: (){
+                              setState(() {
+                                if(_star5 == false){
+                                  _star1 = true;
+                                  _star2 = true;
+                                  _star3 = true;
+                                  _star4 = true;
+                                  _star5 = true;
+                                } else{
+                                  _star1 = false;
+                                  _star2 = false;
+                                  _star3 = false;
+                                  _star4 = false;
+                                  _star5 = false;
+                                }
+                              });
+                            },
+                                icon: Icon(Icons.star,
+                                  color: _star5 ? Colors.yellow: Colors.white,
+                                  size: 32,)),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.redAccent,
+                                shape: RoundedRectangleBorder( //to set border radius to button
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => EvaluateMain()),
+                                );
+                              },
+                            ),
+                            ElevatedButton(
+                              child: Text(
+                                'Submit',
+                                style: TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                  height: 1,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: !_star1 ? Colors.grey[400] : Colors.green,
+                                shape: RoundedRectangleBorder( //to set border radius to button
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                              ),
+                              onPressed: () {
+                                if(_star1 && !_star2 && !_star3 && !_star4 && !_star5){
+                                  FirebaseFirestore.instance.collection('profile').doc("NzP8xVGu1fOcqTWb4JNt").update({'rating': 1});
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) => _buildPopupEvaluation2(context),
+                                  );
+                                }
+                                else if(_star1 && _star2 && !_star3 && !_star4 && !_star5){
+                                  FirebaseFirestore.instance.collection('profile').doc("NzP8xVGu1fOcqTWb4JNt").update({'rating': 2});
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) => _buildPopupEvaluation2(context),
+                                  );
+                                }
+                                else if(_star1 && _star2 && _star3 && !_star4 && !_star5){
+                                  FirebaseFirestore.instance.collection('profile').doc("NzP8xVGu1fOcqTWb4JNt").update({'rating': 3});
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) => _buildPopupEvaluation2(context),
+                                  );
+                                }
+                                else if(_star1 && _star2 && _star3 && _star4 && !_star5){
+                                  FirebaseFirestore.instance.collection('profile').doc("NzP8xVGu1fOcqTWb4JNt").update({'rating': 4});
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) => _buildPopupEvaluation2(context),
+                                  );
+                                }
+                                else if(_star1 && _star2 && _star3 && _star4 && _star5){
+                                  FirebaseFirestore.instance.collection('profile').doc("NzP8xVGu1fOcqTWb4JNt").update({'rating': 5});
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) => _buildPopupEvaluation2(context),
+                                  );
+                                }
+                                else{
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => _buildPopupEvaluation(context),
+                                );}
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Column(
-                  children: [
-                    Container(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/joao.jpg'),
-                        radius: 45.0,
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      'Joao',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Container(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/marco.jpg'),
-                        radius: 45.0,
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      'Marco',
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            Center(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children:[
+                        for (var i in tenants) profiles(i)
+                      ]
+                  ),
+                )
             ),
           ],
         ),
       ),
     );
+  }
+  Text buildText(String name) {
+    return Text(name, style: TextStyle(
+      fontSize: 18.0,
+      color: Colors.black,
+      letterSpacing: 2.0,
+    ),);
   }
 }
 
