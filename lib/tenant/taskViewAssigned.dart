@@ -53,6 +53,24 @@ class _taskViewAssignedState extends State<taskViewAssigned>{
       FirebaseFirestore.instance.collection('task')
         .doc(taskId)
         .update({'done': true});
+
+      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('profile').get();
+
+      double aux = 0;
+      String id = "";
+
+      snapshot.docs.forEach((doc) {
+        if (doc['name'] == "Carolina Oliveira") {
+          aux += double.parse(doc['discount']);
+          id = doc.id;
+        };
+      });
+
+      aux += double.parse(discount);
+
+      FirebaseFirestore.instance.collection('profile')
+          .doc(id)
+          .update({'discount': aux.toString()});
   }
 
   Future<void> removeTask() async{
