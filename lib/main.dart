@@ -109,7 +109,7 @@ class MyApp extends StatelessWidget {
         //'/home': (context) => Task(),
         //'/': (context) => HomeScreen(),
         //}
-        home: TasksLandlord(),
+        home: HomeLandlord(),
       ),
     );
   }

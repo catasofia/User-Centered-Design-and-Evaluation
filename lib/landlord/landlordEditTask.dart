@@ -235,7 +235,10 @@ class _EditTaskState extends State<EditTask> {
                         ),
                       ),
                       onPressed: () {
-                        //  FirebaseFirestore.instance.collection("tasks").doc(taskid).delete();
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupDeleteTask(context, taskid),
+                        );
                       },
                       child: Text('Remove',
                         style: TextStyle(
@@ -478,6 +481,128 @@ Widget _buildPopupEditTask(BuildContext context) {
   );
 }
 
+Widget _buildPopupDeleteTask(BuildContext context, String taskid) {
+  return AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Delete Task',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.black,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: const Color(0xFF48ACBE),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const <Widget>[
+        Text(
+          "Are you sure you want to remove this task?",
+          style: TextStyle(
+            fontFamily: 'Arial',
+            fontSize: 20,
+            color: Colors.black,
+            height: 1,
+          ),
+        ),
+
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 100.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+              color: Colors.redAccent,
+            ),
+            padding: const EdgeInsets.only(top: 6.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme
+                      .of(context)
+                      .primaryColor,
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 100.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+              color: Colors.lightGreen,
+            ),
+            padding: const EdgeInsets.only(top: 6.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    FirebaseFirestore.instance.collection("task").doc(taskid).delete();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomeLandlord()));
+                  },
+                  textColor: Theme
+                      .of(context)
+                      .primaryColor,
+                  child: const Text(
+                    'Confirm',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
 
 Widget _errorPopup(BuildContext context) {
   return new AlertDialog(
