@@ -12,8 +12,9 @@ class Task {
   int landStars;
   int neigStars;
   String id;
+  String house;
 
-  Task({required this.name, required this.date, required this.landStars, required this.neigStars, required this.id});
+  Task({required this.name, required this.date, required this.landStars, required this.neigStars, required this.id, required this.house,});
 }
 
 class NeighborHome extends StatefulWidget {
@@ -33,6 +34,7 @@ class _NeighborHomeState extends State<NeighborHome> {
 
   Future<void> getData() async{
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
+    QuerySnapshot profiles = await FirebaseFirestore.instance.collection('profile').get();
 
     if (tasksToEvaluate.isNotEmpty){
       tasksToEvaluate = [];
@@ -43,22 +45,29 @@ class _NeighborHomeState extends State<NeighborHome> {
     }
 
     snapshot.docs.forEach((doc) {
-      if(doc['done'] == true){
-      Task task1 = Task(name: doc['name'],
-          date: doc['date'],
-          landStars: doc['landStars'],
-          neigStars: doc['neigStars'],
-          id: doc.id);
-      bool aux = true;
-      allTasks.forEach((element) {
-        if (element.id == doc.id) {
-          aux = false;
+      profiles.docs.forEach((element) {
+        if(element['name'] == "Francisca Mota"){
+          if(doc['house'] == element['house']){
+            if(doc['done'] == true){
+              Task task1 = Task(name: doc['name'],
+                  date: doc['date'],
+                  house: doc['house'],
+                  landStars: doc['landStars'],
+                  neigStars: doc['neigStars'],
+                  id: doc.id);
+              bool aux = true;
+              allTasks.forEach((element) {
+                if (element.id == doc.id) {
+                  aux = false;
+                }
+              });
+              if (aux) {
+                allTasks.add(task1);
+              }
+            }
+          }
         }
-      });
-      if (aux) {
-        allTasks.add(task1);
-      }
-    }});
+    });});
 
     snapshot.docs.forEach((element) {
       for(var i = 0; i < allTasks.length; i++){
@@ -107,6 +116,20 @@ class _NeighborHomeState extends State<NeighborHome> {
                   ),
                 ],
               ),
+            ),
+            Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(6, 0,0,0),
+                    child: Text(
+                      tt.house,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ]
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

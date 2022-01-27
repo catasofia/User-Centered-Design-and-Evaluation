@@ -14,6 +14,7 @@ class _LandlordProfileState extends State<ProfileLandlord> {
   String gender = "";
   String image = "";
   String role = "";
+  int rating = 0;
 
   Future<void> getProfile() async{
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('profile').get();
@@ -25,6 +26,7 @@ class _LandlordProfileState extends State<ProfileLandlord> {
         gender = doc['gender'];
         image = doc['image'];
         role = doc['role'];
+        rating = doc['rating'];
       }});
     setState(() {});
   }
@@ -239,7 +241,7 @@ class _LandlordProfileState extends State<ProfileLandlord> {
                           ),
                           SizedBox(width: 30.0),
                           Text(
-                            '4.54',
+                            rating.toString(),
                             style: TextStyle(
                               fontFamily: 'Arial',
                               fontSize: 20,

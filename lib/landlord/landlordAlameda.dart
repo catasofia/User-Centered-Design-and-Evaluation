@@ -436,10 +436,10 @@ Widget _buildPopupNotification(BuildContext context) {
             textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
           ),
           onPressed: () {
-            Navigator.push(
+           /* Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SuggestedTask()),
-            );
+            );*/
 
           },
           child: const Text('- Francisca suggested a task for Alameda T2.',

@@ -19,6 +19,7 @@ class House{
   List aux = [];
   List<Tenant> tenants= [];
   List<Task> tasks=[];
+  List<Suggested_Task> suggestedTasks= [];
 
   House({required this.name, required this.description, required this.id, required this.aux});
 }
@@ -30,6 +31,15 @@ class Task{
   bool done;
 
   Task({required this.name, required this.tenant, required this.house, required this.done });
+}
+
+class Suggested_Task{
+  String name;
+  String description;
+  String house;
+  String id;
+
+  Suggested_Task({required this.name, required this.description, required this.house, required this.id});
 }
 
 class Tenant{
@@ -56,6 +66,8 @@ class _TasksState extends State<TasksLandlord> {
 
     QuerySnapshot tasksSnapshot = await FirebaseFirestore.instance.collection('task').get();
 
+    QuerySnapshot suggestedSnapshot = await FirebaseFirestore.instance.collection('suggested_task').get();
+
     if (houses.isNotEmpty){
       houses = [];
     }
@@ -73,6 +85,9 @@ class _TasksState extends State<TasksLandlord> {
       if (houses[i].tasks.isNotEmpty){
         houses[i].tasks = [];
       }
+      if (houses[i].suggestedTasks.isNotEmpty){
+        houses[i].suggestedTasks = [];
+      }
 
       tasksSnapshot.docs.forEach((element) {
         if (houses[i].name == element['house']){
@@ -82,6 +97,17 @@ class _TasksState extends State<TasksLandlord> {
               done: element['done']
           );
           houses[i].tasks.add(task1);
+        }
+      });
+
+      suggestedSnapshot.docs.forEach((element) {
+        if (houses[i].name == element['house']){
+          Suggested_Task task1 = Suggested_Task(name: element['name'],
+              description: element['description'],
+              house: element['house'],
+              id: element.id
+          );
+          houses[i].suggestedTasks.add(task1);
         }
       });
     }
@@ -129,12 +155,63 @@ class _TasksState extends State<TasksLandlord> {
                   height: 20.0,
                   child: Container(
                   //margin: const EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(color: !p.done ? Colors.grey[400] : Colors.green
+                  decoration: BoxDecoration(color: !p.done ? Colors.grey[400] : Colors.lightGreen
                   ,borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: !p.done ? Text("To be completed", style: TextStyle(color: Colors.black), textAlign: TextAlign.center,) : Text("Completed", style: TextStyle(color: Colors.black), textAlign: TextAlign.center),
                   ),
                 ),
               ),
+        ],
+      ),
+    );
+  }
+
+
+  Widget suggestedTasks(p){
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 8.0),
+      child:Column(
+        children: <Widget>[
+          new Align(
+              alignment: new Alignment(-1.1, 0.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(left: 10.0),
+                      child:
+
+                      Text(
+                        p.name,
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          fontSize: 15,
+                          color: Colors.black,
+                          height: 1,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox( height: 30, width: 100,
+                      child: RaisedButton(onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SuggestedTask(id:p.id)),
+                        );
+                      },
+                        child: Text('See Task',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 15,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                        ),
+                        color: Color(0xFFFFFFFF),),
+                    ),
+                  ]
+              )
+          ),
         ],
       ),
     );
@@ -162,9 +239,9 @@ class _TasksState extends State<TasksLandlord> {
               child: Text(
                 p.name,
                 style: TextStyle(
-                  fontSize: 17.0,
+                  fontSize: 16.0,
                   color: Colors.black,
-                  letterSpacing: 2.0,
+                  //letterSpacing: 2.0,
                 ),
               ),
             ),
@@ -176,7 +253,7 @@ class _TasksState extends State<TasksLandlord> {
               for(var i in tt.tasks)
                 if(p.name == i.tenant)tasks(i)]
             ,
-          )
+          ),
         ],
       ),
     );
@@ -185,7 +262,7 @@ class _TasksState extends State<TasksLandlord> {
   @override
   Widget template(tt) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(3.0),
       child: Card(
         margin: EdgeInsets.fromLTRB(0.0, 18.0, 0.0, 0.0),
         color: Color(0xFF48ACBE),
@@ -216,11 +293,30 @@ class _TasksState extends State<TasksLandlord> {
                         fontSize: 18.0,
                         color: Colors.black,
                         letterSpacing: 2.0,
+                        fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ),
                 ),
+                /*Padding(
+                  padding: const EdgeInsets.fromLTRB(0,15,0,0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Tenants Tasks',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            letterSpacing: 2.0,
+                            fontSize: 17.0,
+                            //fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ]
+                  ),
+                ),*/
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SingleChildScrollView(
@@ -233,7 +329,34 @@ class _TasksState extends State<TasksLandlord> {
                               children: [
                                 for(var i in tt.tenants)tenants(i, tt)]
                               ,
-                            )
+                            ),
+                            Divider(
+                              height: 40.0,
+                              color: Colors.white,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      'Suggested Tasks',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: 2.0,
+                                        fontSize: 17.0,
+                                        //fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ]
+                              ),
+                            ),
+                            Column(
+                              children: [
+                                for(var i in tt.suggestedTasks)suggestedTasks(i)]
+                              ,
+                            ),
                           ],
                         ),
                        /* SizedBox(width: 50.0),
@@ -445,11 +568,11 @@ Widget _buildPopupNotification(BuildContext context) {
           style: TextButton.styleFrom(
             textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
           ),
-          onPressed: () {
+          onPressed: () {/*
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SuggestedTask()),
-            );
+            );*/
 
           },
           child: const Text('- Francisca suggested a task for Alameda T2.',

@@ -5,6 +5,12 @@ import 'package:flutter/material.dart';
 import 'neighborProfile.dart';
 import 'neighborHomeScreen.dart';
 
+class House{
+  String name = "";
+
+  House({ required this.name});
+}
+
 class SuggestTask extends StatefulWidget {
   const SuggestTask({Key? key}) : super(key: key);
 
@@ -14,12 +20,32 @@ class SuggestTask extends StatefulWidget {
 
 final task_name = TextEditingController();
 final description = TextEditingController();
+String neighborid = "NFiyyguWHANyT011vdbh";
 
 class _SuggestTaskState extends State<SuggestTask> {
-  CollectionReference task = FirebaseFirestore.instance.collection('suggested_task');
+
+  House housea = House(
+      name: "");
+
+  Future<void> getData() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('house').get();
+    QuerySnapshot profiles = await FirebaseFirestore.instance.collection('profile').get();
+    snapshot.docs.forEach((doc) {
+      profiles.docs.forEach((element) {
+        if(element['name'] == "Francisca Mota"){
+          if (doc['name'] == element['house']) {
+            House house1 = House(
+                name: doc['name']);
+            housea = house1;
+          }}});
+    });
+    setState((){});
+  }
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference task = FirebaseFirestore.instance.collection('suggested_task');
+    getData();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -149,9 +175,11 @@ class _SuggestTaskState extends State<SuggestTask> {
                           builder: (BuildContext context) => _errorPopup(context),
                         );
                       } else{
+                        print("ENTREIIII");
                         task.add({
                           'name': task_name.text,
-                          'description': description.text
+                          'description': description.text,
+                          'house': housea.name,
                         });
                         showDialog(
                           context: context,

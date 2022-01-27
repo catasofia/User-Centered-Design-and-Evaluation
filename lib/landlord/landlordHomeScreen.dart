@@ -137,6 +137,7 @@ class _HomeState extends State<HomeLandlord> {
                       fontSize: 18.0,
                       color: Colors.black,
                       letterSpacing: 2.0,
+                      fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -415,11 +416,11 @@ Widget _buildPopupNotification(BuildContext context) {
           style: TextButton.styleFrom(
             textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
           ),
-          onPressed: () {
+          onPressed: () { /*
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SuggestedTask()),
-            );
+            );*/
 
           },
           child: const Text('- Francisca suggested a task for Alameda T2.',

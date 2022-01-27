@@ -359,12 +359,12 @@ Widget _buildPopupNotification(BuildContext context) {
           style: TextButton.styleFrom(
             textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
           ),
-          onPressed: () {
+          onPressed: () {/*
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SuggestedTask()),
             );
-
+*/
           },
           child: const Text('- Francisca suggested a task for Alameda T2.',
               style: TextStyle(fontFamily: 'Arial',
