@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:time_app/tenant/taskView.dart';
 import 'package:time_app/tenant/taskViewAssigned.dart';
 import 'tenantTasks.dart';
 import 'tenantContacts.dart';
 import 'profile.dart';
 import 'tenantEvaluateMain.dart';
-import 'cleanElevator.dart';
 import 'tenantMap.dart';
 
 class Home extends StatefulWidget {

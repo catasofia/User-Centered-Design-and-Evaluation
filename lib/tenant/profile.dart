@@ -4,7 +4,6 @@ import 'tenantContacts.dart';
 import 'tenantTasks.dart';
 import '../signInOrUp.dart';
 import 'tenantEvaluateMain.dart';
-import 'tenantCarlosProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -25,10 +24,27 @@ class _ProfileState extends State<Profile> {
   double rating = 0;
   int totalDiscount = 0;
 
+  Future<void> getProfile() async{
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('profile').get();
+
+    snapshot.docs.forEach((doc) {
+      if (doc['name'] == "Carolina Oliveira") {
+        name = doc['name'];
+        age = doc['age'];
+        gender = doc['gender'];
+        image = doc['image'];
+        role = doc['role'];
+        rating = doc['rating'];
+        totalDiscount = 0;
+      }});
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future<DocumentSnapshot<Object?>>? tenant = tenantDB.doc('aQXN0IZC6JE9rgW8eMYc').get();
-    Map<String, dynamic>  data = {};
+
+    getProfile();
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -148,30 +164,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               SizedBox(height: 20.0),
-              FutureBuilder<DocumentSnapshot>(
-                future: tenant,
-                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
-                  if (snapshot.hasError) {
-                    data = {};
-                    return Text("Something went wrong");
-                  }
-
-                  if (snapshot.hasData && !snapshot.data!.exists) {
-                    data = {};
-                    return Text("Document does not exist");
-                  }
-
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    data = snapshot.data!.data() as Map<String, dynamic>;
-                    image = data['image'];
-                    name = data['name'];
-                    gender = data['gender'];
-                    age = data['age'];
-                    role = data['role'];
-                    rating = data['rating'];
-                    totalDiscount = data['totalDiscount'];
-                    return Center(
+              Center(
                       child: CircleAvatar(
                         radius: 79.0,
                         backgroundColor: Colors.black54,
@@ -180,12 +173,7 @@ class _ProfileState extends State<Profile> {
                           radius: 75.0,
                         ),
                       ),
-                    );
-                  }
-                  data = {};
-                  return Text("loading");
-                },
-              ),
+                    ),
               SizedBox(height: 10.0),
               Container(
                 width: 270,
@@ -254,40 +242,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
-              RaisedButton(
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CarlosProfile()),
-                  );
-                },
-                color: Color(0xFF48ACBE),
-                shape: BeveledRectangleBorder(
-                  borderRadius: BorderRadius.circular(3.0),
-                ),
-                child: Text(
-                    ' See  Landlord ',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0
-                    )
-                ),
-              ),
-              RaisedButton(
-                onPressed: (){},
-                color: Color(0xFF48ACBE),
-                shape: BeveledRectangleBorder(
-                  borderRadius: BorderRadius.circular(3.0),
-                ),
-                child: Text(
-                    'See Neighbors',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18.0
-                    )
-                ),
-              ),
+              SizedBox(height: 20),
               RaisedButton(
                 onPressed: (){
                   Navigator.push(
