@@ -351,7 +351,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "- João completed a task, rate him now.",
+          "- There's a new task to evaluate, rate it now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -360,15 +360,6 @@ Widget _buildPopupNotification(BuildContext context) {
           ),
         ),
         SizedBox(height: 20.0),
-        Text(
-          "- Carolina completed a task, rate her now.",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
-          ),
-        ),
       ],
     ),
     actions: <Widget>[
@@ -391,4 +382,3 @@ Widget _buildPopupNotification(BuildContext context) {
     ],
   );
 }
-

@@ -168,7 +168,7 @@ class _NeighborProfileState extends State<NeighborProfile> {
                   height: 50,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF58868E)
+                        primary: Color(0xFF48ACBE)
                       ),
                       onPressed: (){
                         Navigator.push(
@@ -228,7 +228,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "- João completed a task, rate him now.",
+          "- There's a new task to evaluate, rate it now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -237,15 +237,6 @@ Widget _buildPopupNotification(BuildContext context) {
           ),
         ),
         SizedBox(height: 20.0),
-        Text(
-          "- Carolina completed a task, rate her now.",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
-          ),
-        ),
       ],
     ),
     actions: <Widget>[
