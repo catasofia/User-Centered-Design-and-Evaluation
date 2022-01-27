@@ -22,7 +22,7 @@ class _ProfileState extends State<Profile> {
   int age = 0;
   String role = "";
   double rating = 0;
-  int totalDiscount = 0;
+  String totalDiscount = "0";
 
   Future<void> getProfile() async{
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('profile').get();
@@ -35,7 +35,7 @@ class _ProfileState extends State<Profile> {
         image = doc['image'];
         role = doc['role'];
         rating = doc['rating'];
-        totalDiscount = 0;
+        totalDiscount = doc['discount'];
       }});
     setState(() {});
   }
