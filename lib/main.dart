@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:time_app/landlord/landlordHomeScreen.dart';
 import 'package:time_app/landlord/landlordSeeHouse.dart';
 import 'package:time_app/neighbor/neighborHomeScreen.dart';
+import 'package:time_app/neighbor/neighborProfile.dart';
+import 'package:time_app/tenant/profile.dart';
 import 'package:time_app/tenant/tenantEvaluateMain.dart';
 import 'package:time_app/tenant/tenantEvaluatePage.dart';
 import 'homeScreen.dart';
