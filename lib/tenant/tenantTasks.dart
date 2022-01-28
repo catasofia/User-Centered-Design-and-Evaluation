@@ -257,7 +257,7 @@ class _TaskState extends State<Task> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF48ACBE),
+        color: Color(0xFF7FBECB),
         child: Padding(
           padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10),
           child: Row(
@@ -455,7 +455,7 @@ class _TaskState extends State<Task> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "- João completed a task, rate him now.",
+            "- Carlos sent you a message.",
             style: TextStyle(
               fontFamily: 'Arial',
               fontSize: 20,
@@ -493,9 +493,7 @@ class _TaskState extends State<Task> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              textColor: Theme
-                  .of(context)
-                  .primaryColor,
+              textColor: Theme.of(context).primaryColor,
               child: const Icon(
                 Icons.remove_circle_outline,
                 color: Colors.black,
