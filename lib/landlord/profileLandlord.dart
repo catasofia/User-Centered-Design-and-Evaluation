@@ -1,5 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:time_app/landlord/landlordContacts.dart';
+import 'package:time_app/landlord/landlordEvaluate.dart';
+
+import '../homeScreen.dart';
+import 'landlordHomeScreen.dart';
+import 'landlordTasks.dart';
 
 class ProfileLandlord extends StatefulWidget {
   const ProfileLandlord({Key? key}) : super(key: key);
@@ -39,7 +45,7 @@ class _LandlordProfileState extends State<ProfileLandlord> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF48ACBE),
+        color: Color(0xFF7FBECB),
         child: Padding(
           padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
           child: Row(
@@ -49,19 +55,32 @@ class _LandlordProfileState extends State<ProfileLandlord> {
                   icon: Icon(
                     Icons.house_outlined,
                     size: 35.0,
-                  ), onPressed: () {}
+                  ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeLandlord()),
+                );
+              }
               ),
               IconButton(icon: Icon(
                 Icons.star_border,
                 size: 35.0,
-              ), onPressed: () {}),
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LandlordEvaluate()),
+                );
+              }),
               IconButton(
                   icon: Icon(
                     Icons.cleaning_services_rounded,
                     size: 30.0,
                   ),
                   onPressed: () {
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TasksLandlord()),
+                    );
                   }
               ),
               IconButton(
@@ -70,6 +89,10 @@ class _LandlordProfileState extends State<ProfileLandlord> {
                     size: 30.0,
                   ),
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LandlordContacts()),
+                    );
 
                   }
               ),
@@ -264,7 +287,12 @@ class _LandlordProfileState extends State<ProfileLandlord> {
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:[
-                  RaisedButton(onPressed: (){},
+                  RaisedButton(onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                    );
+                  },
                     padding: EdgeInsets.only(top:14.0, bottom:14.0, left:10.0, right: 10.0),
                     child: Text('Logout',
                       style: TextStyle(
@@ -274,7 +302,7 @@ class _LandlordProfileState extends State<ProfileLandlord> {
                         height: 1,
                       ),
                     ),
-                    color: Color(0xFF48ACBE),),
+                    color: Color(0xFF7FBECB),),
             ]),
                 SizedBox(height: 30),
                 Row(
@@ -299,6 +327,7 @@ class _LandlordProfileState extends State<ProfileLandlord> {
 }
 
 
+
 Widget _buildPopupNotification(BuildContext context) {
   return new AlertDialog(
     alignment: Alignment.center,
@@ -318,7 +347,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "- João completed a task, rate him now.",
+          "  - You have a new suggested task.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -328,7 +357,7 @@ Widget _buildPopupNotification(BuildContext context) {
         ),
         SizedBox(height: 20.0),
         Text(
-          "- Maria completed a task, rate her now.",
+          "  - Task completed, you can evaluate it now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,

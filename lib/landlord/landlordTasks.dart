@@ -66,7 +66,7 @@ class _TasksState extends State<TasksLandlord> {
 
     QuerySnapshot tasksSnapshot = await FirebaseFirestore.instance.collection('task').get();
 
-    QuerySnapshot suggestedSnapshot = await FirebaseFirestore.instance.collection('suggested_task').get();
+    QuerySnapshot suggestedSnapshot = await FirebaseFirestore.instance.collection('suggestedTask').get();
 
     if (houses.isNotEmpty){
       houses = [];
@@ -390,7 +390,7 @@ class _TasksState extends State<TasksLandlord> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF48ACBE),
+        color: Color(0xFF7FBECB),
         child: Padding(
           padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
           child: Row(
@@ -545,7 +545,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "  - João completed a task, rate him now.",
+          "  - You have a new suggested task.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -555,31 +555,13 @@ Widget _buildPopupNotification(BuildContext context) {
         ),
         SizedBox(height: 20.0),
         Text(
-          "  - Carolina has sent you a message.",
+          "  - Task completed, you can evaluate it now.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
             color: Colors.black,
             height: 1,
           ),
-        ),
-        SizedBox(height: 20.0),
-        TextButton(
-          style: TextButton.styleFrom(
-            textStyle: const TextStyle(fontSize: 20, fontFamily: 'Arial', color: Colors.black),
-          ),
-          onPressed: () {/*
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SuggestedTask()),
-            );*/
-
-          },
-          child: const Text('- Francisca suggested a task for Alameda T2.',
-              style: TextStyle(fontFamily: 'Arial',
-                fontSize: 20,
-                color: Colors.black,
-                height: 1,)),
         ),
       ],
     ),

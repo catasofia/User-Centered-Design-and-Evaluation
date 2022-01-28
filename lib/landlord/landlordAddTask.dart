@@ -11,7 +11,6 @@ import 'landlordSuggestedTask.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//FALTA GUARDAR NA HOUSE
 
 class House{
   String description = "";
@@ -230,7 +229,7 @@ class _AddTaskState extends State<AddTask> {
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF81C784),
+                        primary: Colors.lightGreen,
                         elevation: 3,
                         padding: EdgeInsets.all(10),
                         shape: RoundedRectangleBorder(
@@ -314,7 +313,7 @@ Widget _buildPopupEvaluation(BuildContext context) {
           children: [
             Icon(
               Icons.warning_amber_outlined,
-              size: 35.0,
+              size: 55.0,
               color: Colors.redAccent,
             ),
           ],
@@ -496,7 +495,7 @@ Widget _buildPopupAddTask(BuildContext context) {
           children: [
             Icon(
               Icons.check,
-              size: 20.0,
+              size: 50.0,
               color: Colors.lightGreen,
             ),
             SizedBox(width: 3.0),

@@ -41,7 +41,7 @@ class _SuggestedTaskState extends State<SuggestedTask> {
      );
 
   Future<void> getData() async{
-    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('suggested_task').get();
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('suggestedTask').get();
 
     snapshot.docs.forEach((doc) {
       if (doc.id == taskid) {
@@ -212,7 +212,7 @@ class _SuggestedTaskState extends State<SuggestedTask> {
                       height: 50,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFFEF5350),
+                          primary: Colors.redAccent,
                           elevation: 3,
                           padding: EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(
@@ -244,7 +244,7 @@ class _SuggestedTaskState extends State<SuggestedTask> {
                       height: 50,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF81C784),
+                          primary: Colors.lightGreen,
                           elevation: 3,
                           padding: EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(
@@ -394,7 +394,7 @@ Widget _buildPopupEditTask(BuildContext context) {
           children: [
             Icon(
               Icons.check,
-              size: 20.0,
+              size: 30.0,
               color: Colors.lightGreen,
             ),
             SizedBox(width: 3.0),
@@ -405,7 +405,7 @@ Widget _buildPopupEditTask(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Task edited!",
+              "Task Added!",
               style: TextStyle(
                 fontFamily: 'Arial',
                 fontSize: 20,
@@ -444,7 +444,7 @@ Widget _buildPopupEditTask(BuildContext context) {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomeLandlord()),
+                      MaterialPageRoute(builder: (context) => TasksLandlord()),
                     );
                   },
                   textColor: Theme.of(context).primaryColor,
@@ -563,7 +563,7 @@ Widget _buildPopupDeleteTask(BuildContext context, String taskid) {
               children: <Widget>[
                 FlatButton(
                   onPressed: () {
-                    FirebaseFirestore.instance.collection("suggested_task").doc(taskid).delete();
+                    FirebaseFirestore.instance.collection("suggestedTask").doc(taskid).delete();
                     Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const TasksLandlord()));
@@ -589,7 +589,6 @@ Widget _buildPopupDeleteTask(BuildContext context, String taskid) {
     ],
   );
 }
-
 Widget _errorPopup(BuildContext context) {
   return new AlertDialog(
     alignment: Alignment.center,
@@ -598,15 +597,110 @@ Widget _errorPopup(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Center(child: Icon(Icons.error, color: Colors.red[700], size: 100,)),
-        SizedBox(height: 15,),
-        Text(
-          "You need to edit some field in order to confirm.",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.warning_amber_outlined,
+              size: 55.0,
+              color: Colors.redAccent,
+            ),
+          ],
+        ),
+        SizedBox(height: 12.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "You must fill in all the\n fields to add the task.",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 90.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.grey[300],
+            ),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 15,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+/*
+Widget _errorPopup(BuildContext context) {
+  return AlertDialog(
+    alignment: Alignment.center,
+    title: const Text(
+      'Atention!',
+      style: TextStyle(
+        fontFamily: 'Arial',
+        fontSize: 30,
+        color: Colors.black,
+        height: 1,
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: const Color(0xFF48ACBE),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const <Widget>[
+        Center(child: Icon(Icons.error, color: Colors.redAccent, size: 70,)),
+        //SizedBox(height: 2, width: 2),
+        Padding(
+          padding: EdgeInsets.only(top: 10.0),
+          child: Text(
+            "You need to fill in all the fields to in order to confirm.",
+            style: TextStyle(
+              fontFamily: 'Arial',
+              fontSize: 20,
+              color: Colors.black,
+              height: 1,
+            ),
           ),
         ),
       ],
@@ -630,7 +724,7 @@ Widget _errorPopup(BuildContext context) {
       ),
     ],
   );
-}
+}*/
 
 void addTaskDB (taska, taskid) {
   CollectionReference task = FirebaseFirestore.instance.collection('task');
@@ -648,7 +742,7 @@ void addTaskDB (taska, taskid) {
     'done': false
   });
   FirebaseFirestore.instance
-      .collection("suggested_task")
+      .collection("suggestedTask")
       .doc(taskid)
       .delete();
 }

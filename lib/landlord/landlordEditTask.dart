@@ -227,7 +227,7 @@ class _EditTaskState extends State<EditTask> {
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFEF5350),
+                        primary: Colors.redAccent,
                         elevation: 3,
                         padding: EdgeInsets.all(10),
                         shape: RoundedRectangleBorder(
@@ -258,7 +258,7 @@ class _EditTaskState extends State<EditTask> {
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF81C784),
+                        primary: Colors.lightGreen,
                         elevation: 3,
                         padding: EdgeInsets.all(10),
                         shape: RoundedRectangleBorder(
@@ -408,7 +408,7 @@ Widget _buildPopupEditTask(BuildContext context) {
           children: [
             Icon(
               Icons.check,
-              size: 20.0,
+              size: 30.0,
               color: Colors.lightGreen,
             ),
             SizedBox(width: 3.0),
@@ -612,32 +612,72 @@ Widget _errorPopup(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Center(child: Icon(Icons.error, color: Colors.red[700], size: 100,)),
-        SizedBox(height: 15,),
-        Text(
-          "You need to edit some field in order to confirm.",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.warning_amber_outlined,
+              size: 55.0,
+              color: Colors.redAccent,
+            ),
+          ],
+        ),
+        SizedBox(height: 12.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "You need to edit some field \n in order to confirm.",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+          ],
         ),
       ],
     ),
     actions: <Widget>[
       Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          new FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            textColor: Theme.of(context).primaryColor,
-            child: const Icon(
-              Icons.highlight_remove,
-              color: Colors.black,
-              size: 25.0,
+          Container(
+            width: 90.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.grey[300],
+            ),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 15,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -645,7 +685,6 @@ Widget _errorPopup(BuildContext context) {
     ],
   );
 }
-
 void updatedb (taskid) {
   if (task_name.text != '') {
     FirebaseFirestore.instance.collection('task')

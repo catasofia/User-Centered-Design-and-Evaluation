@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:time_app/landlord/landlordContacts.dart';
 import 'package:time_app/landlord/landlordEvaluateTasks.dart';
 import 'package:time_app/landlord/landlordHomeScreen.dart';
+import 'package:time_app/landlord/landlordTasks.dart';
 import 'package:time_app/landlord/profileLandlord.dart';
 import 'landlordSuggestedTask.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -144,22 +146,25 @@ class _HomeState extends State<addNeighbor> {
                         });
                       },
                     ),),),
-                const SizedBox(height: 50.0),
-                Text(
-                  tt.name,
-                  style: const TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.black,
-                    letterSpacing: 2.0,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40),
+                  padding: const EdgeInsets.only(left: 0),
                   child: CircleAvatar(
                     backgroundImage: AssetImage(tt.imagePath),
                     radius: 20.0,
                   ),),
+                const SizedBox(height: 50.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    tt.name,
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.black,
+                      letterSpacing: 2.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ],
             )
           ]),
@@ -218,7 +223,7 @@ class _HomeState extends State<addNeighbor> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
-        color: const Color(0xFF48ACBE),
+        color: const Color(0xFF7FBECB),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
           child: Row(
@@ -229,7 +234,13 @@ class _HomeState extends State<addNeighbor> {
                   icon: const Icon(
                     Icons.house_outlined,
                     size: 35.0,
-                  ), onPressed: () {}
+                  ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomeLandlord()),
+                );
+              }
               ),
               IconButton(icon: const Icon(
                 Icons.star_border,
@@ -247,7 +258,11 @@ class _HomeState extends State<addNeighbor> {
                     size: 30.0,
                   ),
                   onPressed: () {
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const TasksLandlord()),
+                    );
                   }
               ),
               IconButton(
@@ -256,7 +271,11 @@ class _HomeState extends State<addNeighbor> {
                     size: 30.0,
                   ),
                   onPressed: () {
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LandlordContacts()),
+                    );
                   }
               ),
             ],
@@ -400,7 +419,7 @@ class _HomeState extends State<addNeighbor> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                        primary: check() ? Colors.grey[400] : Colors.green),
+                        primary: check() ? Colors.grey[400] : Colors.lightGreen),
                     child: const Icon(Icons.person_add_alt_1),
                   ),
 
@@ -587,8 +606,9 @@ class _HomeState extends State<addNeighbor> {
     );
   }
 
+
   Widget _buildPopupNotification(BuildContext context) {
-    return AlertDialog(
+    return new AlertDialog(
       alignment: Alignment.center,
       title: const Text(
         'Notifications',
@@ -600,13 +620,13 @@ class _HomeState extends State<addNeighbor> {
         ),
         textAlign: TextAlign.center,
       ),
-      backgroundColor: const Color(0xFF48ACBE),
-      content: Column(
+      backgroundColor: Color(0xFF48ACBE),
+      content: new Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Text(
-            "  - João completed a task, rate him now.",
+          Text(
+            "  - You have a new suggested task.",
             style: TextStyle(
               fontFamily: 'Arial',
               fontSize: 20,
@@ -614,33 +634,15 @@ class _HomeState extends State<addNeighbor> {
               height: 1,
             ),
           ),
-          const SizedBox(height: 20.0),
-          const Text(
-            "  - Carolina has sent you a message.",
+          SizedBox(height: 20.0),
+          Text(
+            "  - Task completed, you can evaluate it now.",
             style: TextStyle(
               fontFamily: 'Arial',
               fontSize: 20,
               color: Colors.black,
               height: 1,
             ),
-          ),
-          const SizedBox(height: 20.0),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(
-                  fontSize: 20, fontFamily: 'Arial', color: Colors.black),
-            ),
-            onPressed: () {/*
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SuggestedTask()),
-              );*/
-            },
-            child: const Text('- Francisca suggested a task for Alameda T2.',
-                style: TextStyle(fontFamily: 'Arial',
-                  fontSize: 20,
-                  color: Colors.black,
-                  height: 1,)),
           ),
         ],
       ),
@@ -648,13 +650,11 @@ class _HomeState extends State<addNeighbor> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            FlatButton(
+            new FlatButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              textColor: Theme
-                  .of(context)
-                  .primaryColor,
+              textColor: Theme.of(context).primaryColor,
               child: const Icon(
                 Icons.remove_circle_outline,
                 color: Colors.black,

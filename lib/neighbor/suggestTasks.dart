@@ -44,7 +44,7 @@ class _SuggestTaskState extends State<SuggestTask> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference task = FirebaseFirestore.instance.collection('suggested_task');
+    CollectionReference task = FirebaseFirestore.instance.collection('suggestedTask');
     getData();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -175,7 +175,6 @@ class _SuggestTaskState extends State<SuggestTask> {
                           builder: (BuildContext context) => _errorPopup(context),
                         );
                       } else{
-                        print("ENTREIIII");
                         task.add({
                           'name': task_name.text,
                           'description': description.text,
@@ -290,7 +289,7 @@ Widget _confirmationPopup(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Center(child: Icon(Icons.check, color: Colors.green[800], size: 100,)),
+        Center(child: Icon(Icons.check, color: Colors.lightGreen, size: 100,)),
         SizedBox(height: 15,),
         Text(
           "Task successfully suggested.",

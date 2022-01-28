@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:time_app/landlord/profileLandlord.dart';
 // import 'package:image_picker/image_picker.dart';
+import 'landlordContacts.dart';
+import 'landlordEvaluateTasks.dart';
 import 'landlordHomeScreen.dart';
 import 'landlordSuggestedTask.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'landlordTasks.dart';
 
 class AddHouse extends StatefulWidget {
   const AddHouse({Key? key}) : super(key: key);
@@ -49,6 +53,68 @@ class _AddHouseState extends State<AddHouse> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
+      bottomNavigationBar: BottomAppBar(
+        color: const Color(0xFF7FBECB),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                  color: Colors.white,
+                  icon: const Icon(
+                    Icons.house_outlined,
+                    size: 35.0,
+                  ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomeLandlord()),
+                );
+              }
+              ),
+              IconButton(icon: const Icon(
+                Icons.star_border,
+                size: 35.0,
+              ), onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const EvaluateTasks()),
+                );
+              }),
+              IconButton(
+                  icon: const Icon(
+                    Icons.cleaning_services_rounded,
+                    size: 30.0,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const TasksLandlord()),
+                    );
+
+                  }
+              ),
+              IconButton(
+                  icon: const Icon(
+                    Icons.chat_bubble_outline_rounded,
+                    size: 30.0,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LandlordContacts()),
+                    );
+
+                  }
+              ),
+            ],
+          ),
+        ),
+      ),
       body:
       SingleChildScrollView(
           child: Column(
@@ -234,7 +300,7 @@ class _AddHouseState extends State<AddHouse> {
                       height: 40,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF81C784),
+                          primary: Colors.lightGreen,
                           elevation: 3,
                           padding: EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(
@@ -285,9 +351,8 @@ class _AddHouseState extends State<AddHouse> {
                         child: IconButton(
                           icon: Icon(Icons.arrow_back_ios),
                           onPressed: (){
-                            Navigator.push(
+                            Navigator.pop(
                               context,
-                              MaterialPageRoute(builder: (context) => HomeLandlord()),
                             );
                           },
                         )
@@ -387,47 +452,85 @@ Widget _buildPopupAddHouse(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Center(child: Icon(Icons.check, color: Colors.green[800], size: 100,)),
-        SizedBox(height: 15,),
-        Text(
-          "House successfully added.",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check,
+              size: 50.0,
+              color: Colors.lightGreen,
+            ),
+            SizedBox(width: 3.0),
+          ],
+        ),
+        SizedBox(height: 12.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "House added!",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+          ],
         ),
       ],
     ),
     actions: <Widget>[
       Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          new FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              textColor: Theme.of(context).primaryColor,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.grey[400]
+          Container(
+            width: 90.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
                 ),
-                onPressed: (){
-                  clearText();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeLandlord()),
-                  );
-                },
-                child: Text('Ok', style: TextStyle(color: Colors.black),),
-              )
+              ],
+              color: Colors.grey[300],
+            ),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      //MUDAR !!
+                      MaterialPageRoute(builder: (context) => HomeLandlord()),
+                    );
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 15,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     ],
   );
 }
+
 
 Widget _errorPopup(BuildContext context) {
   return new AlertDialog(
@@ -437,32 +540,72 @@ Widget _errorPopup(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Center(child: Icon(Icons.error, color: Colors.red[700], size: 100,)),
-        SizedBox(height: 15,),
-        Text(
-          "You need to fill the details in order to confirm.",
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            color: Colors.black,
-            height: 1,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.warning_amber_outlined,
+              size: 55.0,
+              color: Colors.redAccent,
+            ),
+          ],
+        ),
+        SizedBox(height: 12.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "You must fill in all the\n fields to add a house.",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 20,
+                color: Colors.black,
+                height: 1,
+              ),
+            ),
+          ],
         ),
       ],
     ),
     actions: <Widget>[
       Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          new FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            textColor: Theme.of(context).primaryColor,
-            child: const Icon(
-              Icons.highlight_remove,
-              color: Colors.black,
-              size: 25.0,
+          Container(
+            width: 90.0,
+            height: 30.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.5,
+                  blurRadius: 1.5,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.grey[300],
+            ),
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 15,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -470,6 +613,7 @@ Widget _errorPopup(BuildContext context) {
     ],
   );
 }
+
 
 clearText(){
   house_name.clear();

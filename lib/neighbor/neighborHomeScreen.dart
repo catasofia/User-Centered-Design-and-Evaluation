@@ -208,7 +208,7 @@ class _NeighborHomeState extends State<NeighborHome> {
                     },
                     child: Text("Submit", style: TextStyle(color: Colors.black),),
                     style: ElevatedButton.styleFrom(
-                      primary: tt.neigStars == 0 ? Colors.grey[400] : Colors.green,
+                      primary: tt.neigStars == 0 ? Colors.grey[400] : Colors.lightGreen,
                       shape: RoundedRectangleBorder( //to set border radius to button
                           borderRadius: BorderRadius.circular(10)
                       ),
