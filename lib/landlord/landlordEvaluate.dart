@@ -37,6 +37,8 @@ class _EvaluateState extends State<LandlordEvaluate> {
 
   List<Task> tasksEvaluated= [];
 
+  List<Task> tasksCarolina =[];
+
   Future<void> getData() async{
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
 
@@ -48,7 +50,22 @@ class _EvaluateState extends State<LandlordEvaluate> {
       tasksEvaluated = [];
     }
 
+    if (tasksCarolina.isNotEmpty){
+      tasksCarolina = [];
+    }
+
     snapshot.docs.forEach((doc) {
+
+      if(doc['tenant'] == "Carolina Oliveira"){
+        Task task1 = Task(name: doc['name'],
+            date: doc['date'],
+            landStars: doc['landStars'],
+            neigStars: doc['neigStars'],
+            id: doc.id,
+            house: doc['house']);
+        tasksCarolina.add(task1);
+      }
+
       if(doc['done'] == true){
       Task task1 = Task(name: doc['name'],
           date: doc['date'],
@@ -171,6 +188,7 @@ class _EvaluateState extends State<LandlordEvaluate> {
                     onPressed: (){
                       if(tt.landStars == 1){
                         FirebaseFirestore.instance.collection('task').doc(tt.id).update({'landStars': 1});
+                        updateRate(tasksCarolina);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -178,6 +196,7 @@ class _EvaluateState extends State<LandlordEvaluate> {
                       }
                       if(tt.landStars == 2){
                         FirebaseFirestore.instance.collection('task').doc(tt.id).update({'landStars': 2});
+                        updateRate(tasksCarolina);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -185,6 +204,7 @@ class _EvaluateState extends State<LandlordEvaluate> {
                       }
                       if(tt.landStars == 3){
                         FirebaseFirestore.instance.collection('task').doc(tt.id).update({'landStars': 3});
+                        updateRate(tasksCarolina);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -192,6 +212,7 @@ class _EvaluateState extends State<LandlordEvaluate> {
                       }
                       if(tt.landStars == 4){
                         FirebaseFirestore.instance.collection('task').doc(tt.id).update({'landStars': 4});
+                        updateRate(tasksCarolina);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -199,6 +220,7 @@ class _EvaluateState extends State<LandlordEvaluate> {
                       }
                       if(tt.landStars == 5){
                         FirebaseFirestore.instance.collection('task').doc(tt.id).update({'landStars': 5});
+                        updateRate(tasksCarolina);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -541,4 +563,22 @@ Widget _buildPopupEvaluate(BuildContext context) {
       ),
     ],
   );
+}
+
+void updateRate(List<Task> tasksCarolina){
+  int aux = 0;
+  double sum = 0;
+  int div = 0;
+  tasksCarolina.forEach((element) {
+    if(element.landStars != 0 ){
+      div = div + 1;
+    }
+    if(element.neigStars != 0) {
+      div = div + 1;
+    }
+    aux = aux + element.landStars + element.neigStars;
+  });
+  sum = aux/(div).round();
+  int rat = sum.round();
+  FirebaseFirestore.instance.collection('profile').doc("aQXN0IZC6JE9rgW8eMYc").update({'rating': rat});
 }

@@ -32,6 +32,8 @@ class _NeighborHomeState extends State<NeighborHome> {
 
   List<Task> tasksEvaluated= [];
 
+  List<Task> tasksCarolina =[];
+
   Future<void> getData() async{
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('task').get();
     QuerySnapshot profiles = await FirebaseFirestore.instance.collection('profile').get();
@@ -44,7 +46,22 @@ class _NeighborHomeState extends State<NeighborHome> {
       tasksEvaluated = [];
     }
 
+    if (tasksCarolina.isNotEmpty){
+      tasksCarolina = [];
+    }
+
     snapshot.docs.forEach((doc) {
+
+      if(doc['tenant'] == "Carolina Oliveira"){
+        Task task1 = Task(name: doc['name'],
+            date: doc['date'],
+            landStars: doc['landStars'],
+            neigStars: doc['neigStars'],
+            id: doc.id,
+            house: doc['house']);
+        tasksCarolina.add(task1);
+      }
+
       profiles.docs.forEach((element) {
         if(element['name'] == "Francisca Mota"){
           if(doc['house'] == element['house']){
@@ -172,6 +189,7 @@ class _NeighborHomeState extends State<NeighborHome> {
                     onPressed: (){
                       if(tt.neigStars == 1){
                         FirebaseFirestore.instance.collection('task').doc(tt.id).update({'neigStars': 1});
+                        updateRate(tasksCarolina);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -179,6 +197,7 @@ class _NeighborHomeState extends State<NeighborHome> {
                       }
                       if(tt.neigStars == 2){
                         FirebaseFirestore.instance.collection('task').doc(tt.id).update({'neigStars': 2});
+                        updateRate(tasksCarolina);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -186,6 +205,7 @@ class _NeighborHomeState extends State<NeighborHome> {
                       }
                       if(tt.neigStars == 3){
                         FirebaseFirestore.instance.collection('task').doc(tt.id).update({'neigStars': 3});
+                        updateRate(tasksCarolina);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -193,6 +213,7 @@ class _NeighborHomeState extends State<NeighborHome> {
                       }
                       if(tt.neigStars == 4){
                         FirebaseFirestore.instance.collection('task').doc(tt.id).update({'neigStars': 4});
+                        updateRate(tasksCarolina);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -200,6 +221,7 @@ class _NeighborHomeState extends State<NeighborHome> {
                       }
                       if(tt.neigStars == 5){
                         FirebaseFirestore.instance.collection('task').doc(tt.id).update({'neigStars': 5});
+                        updateRate(tasksCarolina);
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => _buildPopupEvaluate(context),
@@ -504,4 +526,23 @@ Widget _buildPopupEvaluate(BuildContext context) {
       ),
     ],
   );
+}
+
+
+void updateRate(List<Task> tasksCarolina){
+  int aux = 0;
+  double sum = 0;
+  int div = 0;
+  tasksCarolina.forEach((element) {
+    if(element.landStars != 0 ){
+      div = div + 1;
+    }
+    if(element.neigStars != 0) {
+      div = div + 1;
+    }
+    aux = aux + element.landStars + element.neigStars;
+  });
+  sum = aux/(div);
+  int rat = sum.round();
+  FirebaseFirestore.instance.collection('profile').doc("aQXN0IZC6JE9rgW8eMYc").update({'rating': rat});
 }
