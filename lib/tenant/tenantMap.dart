@@ -33,7 +33,7 @@ class _MapState extends State<Map> {
     return Scaffold(
         backgroundColor: Colors.white,
         bottomNavigationBar: BottomAppBar(
-          color: Color(0xFF48ACBE),
+          color: Color(0xFF7FBECB),
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
             child: Row(
@@ -366,7 +366,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "- João completed a task, rate him now.",
+          "- Carlos sent you a message.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,

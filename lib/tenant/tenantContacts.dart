@@ -105,7 +105,7 @@ class _ContactsState extends State<Contacts> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF48ACBE),
+        color: Color(0xFF7FBECB),
         child: Padding(
           padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
           child: Row(
@@ -224,6 +224,9 @@ class _ContactsState extends State<Contacts> {
               height: 40.0,
               color: Colors.white,
             ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
             Text(
               'Your Contacts',
               style: TextStyle(
@@ -405,7 +408,7 @@ class _ContactsState extends State<Contacts> {
                         ),
                         SizedBox(height: 5.0),
                         Text(
-                          'Today I cant it :(',
+                          'Today I cant :(',
                           style: TextStyle(
                             fontFamily: 'Arial',
                             fontSize: 14,
@@ -421,6 +424,8 @@ class _ContactsState extends State<Contacts> {
               ],
             ),
             SizedBox(height: 15.0),
+            ]),
+            ),
           ],
         ),
       ),
@@ -448,7 +453,7 @@ Widget _buildPopupNotification(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "- João completed a task, rate him now.",
+          "- Carlos sent you a message.",
           style: TextStyle(
             fontFamily: 'Arial',
             fontSize: 20,
@@ -498,4 +503,5 @@ Widget _buildPopupNotification(BuildContext context) {
     ],
   );
 }
+
 

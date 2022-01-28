@@ -125,7 +125,6 @@ class _taskViewAssignedState extends State<taskViewAssigned>{
     );
   }
 
-  final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     getData();
@@ -133,7 +132,7 @@ class _taskViewAssignedState extends State<taskViewAssigned>{
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF48ACBE),
+        color: Color(0xFF7FBECB),
         child: Padding(
           padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
           child: Row(
@@ -239,10 +238,18 @@ class _taskViewAssignedState extends State<taskViewAssigned>{
                       ),
                     ),
                     SizedBox(width: 15.0),
-                    Icon(
-                      Icons.notifications_active_outlined,
-                      color: Colors.black,
-                      size: 40.0,
+                    IconButton(
+                        onPressed:(){
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => _buildPopupNotification(context),
+                          );
+                        },
+                      icon: Icon(
+                        Icons.notifications_active_outlined,
+                        color: Colors.black,
+                        size: 40.0,
+                      ),
                     ),
                   ],
                 ),
@@ -259,18 +266,13 @@ class _taskViewAssignedState extends State<taskViewAssigned>{
               ),
               Container(
                 height: 420,
-                child: Scrollbar(
-                  isAlwaysShown: true,
-                  controller: _scrollController,
                   child: SingleChildScrollView(
-                    controller: _scrollController,
                     child: SizedBox(
                       width: 400,
                       child:Column(
                         children: [
                           for(var i in tasks) template(i),
                         ],
-                      ),
                     ),
                   ),
                 ) ,
@@ -314,7 +316,7 @@ class _taskViewAssignedState extends State<taskViewAssigned>{
                           color: Colors.black,
                         )
                     ),
-                    backgroundColor: Color(0xFF69BB67),
+                    backgroundColor: Colors.lightGreen
                   ),
                 ],
               )
@@ -565,6 +567,75 @@ class _taskViewAssignedState extends State<taskViewAssigned>{
     );
   }
 
+  Widget _buildPopupNotification(BuildContext context) {
+    return new AlertDialog(
+      alignment: Alignment.center,
+      title: const Text(
+        'Notifications',
+        style: TextStyle(
+          fontFamily: 'Arial',
+          fontSize: 30,
+          color: Colors.white,
+          height: 1,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      backgroundColor: Color(0xFF48ACBE),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "- Carlos sent you a message.",
+            style: TextStyle(
+              fontFamily: 'Arial',
+              fontSize: 20,
+              color: Colors.black,
+              height: 1,
+            ),
+          ),
+          SizedBox(height: 20.0),
+          Text(
+            "- You have two days to complete your task.",
+            style: TextStyle(
+              fontFamily: 'Arial',
+              fontSize: 20,
+              color: Colors.black,
+              height: 1,
+            ),
+          ),
+          SizedBox(height: 20.0),
+          Text(
+            "- Carlos added a new task.",
+            style: TextStyle(
+              fontFamily: 'Arial',
+              fontSize: 20,
+              color: Colors.black,
+              height: 1,
+            ),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            new FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              textColor: Theme.of(context).primaryColor,
+              child: const Icon(
+                Icons.remove_circle_outline,
+                color: Colors.black,
+                size: 25.0,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
 }
 
