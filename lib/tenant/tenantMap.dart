@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_app/tenant/profile.dart';
 import 'tenantHomescreen.dart';
 import 'tenantContacts.dart';
 import 'tenantTasks.dart';
@@ -96,12 +97,20 @@ class _MapState extends State<Map> {
                     padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
                     child: Row(
                       children: <Widget>[
-                        Icon(
-                          Icons.person_outline,
-                          color: Colors.black,
-                          size: 40.0,
+                        IconButton(
+                          icon: const Icon(
+                            Icons.person_outline,
+                            color: Colors.black,
+                            size: 40.0,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Profile()),
+                            );
+                          },
                         ),
-                        SizedBox(width: 15.0),
+                        SizedBox(width: 10.0),
                         Container(
                           width: 232.0,
                           height: 42.0,
@@ -117,7 +126,7 @@ class _MapState extends State<Map> {
                                 Icons.search,
                                 color: Colors.black,
                               ),
-                              SizedBox(width: 10.0),
+                              SizedBox(width: 7.0),
                               Text(
                                 'Search',
                                 style: TextStyle(
@@ -131,7 +140,7 @@ class _MapState extends State<Map> {
                             ],
                           ),
                         ),
-                        SizedBox(width: 15.0),
+                        SizedBox(width: 10.0),
                         IconButton(
                           icon: const Icon(
                             Icons.notifications_active_outlined,
@@ -169,7 +178,7 @@ class _MapState extends State<Map> {
                   Stack(
                     children: <Widget>[
                       Container(
-                        height: 420.0,
+                        height: 400.0,
                         width: 350.0,
                         decoration: BoxDecoration(
                           image: DecorationImage(
@@ -271,6 +280,21 @@ class _MapState extends State<Map> {
 
                     ]
                   ),
+                  Row(
+                    children: [
+                      Align(
+                          alignment: Alignment.bottomLeft,
+                          child: IconButton(
+                            icon: Icon(Icons.arrow_back_ios),
+                            onPressed: (){
+                              Navigator.pop(
+                                context,
+                              );
+                            },
+                          )
+                      ),
+                    ],
+                  )
                 ]
             )
         )

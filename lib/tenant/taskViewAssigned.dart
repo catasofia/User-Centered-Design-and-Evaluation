@@ -265,7 +265,7 @@ class _taskViewAssignedState extends State<taskViewAssigned>{
                 ),
               ),
               Container(
-                height: 420,
+                height: 390,
                   child: SingleChildScrollView(
                     child: SizedBox(
                       width: 400,
@@ -317,6 +317,22 @@ class _taskViewAssignedState extends State<taskViewAssigned>{
                         )
                     ),
                     backgroundColor: Colors.lightGreen
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(width: 20,),
+                  Align(
+                      alignment: Alignment.bottomLeft,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        onPressed: (){
+                          Navigator.pop(
+                            context,
+                          );
+                        },
+                      )
                   ),
                 ],
               )

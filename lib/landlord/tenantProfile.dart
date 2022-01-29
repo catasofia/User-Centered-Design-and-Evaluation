@@ -149,30 +149,15 @@ class _TenantProfileState extends State<TenantProfile> {
               ],
             ),
             SizedBox(height: 50.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  children: [
-                    Container(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage(image),
-                        radius: 55.0,
-                      ),
-                    ),
-                    SizedBox(height: 16.0),
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1,
-                      ),
-                    ),
-                  ],
+            Center(
+              child: CircleAvatar(
+                radius: 59.0,
+                backgroundColor: Colors.black54,
+                child: CircleAvatar(
+                  backgroundImage: AssetImage(image),
+                  radius: 55.0,
                 ),
-              ],
+              ),
             ),
             SizedBox(height: 30.0),
             Center(

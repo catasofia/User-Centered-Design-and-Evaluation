@@ -303,8 +303,19 @@ class _ChatState extends State<Chat> {
             SizedBox(height: 15.0),
             Row(
               children: [
+                    Align(
+                        alignment: Alignment.bottomLeft,
+                        child: IconButton(
+                          icon: Icon(Icons.arrow_back_ios),
+                          onPressed: (){
+                            Navigator.pop(
+                              context,
+                            );
+                          },
+                        )
+                    ),
                 Container(
-                  width: 300,
+                  width: 250,
                   child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),

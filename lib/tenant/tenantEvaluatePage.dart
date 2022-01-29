@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:time_app/tenant/landlordProfile.dart';
 import 'tenantTasks.dart';
 import 'tenantHomescreen.dart';
 import 'tenantEvaluateMain.dart';
@@ -293,6 +294,10 @@ class _EvaluateState extends State<Evaluate> {
                     ),
                   ),
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfileL()),
+                    );
                   },
                 ),
               ),

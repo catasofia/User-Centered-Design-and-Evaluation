@@ -253,9 +253,26 @@ class _taskViewState extends State<taskView>{
                   ),
                 ) ,
               ),
+              Row(
+                children: [
+                  SizedBox(width: 20,),
+                  Align(
+                      alignment: Alignment.bottomLeft,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        onPressed: (){
+                          Navigator.pop(
+                            context,
+                          );
+                        },
+                      )
+                  ),
+                ],
+              )
             ]
         ),
       ),
+
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           showDialog(

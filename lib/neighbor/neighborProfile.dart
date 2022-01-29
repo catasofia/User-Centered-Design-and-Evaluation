@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_app/homeScreen.dart';
 import 'package:time_app/signUp.dart';
 import 'neighborHomeScreen.dart';
 import '../signInOrUp.dart';
@@ -70,26 +71,20 @@ class _NeighborProfileState extends State<NeighborProfile> {
             ],
             ),
           ),
-            Divider(
-              height: 40.0,
-              color: Colors.white,
-            ),
             Column(
               children: [
                 SizedBox(height: 20,),
-                Row(
-                  children: [
-                    SizedBox(width: 135,),
-                    Container(
-                      child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/francisca.jpg'),
-                          radius: 70.0,
-                      ),
+                Center(
+                  child: CircleAvatar(
+                    radius: 79.0,
+                    backgroundColor: Colors.black54,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/francisca.jpg'),
+                      radius: 75.0,
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(height: 30.0),
-                SizedBox(height: 30.0),
+                SizedBox(height: 10.0),
                 Center(
                   child: Container(
                     width: 350.0,
@@ -162,29 +157,28 @@ class _NeighborProfileState extends State<NeighborProfile> {
                     ),
                   ),
                 ),
-                SizedBox(height: 60,),
-                Container(
-                  width: 175,
-                  height: 50,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF7FBECB)
-                      ),
-                      onPressed: (){
+                SizedBox(height: 30,),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:[
+                      RaisedButton(onPressed: (){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SignUp()),
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
                         );
                       },
-                      child: Text('Logout',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
-                      ),
-                      )
-                  ),
-                ),
-                SizedBox(height: 30,),
+                        padding: EdgeInsets.only(top:14.0, bottom:14.0, left:10.0, right: 10.0),
+                        child: Text('Logout',
+                          style: TextStyle(
+                            fontFamily: 'Arial',
+                            fontSize: 18,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                        ),
+                        color: Color(0xFF7FBECB),),
+                    ]),
+                SizedBox(height: 70,),
                 Row(
                   children: [
                     SizedBox(width: 20,),
