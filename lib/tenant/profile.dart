@@ -179,7 +179,7 @@ class _ProfileState extends State<Profile> {
               Center(
                 child: Container(
                   width: 350.0,
-                  height: 140.0,
+                  height: 180.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
                     boxShadow: [
@@ -268,6 +268,35 @@ class _ProfileState extends State<Profile> {
                           ),
                           Icon(
                             Icons.star_border,
+                            color: Color(0xFF48ACBE),
+                            size: 25.0,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(width: 20,),
+                          Text(
+                            'Total\nDiscount:',
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 20,
+                              color: Color(0xFF48ACBE),
+                              height: 1,
+                            ),
+                          ),
+                          SizedBox(width: 10.0),
+                          Text(
+                            totalDiscount,
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              fontSize: 20,
+                              color: Color(0xFF48ACBE),
+                              height: 1,
+                            ),
+                          ),
+                          Icon(
+                            Icons.euro_rounded,
                             color: Color(0xFF48ACBE),
                             size: 25.0,
                           ),
