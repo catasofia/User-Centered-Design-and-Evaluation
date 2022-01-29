@@ -158,12 +158,12 @@ class _SuggestTaskState extends State<SuggestTask> {
               children: [
                 Container(
                   width: 150,
-                  height: 75,
+                  height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF48ACBE),
+                      primary: Colors.lightGreen,
                       elevation: 3,
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(10),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)
                       ),
@@ -198,6 +198,7 @@ class _SuggestTaskState extends State<SuggestTask> {
                 ),
               ],
             ),
+            SizedBox(height: 50,),
             Row(
               children: [
                 SizedBox(width: 20,),
