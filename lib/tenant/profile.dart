@@ -22,7 +22,7 @@ class _ProfileState extends State<Profile> {
   String gender = "";
   int age = 0;
   String role = "";
-  double rating = 0;
+  int rating = 0;
   String totalDiscount = "0";
 
   Future<void> getProfile() async{
